@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>たつや学長の誰でも完璧メール</title>
+
+  </head>
+  <body>
+    
+    <div class="container">
+      <h1 class="display-4 text-center"> たつや学長の誰でも完璧メール </h1>
+      <hr>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">Step1 全体像を把握する</li>
+          <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
+          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
+        </ol>
+      </nav>
+
+      <section class="alert alert-danger col-12" role="alert">
+        <h4 class="alert-heading">Step1 全体像を把握する</h4>
+        <p>
+          以下の質問に答えてください。<br>
+          自動的にロジックツリーを作成し、あなたの課題の全体像を明確にしていきます。
+        </p>
+      </section>
+      <hr>
+
+
+      <section class="col-12">
+        <h4>今回の課題を明らかにする</h4>
+      
+        <div class="row">
+          <label for="a">
+            相手が欲しいものは何ですか？(100字以内で簡潔にまとめてください)
+          </label>
+        </div>
+        <div class="row mb-3">
+            <textarea class="form-control" rows="3" cols="70">コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい</textarea>
+        </div>
+
+        <div class="row">
+          <label for="b"> あなたの現状はどうですか？(100字以内で簡潔にまとめてください)
+          </label>
+        </div>
+        <div class="row mb-3">
+          <textarea class="form-control" rows="3" cols="70">コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である</textarea>
+        </div>
+
+        <div class="row">
+          <label for="clarify"> あなたが相手に説明したい（あるいは自分自身で明確にしたい）のは、以下のどちらですか？ </label>
+        </div>
+        <div class="row mb-3">
+          <label class="radio-inline">
+            <input type="radio" name="clarify" checked>原因(理由)
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="clarify">方法
+          </label>
+        </div>
+
+        <div class="alert alert-primary" role="alert">
+          <h4 class="alert-heading">今回の課題</h4>
+          <p>
+            「コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい」に対して<br>
+            「コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である」のギャップが課題です。<br>
+            【原因を選んだ場合→】この課題の原因にはどのようなものが考えられるか？<br>
+            【方法を選んだ場合→】この課題を解決するにはどのような方法が考えられるか？
+          </p>
+        </div>
+
+        <div class="row mb-5">
+          <a href="img/logictree.png" target="_blank" class="btn btn-primary">
+            ここまでのロジックツリーを確認する
+          </a>
+        </div>
+      </section>
+
+      <hr>
+      
+      <section class="col-12">
+
+        <div class="row mb-1">
+          <label for="d"> あらゆる【原因(理由)/方法】をMECEで検討しましょう </label>
+          <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
+            MECEとは？
+          </button>
+        </div>
+
+        <div class="row mb-3">
+          <select name="fw" class="form-control">
+            <option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+            <option value="1">経営資源(例 ヒト、モノ、カネ、情報)</option>
+            <option value="2">利益、経費</option>
+            <option value="3">過去、現在、未来</option>
+            <option value="4">4C(自社、競合、顧客、チャネル)</option>
+            <option value="5">5Forces(競合、買い手、売り手、代替、新規参入)</option>
+            <option value="6">地域(例 北海道・東北、関東甲信越、東海・北陸、近畿、中四国、九州・沖縄)</option>
+            <option value="7">企業組織(例　営業、製造、技術、コールセンター、本社・事務系)</option>
+            <option value="8">企業組織(例　主任、係長、課長、次長、部長、取締役)</option>
+            <option value="9">企業組織(例　本社、営業所、工場、研究所、配送センター)</option>
+            <option value="10">年齢(例　20歳未満、20歳以上40歳未満、40歳以上60歳未満、60歳以上)</option>
+            <option value="11">PDCA(Plan、Do、Check、Action)</option>
+            <option value="12">バリューチェーン(例　仕入、加工、組立、出荷、保守)</option>
+            <option value="12">理論、感情</option>
+            <option value="12">四季(春、夏、秋、冬)</option>
+            <option value="12">その他(手動入力)</option>
+          </select>
+        </div>
+
+        <section>
+          <div class="row">
+            <label for="" class="col-11"> ヒトに関する具体的な【原因(理由)/方法】を挙げてください</label>
+            <button type="button" class="btn btn-danger col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="30万円のエンジニアを提案する">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れないが安いエンジニアを提案する">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れるがJavaの経験が浅いエンジニアを提案する">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="相場通りのエンジニアをご検討いただく">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="値段は高いがコミュニケーションが取れるJavaのエンジニアをご検討いただく">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+          </div>
+          <br>
+          <div class="row">
+            <label for=""> 「ヒト」を言い換えると何ですか？(例：Javaエンジニア)</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control mb-5" value="JAVAエンジニア">
+          </div>
+        </section>
+
+        <section>
+          <div class="row">
+            <label for="" class="col-11"> モノに関する具体的な【原因(理由)/方法】を挙げてください</label>
+            <button type="button" class="btn btn-danger col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="リモートワークにする">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="ハイスペックPCを支給する">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="たつや学長の誰でも完璧メールを使う">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+          </div>
+          <br>
+          <div class="row">
+            <label for="">「モノ」を言い換えると何ですか？(例：設備、パソコン)</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control mb-5" value="設備">
+          </div>
+        </section>
+
+        <section>
+          <div class="row">
+            <label for="" class="col-11"> カネに関する具体的な【原因(理由)/方法】を挙げてください</label>
+            <button type="button" class="btn btn-danger col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="３ヶ月分一括払いにしてもらえれば20%ディスカウントにする">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="成果が出せていなければ値引きする
+">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+          </div>
+          <br>
+          <div class="row">
+            <label for="">「カネ」を言い換えると何ですか？(例：エンジニア単価)</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control mb-5" value="エンジニア単価">
+          </div>
+        </section>
+
+        <section>
+          <div class="row">
+            <label for="" class="col-11"> 情報に関する具体的な【原因(理由)/方法】を挙げてください</label>
+            <button type="button" class="btn btn-danger col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="派遣したエンジニアから取れないような情報の差分を自社から提供する">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <label for="" class="col-2">第二階層：</label>
+            <input type="text" class="form-control col-9" value="毎月お得な技術情報をお客様に配信する">
+            <button type="button" class="btn btn-primary col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <label for="" class="offset-1 col-2">第三階層：</label>
+            <input type="text" class="form-control col-8 float-right" value="">
+            <button type="button" class="btn btn-info col-1">削除</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+          </div>
+          <br>
+          <div class="row">
+            <label for="">「情報」を言い換えると何ですか？(例：エンジニア派遣の市況)</label>
+          </div>
+          <div class="row">
+            <input type="text" class="form-control mb-3" value="エンジニア派遣の市況">
+          </div>
+          <div class="row">
+            <button type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>
+          </div>
+        </section>
+
+
+        <div class="row mb-5">
+          <a href="img/logictree.png" target="_blank" class="btn btn-primary mr-3">
+            ここまでのロジックツリーを確認する
+          </a>
+          <a href="#" target="_blank" class="btn btn-warning">
+            ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+          </a>
+        </div>
+
+      </section>
+
+
+      <section class="col-12">
+
+        <div class="alert alert-danger" role="alert">
+          <p>
+          全体像を表現することが目的の場合は、ここで終了です。さらに内容を精査して、より「相手」が理解しやすいものを作り上げましょう。<br>
+          </p>
+        </div>
+        <div class="row">
+          <label for=""> 
+            ここで作成した全体像を踏まえて、あなたが誰かに説明あるいは納得したい場合には、あなたの主張を一つ選び以下に記入してください。<br>
+          </label>
+        </div>
+        <div class="row mb-3">
+          <input type="text" class="form-control" value="30万円のエンジニアを提案する">
+        </div>
+        <div class="row mb-5">
+            <a href="step2.html" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</a>
+        </div>
+    
+      </section>
+    
+    </div>
+
+
+    <!-- Button trigger modal -->
+    
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">MECEとは？</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <strong class="mb-3">「ヌケモレダブりがない状態、つまり網羅的にすると言うこと」</strong>
+            <p>
+            例えば、あなたが「当社の製品競争力を調べよ」と指示された時、もし、"競合の価格のみ"調査して報告したら、上司はどう思うでしょう？「製品性能については調べなかったのか？？代替品については？新規参入者については？」とヌケモレを指摘させることでしょう。だから、まず最初に「網羅的に全体を捉える」必要があるのです。
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
