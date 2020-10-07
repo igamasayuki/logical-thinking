@@ -8,7 +8,7 @@ create table if not exists framework (
     id serial primary key,
     frameworkkindid integer,
     content text,
-    foreign key (frameworkkindid) references frameworkkind(id)
+    foreign key (frameworkkindtype) references frameworkkind(id)
 );
 -- フレームワークの要素
 create table if not exists frameworkelement (
@@ -73,7 +73,7 @@ create table if not exists reason (
     -- 根拠のこと? => 他テーブルのカラム名と意味が異なる
     word text,
     -- 他テーブルのカラム名から「言い換えると」のカラムを追加
-    anotherExplanation text,
+    anotherexplanation text,
     explanation text,
     pyramidid integer,
     foreign key pyramidid references pyramid(id)
