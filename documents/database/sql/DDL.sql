@@ -15,7 +15,7 @@ create table if not exists frameworkelement (
     id serial primary key,
     frameworkid integer, 
     element text,
-    foreign key frameworkid references framework(id)
+    foreign key (frameworkid) references framework(id)
 );
 -- ロジックツリー
 create table if not exists logictree (
@@ -63,8 +63,8 @@ create table if not exists pyramid (
     frameworkid integer,
     -- 結論
     conclusion text,
-    foreign key frameworkkindid references frameworkkind(id),
-    foreign key frameworkid references framework(id)
+    foreign key (frameworkkindid) references frameworkkind(id),
+    foreign key (frameworkid) references framework(id)
 );
 
 create table if not exists reason (
@@ -76,12 +76,12 @@ create table if not exists reason (
     anotherExplanation text,
     explanation text,
     pyramidid integer,
-    foreign key pyramidid references pyramid(id)
+    foreign key (pyramidid) references pyramid(id)
 );
 
 create table if not exists example (
     id serial primary key,
     explanation text,
     reasonid integer,
-    foreign key reasonid references reason(id)
+    foreign key (reasonid) references reason(id)
 );

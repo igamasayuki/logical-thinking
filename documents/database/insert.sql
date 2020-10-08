@@ -23,7 +23,7 @@ insert into framework (frameworkkindid,content) values
 (7,'年齢(例　20歳未満、20歳以上40歳未満、40歳以上60歳未満、60歳以上)'),
 (8,'PDCA(Plan、Do、Check、Action)'),
 (8,'バリューチェーン(例　仕入、加工、組立、出荷、保守)'),
-(9,'理論、感情')
+(9,'理論、感情'),
 (9,'その他(手動入力)');
 
 insert into frameworkelement (frameworkid,element) values 
