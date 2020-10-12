@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/config :: configFragment">
+</head>
+<body>
+	<div class="container">
+		<header th:replace="fragments/header :: headerFragment"></header>
+		<div layout:fragment="content" class="content-inner"></div>
+	</div>
+</body>
+</html>
