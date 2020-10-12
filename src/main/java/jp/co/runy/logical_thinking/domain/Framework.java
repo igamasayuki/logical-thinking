@@ -3,48 +3,43 @@ package jp.co.runy.logical_thinking.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author takahashikouhei
+ * フレームワークのクラス
+ */
 public class Framework {
 	
 	private int id;
 	private Integer frameworkKindId;
+	private String content;
 	private List<FrameworkElement> frameworkElementList = new ArrayList<>();
 	
-	/**
-	 * @return the id
-	 */
 	public int getId() {
 		return id;
 	}
-	/**
-	 * @param id the id to set
-	 */
 	public void setId(int id) {
 		this.id = id;
 	}
-	/**
-	 * @return the frameworkKindId
-	 */
 	public Integer getFrameworkKindId() {
 		return frameworkKindId;
 	}
-	/**
-	 * @param frameworkKindId the frameworkKindId to set
-	 */
 	public void setFrameworkKindId(Integer frameworkKindId) {
 		this.frameworkKindId = frameworkKindId;
 	}
-	/**
-	 * @return the frameworkElementList
-	 */
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public List<FrameworkElement> getFrameworkElementList() {
 		return frameworkElementList;
 	}
-	/**
-	 * @param frameworkElementList the frameworkElementList to set
-	 */
 	public void setFrameworkElementList(List<FrameworkElement> frameworkElementList) {
 		this.frameworkElementList = frameworkElementList;
 	}
+	
+
 	
 	
 

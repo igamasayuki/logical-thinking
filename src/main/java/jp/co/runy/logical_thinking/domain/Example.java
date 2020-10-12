@@ -1,5 +1,9 @@
 package jp.co.runy.logical_thinking.domain;
 
+/**
+ * @author takahashikouhei
+ * 根拠にクラス
+ */
 public class Example {
 	
 	private int id;

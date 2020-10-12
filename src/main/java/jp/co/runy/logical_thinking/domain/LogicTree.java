@@ -3,13 +3,29 @@ package jp.co.runy.logical_thinking.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author takahashikouhei
+ * ロジックツリーの構成を表すクラス
+ */
 public class LogicTree {
 	
 	private int id;
+	/**
+	 * 相手が欲しいもの
+	 */
 	private String partnerWants;
+	/**
+	 * あなたの現場
+	 */
 	private String currentState;
+	/**
+	 * 原因(理由)/方法
+	 */
 	private Integer descriptionType;
 	private Integer frameworkId;
+	/**
+	 * 主張
+	 */
 	private String insistance;
 	private List<FirstHierarchy> firstHierarchyList = new ArrayList<>();
 

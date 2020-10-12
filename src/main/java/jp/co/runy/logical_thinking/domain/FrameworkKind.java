@@ -3,6 +3,10 @@ package jp.co.runy.logical_thinking.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author takahashikouhei
+ * フレームワークを検索するクラス
+ */
 public class FrameworkKind {
 	
 	private int id;

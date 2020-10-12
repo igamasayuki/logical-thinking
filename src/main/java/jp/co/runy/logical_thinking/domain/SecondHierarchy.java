@@ -3,6 +3,10 @@ package jp.co.runy.logical_thinking.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author takahashikouhei
+ * ロジックツリーの第二階層を表すクラス
+ */
 public class SecondHierarchy {
 	
 	private int id;

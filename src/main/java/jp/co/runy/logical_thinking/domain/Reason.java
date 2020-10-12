@@ -3,6 +3,10 @@ package jp.co.runy.logical_thinking.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author takahashikouhei
+ * ピラミッド構造の根拠を表すクラス
+ */
 public class Reason {
 	
 	private int id;
