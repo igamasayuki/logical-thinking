@@ -1,4 +1,4 @@
-insert into frameworkkind (summary) values 
+insert into framework_kinds (summary) values 
 ('ヒト、モノ、カネ、情報に関すること？'),-- 1
 ('カネ絡みこと？'), -- 2
 ('時間に関係すること？'), -- 3
@@ -9,7 +9,7 @@ insert into frameworkkind (summary) values
 ('業務プロセスに関すること？'), -- 8
 ('その他'); -- 9
 
-insert into framework (frameworkkindtype,content) values
+insert into frameworks (framework_kind_id,content) values
 (1,'経営資源(例 ヒト、モノ、カネ、情報)'),
 (2,'利益、経費'),
 (3,'過去、現在、未来'),
@@ -23,10 +23,10 @@ insert into framework (frameworkkindtype,content) values
 (7,'年齢(例　20歳未満、20歳以上40歳未満、40歳以上60歳未満、60歳以上)'),
 (8,'PDCA(Plan、Do、Check、Action)'),
 (8,'バリューチェーン(例　仕入、加工、組立、出荷、保守)'),
-(9,'理論、感情')
+(9,'理論、感情'),
 (9,'その他(手動入力)');
 
-insert into frameworkelement (frameworktype,element) values 
+insert into framework_elements (framework_id,element) values 
 (1,'ヒト'),
 (1,'カネ'),
 (1,'モノ'),

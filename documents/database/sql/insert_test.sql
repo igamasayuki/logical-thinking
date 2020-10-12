@@ -1,4 +1,4 @@
-insert into logictree (partnerwants,currentState,descriptionType,frameworkType,insistence) values 
+insert into logic_trees (partner_wants,current_state,description_type,framework_id,insistence) values 
 (
     'コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい',
     'コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である',
@@ -7,7 +7,7 @@ insert into logictree (partnerwants,currentState,descriptionType,frameworkType,i
     '30万円のエンジニアを提案する'
 );
 
-insert into firsthierarchy (word,anotherword,logictreeid) values
+insert into first_hierarchies (word,another_word,logic_tree_id) values
 (
     'ヒト',
     'JAVAエンジニア',
@@ -29,7 +29,7 @@ insert into firsthierarchy (word,anotherword,logictreeid) values
     1
 );
 
-insert into secondhierarchy (explanation,firsthierarchyid) values
+insert into second_hierarchies (explanation,first_hierarchy_id) values
 (
     '30万円のエンジニアを提案する',
     1
@@ -67,7 +67,7 @@ insert into secondhierarchy (explanation,firsthierarchyid) values
     4
 );
 
-insert into thirdhierarchy (explanation,secondhierarchyid) values 
+insert into third_hierarchies (explanation,second_hierarchy_id) values 
 (
     'コミュニケーションは取れないが安いエンジニアを提案する',
     1
@@ -81,14 +81,59 @@ insert into thirdhierarchy (explanation,secondhierarchyid) values
     2
 );
 
-insert into pyramid (frameworkkindtype,frameworkType,conclusion) values 
+insert into pyramids (framework_kind_id,framework_id,conclusion) values 
 (
     1,
     1,
     '自社、競合、顧客、チャネルの観点から30万円のエンジニアを提案する'
 );
 
-insert into reason (word,anotherword,explanation,pyramidid) values 
+insert into reasons (word,explanation,another_explanation,pyramid_id) values 
 (
-    
-)
+    '自社',
+    'サポート体勢を強化することを検討します',
+    '自社によるサポート体制の強化',
+    1
+),
+(
+    '競合',
+    '他社のエンジニアと比較しても品質は高く、結果的に工数が少なく（TCO:トータルコストオブオーナーシップ）は廉価で済みます',
+    '競合に対する優位性',
+    1
+),
+(
+    '顧客',
+    '（１）プロジェクト期間が短くできます
+（２）お客様サイドにおける管理工数が低くなります',
+    '顧客のメリット',
+    1
+),
+(
+    'チャネル',
+    'そこまでのクオリティが不要と言う場合は、当社パートナーにも優秀なエンジニアがおりますので、ご提案可能です',
+    '当社のアライアンスパートナー',
+    1
+);
+
+
+insert into examples (explanation,reason_id) values 
+(
+    '以前、他のお客様から同様のご依頼をいただいた際に、サポート態勢強化をしましたら、非常にご満足いただけるサービスレベルとご回答いただいております',
+    1
+),
+(
+    '当社では、プロジェクト終了時にアンケートを実施しており、顧客満足度4.2となっております。評価詳細をみると、生産性の高さのご意見を多くいただいています',
+    2
+),
+(
+    '(１）先述の通り、当社のエンジニアは生産性が高いことから、結果プロジェクト期間を短くした事例が多数あります',
+    3
+),
+(
+    '（２）当社比で、5年前に比べると、お客様の管理工数が約３５％削減できているデータがあります',
+    3
+),
+(
+    '昨年度実績で申し上げますと、当社が携わるプロジェクトの７０％にアライアンスパートナーのエンジニアが参画しております。当社のアライアンスエンジニアになるためには、当社独自のテストをクリアする必要があります。こう言ったプロセスを経て、エンジニアの質の担保を行っています',
+    4
+);
