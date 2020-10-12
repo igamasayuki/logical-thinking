@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.runy.logical_thinking.mapper.FrameworkMapper">
+
+	<resultMap type="jp.co.runy.logical_thinking.domain.Framework" id="frameworkResult">
+		<id column="id" property="id"/>
+		<result column="framework_kind_id" property="frameworkKindId"/>
+		<result column="content" property="content"/>
+		<collection property="frameworkElementList" ofType="jp.co.runy.logical_thinking.domain.FrameworkElement">
+			<result column="element_id" property="id"/>
+			<result column="framework_id" property="frameworkId"/>
+			<result column="element" property="element"/>
+		</collection>
+	</resultMap>
+    <select id="findramework" resultMap="frameworkResult">
+		select 
+			f.id,
+			f.framework_kind_id,
+			f.content, 
+			element.id as element_id,
+			element.framework_id,
+			element.element 
+		from 
+			frameworks f 
+		left join 
+			framework_elements element 
+		on 
+			f.id = element.framework_id;
+    </select>
+    
+</mapper>
