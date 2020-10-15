@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/default}"
+	>
+<div layout:fragment="content">
+    <script th:src="@{/javascript/logicTree/main.js}"></script>
+	<div class="container">
+	<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">Step1 全体像を把握する</li>
+          <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
+          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
+        </ol>
+	</nav>
+
+      <section class="alert alert-danger col-12" role="alert">
+        <h4 class="alert-heading">Step1 全体像を把握する</h4>
+        <p>
+          以下の質問に答えてください。<br>
+          自動的にロジックツリーを作成し、あなたの課題の全体像を明確にしていきます。
+        </p>
+      </section>
+	  <hr>
+	  <section class="col-12">
+        <h4>今回の課題を明らかにする</h4>
+      
+        <div class="row">
+          <label for="a">
+            相手が欲しいものは何ですか？(100字以内で簡潔にまとめてください)
+          </label>
+        </div>
+        <div class="row mb-3">
+            <textarea id="partnerWants" class="form-control" rows="3" cols="70">コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい</textarea>
+        </div>
+
+        <div class="row">
+          <label for="b"> あなたの現状はどうですか？(100字以内で簡潔にまとめてください)
+          </label>
+        </div>
+        <div class="row mb-3">
+          <textarea id="currentState" class="form-control" rows="3" cols="70">コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である</textarea>
+        </div>
+
+        <div class="row">
+          <label for="clarify"> あなたが相手に説明したい（あるいは自分自身で明確にしたい）のは、以下のどちらですか？ </label>
+        </div>
+        <div class="row mb-3">
+          <label class="radio-inline">
+            <input type="radio" name="clarify" checked value="1">原因(理由)
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="clarify" value="2">方法
+          </label>
+        </div>
+        <!-- <div id = "copyPartnerWants">テスト</div> -->
+        <div class="alert alert-primary" role="alert">
+          <h4 class="alert-heading">今回の課題</h4>
+          <!-- <p>
+            「<div id = "copyPartnerWants">コミュニティ</div>」に対して<br>
+            「コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である」のギャップが課題です。<br>
+            【原因を選んだ場合→】この課題の原因にはどのようなものが考えられるか？<br>
+            【方法を選んだ場合→】この課題を解決するにはどのような方法が考えられるか？
+          </p> -->
+          「<font id = "copyPartnerWants">
+              コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい
+          </font>
+          」に対して<br>「
+          <font id = "copyCurrentState">
+            コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である
+          </font>」のギャップが課題です。<br>
+          <div id="reason">この課題の原因にはどのようなものが考えられるか？</div>
+          <div id="method" style="display: none;">この課題を解決するにはどのような方法が考えられるか？</div>
+        </div>
+
+        <div class="row mb-5">
+          <a href="img/logictree.png" target="_blank" class="btn btn-primary">
+            ここまでのロジックツリーを確認する
+          </a>
+        </div>
+        <button class="btn">test</button>
+	  </section>
+
+	  <section class="col-12">
+          <div></div>
+        <div class="row mb-1">
+          <label for="d"> あらゆる【<font class="test">原因(理由)</font>】をMECEで検討しましょう </label>
+          <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
+            MECEとは？
+          </button>
+        </div>
+
+		<div class="row mb-3">
+			<select name="fw" class="form-control" id="fwradio">
+				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+				<option th:each="framework : ${frameworkList}" th:value="${framework.id}" th:text="${framework.content}"></option>
+            </select>
+        </div>
+        <section id="hierarchy">
+            <!-- <button>ボタン1</button> -->
+            <!-- <div id="fw1">
+                <div id="fh1">
+                    <div class="row">
+                        <label for="" class="col-11"> ヒトに関する具体的な【原因(理由)/方法】を挙げてください</label>
+                        <button type="button" class="btn btn-danger col-1">削除</button>
+                    </div>
+                    <div id="sh1">
+                        <div class="row">
+                            <label for="" class="col-2">第二階層：</label>
+                            <input type="text" class="form-control col-9" value="30万円のエンジニアを提案する">
+                            <button type="button" class="btn btn-primary col-1">削除</button>
+                        </div>
+                        <div id="th1">
+                            <div>
+                                <div class="row">
+                                    <label for="" class="offset-1 col-2">第三階層：</label>
+                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れないが安いエンジニアを提案する">
+                                    <button type="button" class="btn btn-info col-1">削除</button>
+                                  </div>
+                                  <div class="row">
+                                    <label for="" class="offset-1 col-2">第三階層：</label>
+                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れるがJavaの経験が浅いエンジニアを提案する">
+                                    <button type="button" class="btn btn-info col-1">削除</button>
+                                  </div>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button id="addSh1" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+                    </div>
+                </div>
+              </div> -->
+        </section>
+        <div class="row mb-5">
+            <a href="img/logictree.png" target="_blank" class="btn btn-primary mr-3">
+              ここまでのロジックツリーを確認する
+            </a>
+            <a href="#" target="_blank" class="btn btn-warning">
+              ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+            </a>
+          </div>
+    </section>
+    <section class="col-12">
+
+        <div class="alert alert-danger" role="alert">
+          <p>
+          全体像を表現することが目的の場合は、ここで終了です。さらに内容を精査して、より「相手」が理解しやすいものを作り上げましょう。<br>
+          </p>
+        </div>
+        <div class="row">
+          <label for=""> 
+            ここで作成した全体像を踏まえて、あなたが誰かに説明あるいは納得したい場合には、あなたの主張を一つ選び以下に記入してください。<br>
+          </label>
+        </div>
+        <div class="row mb-3">
+          <input type="text" class="form-control" value="30万円のエンジニアを提案する">
+        </div>
+        <div class="row mb-5">
+            <button id="submit" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
+        </div>
+    
+      </section>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">MECEとは？</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <strong class="mb-3">「ヌケモレダブりがない状態、つまり網羅的にすると言うこと」</strong>
+            <p>
+            例えば、あなたが「当社の製品競争力を調べよ」と指示された時、もし、"競合の価格のみ"調査して報告したら、上司はどう思うでしょう？「製品性能については調べなかったのか？？代替品については？新規参入者については？」とヌケモレを指摘させることでしょう。だから、まず最初に「網羅的に全体を捉える」必要があるのです。
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</html>
