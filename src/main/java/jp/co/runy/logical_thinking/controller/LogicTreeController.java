@@ -34,6 +34,6 @@ public class LogicTreeController {
 		List<Framework> list = logicTreeService.findFramework();
 		
 		model.addAttribute("frameworkList",logicTreeService.findFramework());
-		return "/test/test";
+		return "/logicTree/main";
 	}
 }
