@@ -29,5 +29,13 @@
 		on 
 			f.id = element.framework_id;
     </select>
+    <select id="findFrameworkElementById" parameterType="int" resultType="jp.co.runy.logical_thinking.domain.FrameworkElement">
+    	select 
+    		*
+    	from
+    		framework_elements
+    	where
+    		framework_id = #{id};
+    </select>
     
 </mapper>
