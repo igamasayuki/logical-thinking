@@ -78,7 +78,7 @@ $(function(){
       $('[name="fw"]').change(function () {
           clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
           $.ajax({
-              url: 'http://localhost:8080/api/getframework/' + $(this).val(),
+              url: 'http://localhost:8080/api/frameworkelement/get/' + $(this).val(),
               type: 'get'
           }).done(function(data){
             frameworkElement = data
@@ -195,11 +195,36 @@ $(function(){
                 console.log(parame)
                 console.log(logicTree[parame])
 
-                var input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', 'logicTreeForm.'+parame);
-                input.setAttribute('value', logicTree[parame]);
-                form.appendChild(input);
+                if(parame === 'firstHierarchyList'){
+                    // console.log(logicTree[parame].size)
+                    // console.log(logicTree[parame].length)
+                    // console.log(logicTree[parame][0])
+                    for(let index = 0; index < logicTree[parame].length; index++){
+                        for(var firstHierarchyParam in logicTree[parame][index]){
+                            console.log('---------')
+                            console.log(firstHierarchyParam)
+                            console.log(logicTree[parame][index][firstHierarchyParam])
+                            console.log(parame + '[' + index + '].' + firstHierarchyParam)
+                            
+                            if(logicTree[parame][index][firstHierarchyParam] === 'scondHierarchyList'){
+
+                            } else {
+                                var inputFH = document.createElement('input');
+                                inputFH.setAttribute('type', 'hidden');
+                                inputFH.setAttribute('name', parame + '[' + index + '].' + firstHierarchyParam);
+                                // if(parame + '[' + index + '].' + firstHierarchyParam === '')
+                                inputFH.setAttribute('value', logicTree[parame][index][firstHierarchyParam]);
+                                form.appendChild(inputFH);
+                            }
+                        }
+                    }
+                } else {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', parame);
+                    input.setAttribute('value', logicTree[parame]);
+                    form.appendChild(input);
+                }
             }
 
 

@@ -78,15 +78,14 @@
           </a>
         </div>
         <button class="btn">test</button>
-	  </section>
-
-	  <section class="col-12">
+      </section>
+      <section class="col-12">
           <div></div>
         <div class="row mb-1">
           <label for="d"> あらゆる【<font class="test">原因(理由)</font>】をMECEで検討しましょう </label>
           <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
             MECEとは？
-          </button>
+        </button>
         </div>
 
 		<div class="row mb-3">
@@ -143,7 +142,6 @@
           </div>
     </section>
     <section class="col-12">
-
         <div class="alert alert-danger" role="alert">
           <p>
           全体像を表現することが目的の場合は、ここで終了です。さらに内容を精査して、より「相手」が理解しやすいものを作り上げましょう。<br>
@@ -160,8 +158,24 @@
         <div class="row mb-5">
             <button id="submit" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
-    
       </section>
+      <!-- <form th:action="@{/test}" method="post" th:object="${logicTreeForm}">
+        <input type="text" th:field="*{partnerWants}">
+        <input type="text" th:field="*{currentState}">
+        <button type="submit">test1</button>
+    </form> -->
+    <form th:action="@{/test}" method="post">
+        <input type="text" name="partnerWants">
+        <input type="text" name="currentState">
+        <input type="text" name="descriptionType" value="1">
+        <input type="text" name="insistance">
+        <input type="text" name="firstHierarchyList[0].word">
+        <br>
+        <input type="text" name="firstHierarchyList[0].logicTreeId">
+        <input type="text" name="firstHierarchyList[0].scondHierarchyList[0].explanation" value="第二階層">
+        <input type="text" name="firstHierarchyList[1].word">
+        <button type="submit">test2</button>
+    </form>
     </div>
 
     <!-- Modal -->
