@@ -12,8 +12,8 @@ public class FirstHierarchy {
 	private int id;
 	private String word;
 	private String anotherWord;
-	private Integer logicTreeId;
-	private List<SecondHierarchy> scondHierarchyList = new ArrayList<>();
+	private int logicTreeId;
+	private List<SecondHierarchy> secondHierarchyList = new ArrayList<>();
 	
 	/**
 	 * @return the id
@@ -54,26 +54,26 @@ public class FirstHierarchy {
 	/**
 	 * @return the logicTreeId
 	 */
-	public Integer getLogicTreeId() {
+	public int getLogicTreeId() {
 		return logicTreeId;
 	}
 	/**
 	 * @param logicTreeId the logicTreeId to set
 	 */
-	public void setLogicTreeId(Integer logicTreeId) {
+	public void setLogicTreeId(int logicTreeId) {
 		this.logicTreeId = logicTreeId;
 	}
 	/**
 	 * @return the scondHierarchyList
 	 */
-	public List<SecondHierarchy> getScondHierarchyList() {
-		return scondHierarchyList;
+	public List<SecondHierarchy> getSecondHierarchyList() {
+		return secondHierarchyList;
 	}
 	/**
 	 * @param scondHierarchyList the scondHierarchyList to set
 	 */
-	public void setScondHierarchyList(List<SecondHierarchy> scondHierarchyList) {
-		this.scondHierarchyList = scondHierarchyList;
+	public void setScondHierarchyList(List<SecondHierarchy> secondHierarchyList) {
+		this.secondHierarchyList = secondHierarchyList;
 	}
 	
 	

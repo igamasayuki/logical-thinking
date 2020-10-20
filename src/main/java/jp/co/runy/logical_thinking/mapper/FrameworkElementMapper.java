@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.domain.FrameworkElement;
-
 /**
  * @author takahashikouhei
- * フレームワークテーブルから情報を取得するためのマッパー
+ * フレームワークの要素を取得するMapper
+ * ajaxで使用するapi
  */
 @Mapper
-public interface FrameworkMapper {
-	List<Framework> findramework();
+public interface FrameworkElementMapper {
+	List<FrameworkElement> findFrameworkElementById(int id);
 }

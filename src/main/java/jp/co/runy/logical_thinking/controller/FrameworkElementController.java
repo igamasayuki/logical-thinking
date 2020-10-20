@@ -11,19 +11,24 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import jp.co.runy.logical_thinking.domain.FrameworkElement;
-import jp.co.runy.logical_thinking.service.FrameworkService;
+import jp.co.runy.logical_thinking.service.FrameworkElementService;
 
 /**
  * @author takahashikouhei
  * ajaxでフレームワークの情報を取得するためのコントローラ
  */
 @RestController
-@RequestMapping("/api/framework")
-public class FrameworkController {
-	
+@RequestMapping("/api/frameworkelement")
+public class FrameworkElementController {
 	@Autowired
-	private FrameworkService frameworkService;
-	
-
-	
+	private FrameworkElementService frameworkElementService;
+	/**
+	 * @param id 選択したframeworkのid
+	 * @return
+	 */
+	@GetMapping("/get/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<FrameworkElement> getFramewaorkElements(@PathVariable("id") int id) {
+		return frameworkElementService.findFrameworkElementById(id);
+	}
 }

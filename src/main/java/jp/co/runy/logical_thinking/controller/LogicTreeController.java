@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
@@ -31,9 +32,16 @@ public class LogicTreeController {
 	 */
 	@RequestMapping(value = "/logicalthinking/logictree")
 	public String readLogicTree(Model model) {
-		List<Framework> list = logicTreeService.findFramework();
 		
 		model.addAttribute("frameworkList",logicTreeService.findFramework());
 		return "/logicTree/main";
 	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public String test(@ModelAttribute("logicTreeForm") LogicTreeForm form, Model model) {
+		System.out.println("-------------------------");
+		System.out.println(form);
+		return "/logicTree/test";
+	}
+	
 }
