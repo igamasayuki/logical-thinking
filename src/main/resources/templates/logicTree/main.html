@@ -136,9 +136,12 @@
             <a href="img/logictree.png" target="_blank" class="btn btn-primary mr-3">
               ここまでのロジックツリーを確認する
             </a>
-            <a href="#" target="_blank" class="btn btn-warning">
+            <!-- <a href="#" target="_blank" class="btn btn-warning">
               ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
-            </a>
+            </a> -->
+            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
+                ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+            </button>
           </div>
     </section>
     <section class="col-12">
@@ -159,23 +162,6 @@
             <button id="submit" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
       </section>
-      <!-- <form th:action="@{/test}" method="post" th:object="${logicTreeForm}">
-        <input type="text" th:field="*{partnerWants}">
-        <input type="text" th:field="*{currentState}">
-        <button type="submit">test1</button>
-    </form> -->
-    <form th:action="@{/test}" method="post">
-        <input type="text" name="partnerWants">
-        <input type="text" name="currentState">
-        <input type="text" name="descriptionType" value="1">
-        <input type="text" name="insistance">
-        <input type="text" name="firstHierarchyList[0].word">
-        <br>
-        <input type="text" name="firstHierarchyList[0].logicTreeId">
-        <input type="text" name="firstHierarchyList[0].scondHierarchyList[0].explanation" value="第二階層">
-        <input type="text" name="firstHierarchyList[1].word">
-        <button type="submit">test2</button>
-    </form>
     </div>
 
     <!-- Modal -->
@@ -200,5 +186,28 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="soWhatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">so what/why soとは？</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- <strong class="mb-3">「ヌケモレダブりがない状態、つまり網羅的にすると言うこと」</strong> -->
+                <p>
+                    ロジックツリーやピラミッド構造において、同じ階層（横関係）はMECEにする必要があることは、MECEのパートで解説した。so what/why soは、縦方向（上下）の関係が論理的につながるかを確認する際に使う問い。「so what（要するに、つまり）は下の階層から上の階層を説明するとき」に使い、「why so（例えば、具体的には、なぜなら）は上の階層から下の階層を説明するとき」に使い上下の論理的つながりを確認する。
+                </p>
+                <a href="https://youtu.be/dwdC7EyD0yI">https://youtu.be/dwdC7EyD0yI</a>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
 </html>
