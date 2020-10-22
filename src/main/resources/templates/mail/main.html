@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/default}"
+	>
+<div layout:fragment="content">
+	<div class="container">
+	<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">Step1 全体像を把握する</li>
+          <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
+          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
+        </ol>
+	  </nav>
+	  
+	        <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">出来上がったメールの文章</h4>
+        <p>
+          あなたの回答から以下のようにメール文章を作成しました。<br>
+          必要であれば手直しを行い空いてに送ってください。
+        </p>
+      </div>
+      <div class="alert alert-light" role="alert">
+        <pre>
+いつもお世話になっております。
+xxx株式会社の●○です。
+          
+先日お問い合わせいただいた以下の件につき、ご回答申し上げます。
+          
+先日のお話しでは、以下の課題が炙り出されました。
+          
+「<font th:text="${logicTreeList.get(0)}"></font>(←※相手が欲しいもの)」と言う貴社のご要望に対して、
+「<font th:text="${logicTreeList.get(1)}"></font>(←※あなたの現状)」と回答いたしました。このギャップが課題として残りました。
+
+本日は、この課題についてご報告いたします。
+          
+この点につきまして、
+          
+「<font th:text="${pyramidList.get(0)}"></font>(←※結論)」
+
+とさせていただきたく思います。
+          
+理由は「4（←※第1階層の数）」つあります。
+          
+一つ目は、「※<font th:text="${reasonList.get(0)}"></font>の視点」、二つ目は「※<font th:text="${reasonList.get(3)}"></font>の視点」、三つ目は「※<font th:text="${reasonList.get(6)}"></font>の視点」、四つ目は「※<font th:text="${reasonList.get(9)}"></font>の視点」です。
+          
+まず、「※<font th:text="${reasonList.get(0)}"></font>」の視点です。
+<font th:text="${reasonList.get(2)}"></font>　(←※根拠を一言で言い換えたもの)
+<font th:text="${reasonList.get(1)}"></font> (←※根拠)
+          
+<font th:text="${exampleList.get(0)}"></font>　(←※証拠)
+
+次に「※<font th:text="${reasonList.get(3)}"></font>」の視点です。
+<font th:text="${reasonList.get(5)}"></font>　(←※根拠を一言で言い換えたもの)
+<font th:text="${reasonList.get(4)}"></font> (←※根拠)
+
+<font th:text="${exampleList.get(1)}"></font> (←※証拠)
+
+          
+3点目は「※<font th:text="${reasonList.get(6)}"></font>」の視点です。
+<font th:text="${reasonList.get(8)}"></font>　(←※根拠を一言で言い換えたもの)
+<font th:text="${reasonList.get(7)}"></font> (←※根拠)
+
+<font th:text="${exampleList.get(2)}"></font> (←※証拠１)
+<font th:text="${exampleList.get(3)}"></font> (←※証拠２)
+
+
+最後に「※<font th:text="${reasonList.get(9)}"></font>」の視点です。
+<font th:text="${reasonList.get(11)}"></font>　(←※根拠を一言で言い換えたもの)
+<font th:text="${reasonList.get(10)}"></font> (←※根拠)
+
+<font th:text="${exampleList.get(4)}"></font> (←※証拠)
+
+以上のことから、
+          
+貴社と弊社のギャップを埋める対策として、
+          
+「<font th:text="${pyramidList.get(0)}"></font>(←※結論)」
+          
+をご提案します。
+          
+ 以上、よろしくお願いします。
+          </pre>
+      </div>
+     
+      
+
+
+    </div>
+
+    <script src="js/logical.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+	  
+
+	</div>
+</div>
+</html>
