@@ -1,6 +1,5 @@
 package jp.co.runy.logical_thinking.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,9 +25,9 @@ public class LogicTree {
 	/**
 	 * 主張
 	 */
-	private String insistance;
-	private List<FirstHierarchy> firstHierarchyList = new ArrayList<>();
-
+	private String insistence;
+	private List<FirstHierarchy> firstHierarchyList;
+	private String sessionId;
 	/**
 	 * @return the id
 	 */
@@ -102,15 +101,15 @@ public class LogicTree {
 	/**
 	 * @return the insistance
 	 */
-	public String getInsistance() {
-		return insistance;
+	public String getInsistence() {
+		return insistence;
 	}
 
 	/**
 	 * @param insistance the insistance to set
 	 */
-	public void setInsistance(String insistance) {
-		this.insistance = insistance;
+	public void setInsistance(String insistence) {
+		this.insistence = insistence;
 	}
 
 	/**
@@ -125,6 +124,20 @@ public class LogicTree {
 	 */
 	public void setFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
 		this.firstHierarchyList = firstHierarchyList;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	/**
+	 * @param sessionId
+	 */
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 	
 	

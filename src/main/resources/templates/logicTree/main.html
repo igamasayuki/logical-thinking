@@ -4,6 +4,9 @@
 	>
 <div layout:fragment="content">
     <script th:src="@{/javascript/logicTree/main.js}"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <!-- <script src="flowchart.js"></script> -->
+    <script src="/javascript/logicTree/flowchart.js"></script>
 	<div class="container">
 	<nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -19,6 +22,7 @@
           以下の質問に答えてください。<br>
           自動的にロジックツリーを作成し、あなたの課題の全体像を明確にしていきます。
         </p>
+        <a href="../create.html">test</a>
       </section>
 	  <hr>
 	  <section class="col-12">
@@ -77,12 +81,17 @@
             ここまでのロジックツリーを確認する
           </a>
         </div>
+        <div class="row mb-1">
+          <button onclick="checkedTree()" type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#checkedModal">
+            ここまでのロジックツリーを確認する
+        </button>
+        </div>
         <button class="btn">test</button>
       </section>
       <section class="col-12">
           <div></div>
         <div class="row mb-1">
-          <label for="d"> あらゆる【<font class="test">原因(理由)</font>】をMECEで検討しましょう </label>
+          <label for="d"> あらゆる【<font class="clarify">原因(理由)</font>】をMECEで検討しましょう </label>
           <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal">
             MECEとは？
         </button>
@@ -133,14 +142,15 @@
               </div> -->
         </section>
         <div class="row mb-5">
-            <a href="img/logictree.png" target="_blank" class="btn btn-primary mr-3">
-              ここまでのロジックツリーを確認する
-            </a>
+            <button target="_blank" class="btn btn-primary mr-3">
+              <p>ここまでのロジックツリーを確認する</p>
+              So What?/Why So?の関係になっているか確認してください
+            </button>
             <!-- <a href="#" target="_blank" class="btn btn-warning">
               ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
             </a> -->
             <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
-                ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+                So What?/Why So?とは
             </button>
           </div>
     </section>
@@ -159,7 +169,7 @@
           <input id="insistence" type="text" class="form-control" value="30万円のエンジニアを提案する">
         </div>
         <div class="row mb-5">
-            <button id="submit" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
+            <button onclick="test()" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
       </section>
     </div>
@@ -202,6 +212,25 @@
                     ロジックツリーやピラミッド構造において、同じ階層（横関係）はMECEにする必要があることは、MECEのパートで解説した。so what/why soは、縦方向（上下）の関係が論理的につながるかを確認する際に使う問い。「so what（要するに、つまり）は下の階層から上の階層を説明するとき」に使い、「why so（例えば、具体的には、なぜなら）は上の階層から下の階層を説明するとき」に使い上下の論理的つながりを確認する。
                 </p>
                 <a href="https://youtu.be/dwdC7EyD0yI">https://youtu.be/dwdC7EyD0yI</a>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="checkedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">確認する</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <canvas id="myCanvas" width="500" height="400"></canvas>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

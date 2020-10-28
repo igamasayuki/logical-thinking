@@ -13,7 +13,7 @@ public class FirstHierarchy {
 	private String word;
 	private String anotherWord;
 	private int logicTreeId;
-	private List<SecondHierarchy> secondHierarchyList = new ArrayList<>();
+	private List<SecondHierarchy> secondHierarchyList;
 	
 	/**
 	 * @return the id

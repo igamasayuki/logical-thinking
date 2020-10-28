@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.runy.logical_thinking.mapper.LogicTreeMapper">
+	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
+		<if test="id != null">
+		<!-- update -->
+		</if>
+		<if test="id == 0">
+			insert into logic_trees (
+				<trim prefixOverrides=", ">
+					<if test="partnerWants != null">, partner_wants</if>
+					<if test="currentState != null">, current_state</if>
+					<if test="descriptionType != null">, description_type</if>
+					<if test="frameworkId != 0">, framework_id</if>
+					<if test="insistence != null">, insistence</if>
+					<if test="sessionId != null">, session_id</if>
+				</trim>
+			) 
+			values (
+				<trim prefixOverrides=",">
+					<if test="partnerWants != null">, #{partnerWants}</if>
+					<if test="currentState != null">, #{currentState}</if>
+					<if test="descriptionType != null">, #{descriptionType}</if>
+					<if test="frameworkId != 0">, #{frameworkId}</if>
+					<if test="insistence != null">, #{insistence}</if>
+					<if test="sessionId != null">, #{sessionId}</if>
+				</trim>
+			);
+		</if>
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+            <if test="id != 0">select ${id}</if>
+            <if test="id == 0">select CURRVAL('logic_trees_id_seq');</if>
+        </selectKey>
+	</insert>
+</mapper>

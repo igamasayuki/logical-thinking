@@ -1,3 +1,252 @@
+window.addEventListener("load", function(){
+    // var flowchart = new FlowChart('myCanvas', {
+    //     start_x    : 100,  // チャートの開始位置(X軸)
+    //     width      : 180,  // チャートの横幅 (単位: px)
+    //     height     : 40,   // チャートの高さ (単位: px)
+    //     distance_x : 50,   // チャート間の距離(X軸)
+    //     distance_y : 20,   // チャート間の距離(Y軸)
+    //     fullscreen : true, // フルスクリーン表示
+    //     margin     : 20,   // マージン (単位: px)
+    // });
+    // flowchart.init(
+    //   '課題',   // 基準のチャートのラベル
+    //   [           // 初期データ
+    //     {label:'太郎', children:[
+    //       {label: '四郎', children: []},
+    //       {label: '五郎', children: [
+    //         {label: '孫太郎', children: []},
+    //         {label: '孫次郎', children: []},
+    //       ]},Fsubmit
+
+    //     ]},
+    //     {label:'次郎', children:[]},
+    //     {label: '三郎', children: [
+    //       {label: '六郎', children: []},
+    //       {label: '七郎', children: []},
+    //     ]},
+    //     {label: '花子', children: [
+    //       {label: '奈々子', children: []},
+    //       {label: '八重子', children: []},
+    //     ]},
+    //   ]
+    // );
+});
+function test(){
+    // ロジックツリーの値を取得
+    logicTree = {
+        partnerWants : $('#partnerWants').val(),
+        currentState : $('#currentState').val(),
+        descriptionType : $('input[name="clarify"]').val(),
+        frameworkId : $('[name="fw"]').val(),
+        insistence : $('#insistence').val(),
+        firstHierarchyList : []
+    }
+    // 第一階層の数を取得
+    for(let index = 0; index < $('.fw').length; index++){
+        // ex. fh0, fh1 ...
+        fHName = 'fh' + index;
+        // 第一階層の値を取得
+        firstHierarchy = {
+            word : $('section[name=' + fHName + '] div div input').val(),
+            anotherWord : $('section[name=' + fHName + '] input[name=anotherWord]').val(),
+            logicTreeId : 0,
+            secondHierarchyList : []
+        }
+        // 第二階層の数を取得 (第一階層で取得したnameの直接の子要素のsectionの数を取得)
+        // childrenの使用理由: 同列階層のsectionを除くため
+        for(let index2 = 0; index2 < $('section[name=' + fHName + ']').children('section').length; index2++){
+            // ex. fh0_sh0, fh0_sh1 ...
+            sHName = fHName + '_sh' + index2;
+            // 第二階層の値を取得
+            secondHierarchy = {
+                explanation : $('section[name=' + sHName + '] input').val(),
+                thirdHierarchyList : []
+            }
+            // 第三階層の数を取得 (第二階層で取得したnameの子要素のsectionの数を取得)
+            for(let index3 = 0; index3 < $('section[name=' + sHName + '] section').length; index3++){
+                tHName = sHName + '_th' + index3;
+                thirdHierarchy = {
+                explanation : $('section[name=' + tHName + '] input').val()
+                }
+                secondHierarchy.thirdHierarchyList.push(thirdHierarchy)
+            }
+            firstHierarchy.secondHierarchyList.push(secondHierarchy)
+        }
+        logicTree.firstHierarchyList.push(firstHierarchy)
+    }
+    console.log(JSON.stringify(logicTree))
+    // parameList = []
+    // for(var parame in logicTree){
+    //     // 第一階層のforms作成
+    //     if(parame === 'firstHierarchyList'){
+    //         for(let index = 0; index < logicTree[parame].length; index++){
+    //             for(var firstHierarchyParam in logicTree[parame][index]){
+    //                 // 第二階層のform作成
+    //                 if(firstHierarchyParam === 'secondHierarchyList'){
+    //                     // 第二階層に値が入力されている場合
+    //                     for(let index2 = 0; index2 < logicTree[parame][index][firstHierarchyParam].length; index2++){
+    //                         for(var secondHierarchyParam in logicTree[parame][index][firstHierarchyParam][index2]){
+    //                             // 第三階層のform作成
+    //                             if(secondHierarchyParam === 'thirdHierarchyList'){
+    //                                 // 第三階層に値が入力されている場合
+    //                                 for(let index3 = 0; index3 < logicTree[parame][index][firstHierarchyParam][index2][secondHierarchyParam].length; index3++){
+    //                                     for(var thirdHierarchyParam in logicTree[parame][index][firstHierarchyParam][index2][secondHierarchyParam][index3]){
+    //                                         var inputTH = document.createElement('input');
+    //                                         // inputTH.setAttribute('type', 'hidden');
+    //                                         inputTH.setAttribute('name', parame + '[' + index + '].' + firstHierarchyParam + '[' + index2 + '].' + secondHierarchyParam + '[' + index3 + '].' + thirdHierarchyParam)
+    //                                         inputTH.setAttribute('value', logicTree[parame][index][firstHierarchyParam][index2][secondHierarchyParam][index3][thirdHierarchyParam]);
+    //                                         form.appendChild(inputTH);
+    //                                     }
+    //                                 }
+    //                             }else {
+    //                                 var inputSH = document.createElement('input');
+    //                                 inputSH.setAttribute('type', 'hidden');
+    //                                 inputSH.setAttribute('name', parame + '[' + index + '].' + firstHierarchyParam + '[' + index2 + '].' + secondHierarchyParam);
+    //                                 inputSH.setAttribute('value', logicTree[parame][index][firstHierarchyParam][index2][secondHierarchyParam]);
+    //                                 form.appendChild(inputSH);
+    //                             }
+    //                         }
+    //                     }
+    //                 } else {
+    //                     var inputFH = document.createElement('input');
+    //                     inputFH.setAttribute('type', 'hidden');
+    //                     inputFH.setAttribute('name', parame + '[' + index + '].' + firstHierarchyParam);
+    //                     inputFH.setAttribute('value', logicTree[parame][index][firstHierarchyParam]);
+    //                     form.appendChild(inputFH);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         var input = document.createElement('input');
+    //         input.setAttribute('type', 'hidden');
+    //         input.setAttribute('name', parame);
+    //         input.setAttribute('value', logicTree[parame]);
+    //         form.appendChild(input);
+    //     }
+    // }
+    var param = JSON.stringify(logicTree);
+    console.log(param)
+    var test = { word : "test"};
+    var jsonWord = JSON.stringify(test)
+    console.log(test)
+    console.log(jsonWord)
+    console.log(JSON.stringify(test));
+    logicTreeTest = {
+        partnerWants : "partnerWants",
+        currentState : "currentState",
+        descriptionType : "descriptionType",
+        frameworkId : "frameworkId",
+        insistance : "insistance",
+        firstHierarchyList : [
+            {
+                word : "word",
+                anotherWord : "anotherWord",
+                secondHierarchyList : []
+            }
+        ]
+    }
+    FirstHierarchyTest = [
+        { word:"word1", anotherWord:"anotherWord1"},
+        { word:"word2", anotherWord:"anotherWord2"}
+    ]
+    console.log(JSON.stringify(logicTreeTest))
+    $.ajax({
+        url: 'http://localhost:8080//logicalthinking/logictree/api/upsert',
+        type: 'post',
+        dataType: 'json',
+        data: param,
+        contentType: "application/json; charset=utf-8"
+        // data : {"partnerWants" : "test"}
+
+    }).done(function(data){
+        console.log(data)
+    })
+}
+function checkedTree(){
+    list = []
+         // ロジックツリーの値を取得
+         logicTree = {
+            partnerWants : $('#partnerWants').val(),
+            currentState : $('#currentState').val(),
+            descriptionType : $('input[name="clarify"]').val(),
+            frameworkId : $('[name="fw"]').val(),
+            insistance : $('#insistence').val(),
+            firstHierarchyList : []
+        }
+        // 第一階層の数を取得
+        for(let index = 0; index < $('.fw').length; index++){
+            // ex. fh0, fh1 ...
+            fHName = 'fh' + index;
+            // 第一階層の値を取得
+            data = {
+                label : $('section[name=' + fHName + '] div div input').val(),
+                children : []
+            }
+            // 第二階層の数を取得 (第一階層で取得したnameの直接の子要素のsectionの数を取得)
+            // childrenの使用理由: 同列階層のsectionを除くため
+            for(let index2 = 0; index2 < $('section[name=' + fHName + ']').children('section').length; index2++){
+                // ex. fh0_sh0, fh0_sh1 ...
+                sHName = fHName + '_sh' + index2;
+                // 第二階層の値を取得
+                secondHierarchy = {
+                    label : $('section[name=' + sHName + '] input').val(),
+                    children : []
+                }
+                console.log('secondHierarchy:')
+                console.log(secondHierarchy)
+                // 第三階層の数を取得 (第二階層で取得したnameの子要素のsectionの数を取得)
+                for(let index3 = 0; index3 < $('section[name=' + sHName + '] section').length; index3++){
+                    tHName = sHName + '_th' + index3;
+                    thirdHierarchy = {
+                    explanation : $('section[name=' + tHName + '] input').val()
+                    }
+                    secondHierarchy.children.push(thirdHierarchy)
+                }
+                data.children.push(secondHierarchy)
+            }
+            list.push(data)
+            logicTree.firstHierarchyList.push(data)
+        }
+        // console.log(data)
+        // console.log(list)
+        var flowchart = new FlowChart('myCanvas', {
+            start_x    : 100,  // チャートの開始位置(X軸)
+            width      : 180,  // チャートの横幅 (単位: px)
+            height     : 40,   // チャートの高さ (単位: px)
+            distance_x : 50,   // チャート間の距離(X軸)
+            distance_y : 20,   // チャート間の距離(Y軸)
+            fullscreen : true, // フルスクリーン表示
+            margin     : 20,   // マージン (単位: px)
+        });
+        flowchart.init(
+           '課題\naaaaaaaaaaaaaaaaaaaaaaaaaa',
+           [
+               {label: 'test', children:[]}
+           ]
+        )
+        // 欲しいデータ
+        // flowchart.init(
+        //     '佐藤家',   // 基準のチャートのラベル
+        //     [           // 初期データ
+        //       {label:'第一階層', children:[
+        //         {label: '第二階層', children: []},
+        //         {label: '第二階層', children: [
+        //           {label: '第三階層', children: []},
+        //           {label: '第三階層', children: []},
+        //         ]},
+        //       ]},
+        //       {label:'次郎', children:[]},
+        //       {label: '三郎', children: [
+        //         {label: '六郎', children: []},
+        //         {label: '七郎', children: []},
+        //       ]},
+        //       {label: '花子', children: [
+        //         {label: '奈々子', children: []},
+        //         {label: '八重子', children: []},
+        //       ]},
+        //     ]
+}
+
 // 「第一階層を追加する」の後処理
 function keyup(thisEle){
     // sectionのnameを取得
@@ -59,10 +308,11 @@ $(function(){
                   '<div id="' + fhId + '">' + 
                   '<div class="row">' + 
                   '<label for="" class="col-11">' +
-                  data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+                  data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください123' + 
                   '</label>' +
                   '<input type="hidden" value="' + data[index].element +  '">'
                   '<button type="button" onclick="button(this, \'delete\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
+                  '<button>test</button>'
                   '</div>' +
                   '</div>' + 
                   '</section>';

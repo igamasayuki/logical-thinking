@@ -1,0 +1,83 @@
+<!-- <!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Create.js - フローチャート</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        canvas { background: WhiteSmoke; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1024" height="800"></canvas>
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="/javascript/logicTree/test.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            var flowchart = new FlowChart('myCanvas');
+
+            // 初期化 (初期データ)
+            flowchart.init('佐藤家',[
+              {label:'太郎', children:[]},
+              {label: '花子', children: [
+                {label: '奈々子', children: []},
+                {label: '八重子', children: []},
+              ]},
+            ]);
+        });
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>Create.js - フローチャート</title>
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        canvas { background: WhiteSmoke; }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="1920" height="1000"></canvas>
+
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <!-- <script src="flowchart.js"></script> -->
+    <script src="/javascript/logicTree/flowchart.js"></script>
+    <script>
+        window.addEventListener("load", function(){
+            var flowchart = new FlowChart('myCanvas', {
+                start_x    : 100,  // チャートの開始位置(X軸)
+                width      : 180,  // チャートの横幅 (単位: px)
+                height     : 40,   // チャートの高さ (単位: px)
+                distance_x : 50,   // チャート間の距離(X軸)
+                distance_y : 20,   // チャート間の距離(Y軸)
+                fullscreen : true, // フルスクリーン表示
+                margin     : 20,   // マージン (単位: px)
+            });
+            flowchart.init(
+              '佐藤家',   // 基準のチャートのラベル
+              [           // 初期データ
+                {label:'太郎', children:[
+                  {label: '四郎', children: []},
+                  {label: '五郎', children: [
+                    {label: '孫太郎', children: []},
+                    {label: '孫次郎', children: []},
+                  ]},
+                ]},
+                {label:'次郎', children:[]},
+                {label: '三郎', children: [
+                  {label: '六郎', children: []},
+                  {label: '七郎', children: []},
+                ]},
+                {label: '花子', children: [
+                  {label: '奈々子', children: []},
+                  {label: '八重子', children: []},
+                ]},
+              ]
+            );
+        });
+    </script>
+</body>
+</html>
