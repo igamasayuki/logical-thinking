@@ -28,53 +28,53 @@ xxx株式会社の●○です。
           
 先日のお話しでは、以下の課題が炙り出されました。
           
-「<font th:text="${logicTreeList.get(0)}"></font>(←※相手が欲しいもの)」と言う貴社のご要望に対して、
-「<font th:text="${logicTreeList.get(1)}"></font>(←※あなたの現状)」と回答いたしました。このギャップが課題として残りました。
+「<mark><font th:text="${logicTreeList.partnerWants}"></font></mark>」と言う貴社のご要望に対して、
+「<mark><font th:text="${logicTreeList.currentState}"></font></mark>」と回答いたしました。このギャップが課題として残りました。
 
 本日は、この課題についてご報告いたします。
           
 この点につきまして、
           
-「<font th:text="${pyramidList.get(0)}"></font>(←※結論)」
+「<mark><font th:text="${pyramidList.conclusion}"></font></mark>」
 
 とさせていただきたく思います。
           
-理由は「4（←※第1階層の数）」つあります。
+理由は「<mark>4</mark>」つあります。
           
-一つ目は、「※<font th:text="${reasonList.get(0)}"></font>の視点」、二つ目は「※<font th:text="${reasonList.get(3)}"></font>の視点」、三つ目は「※<font th:text="${reasonList.get(6)}"></font>の視点」、四つ目は「※<font th:text="${reasonList.get(9)}"></font>の視点」です。
+一つ目は、「<mark><font th:text="${reasonList.word.get(0)}"></font></mark>の視点」、二つ目は「<mark><font th:text="${reasonList.word.get(1)}"></font></mark>の視点」、三つ目は「<mark><font th:text="${reasonList.word.get(2)}"></font></mark>の視点」、四つ目は「<mark><font th:text="${reasonList.word.get(3)}"></font></mark>の視点」です。
           
-まず、「※<font th:text="${reasonList.get(0)}"></font>」の視点です。
-<font th:text="${reasonList.get(2)}"></font>　(←※根拠を一言で言い換えたもの)
-<font th:text="${reasonList.get(1)}"></font> (←※根拠)
+まず、「<mark><font th:text="${reasonList.word.get(0)}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList.anotherExplanation.get(0)}"></font></mark>
+<mark><font th:text="${reasonList.explanation.get(0)}"></font></mark>
           
-<font th:text="${exampleList.get(0)}"></font>　(←※証拠)
+<mark><font th:text="${exampleList.explanation.get(0)}"></font></mark>
 
-次に「※<font th:text="${reasonList.get(3)}"></font>」の視点です。
-<font th:text="${reasonList.get(5)}"></font>　(←※根拠を一言で言い換えたもの)
-<font th:text="${reasonList.get(4)}"></font> (←※根拠)
+次に「<mark><font th:text="${reasonList.word.get(1)}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList.anotherExplanation.get(1)}"></font></mark>
+<mark><font th:text="${reasonList.explanation.get(1)}"></font></mark>
 
-<font th:text="${exampleList.get(1)}"></font> (←※証拠)
+<mark><font th:text="${exampleList.explanation.get(1)}"></font></mark>
 
           
-3点目は「※<font th:text="${reasonList.get(6)}"></font>」の視点です。
-<font th:text="${reasonList.get(8)}"></font>　(←※根拠を一言で言い換えたもの)
-<font th:text="${reasonList.get(7)}"></font> (←※根拠)
+3点目は「<mark><font th:text="${reasonList.word.get(2)}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList.anotherExplanation.get(2)}"></font></mark>
+<mark><font th:text="${reasonList.explanation.get(2)}"></font></mark>
 
-<font th:text="${exampleList.get(2)}"></font> (←※証拠１)
-<font th:text="${exampleList.get(3)}"></font> (←※証拠２)
+<mark><font th:text="${exampleList.explanation.get(2)}"></font></mark>
+<mark><font th:text="${exampleList.explanation.get(3)}"></font></mark>
 
 
-最後に「※<font th:text="${reasonList.get(9)}"></font>」の視点です。
-<font th:text="${reasonList.get(11)}"></font>　(←※根拠を一言で言い換えたもの)
-<font th:text="${reasonList.get(10)}"></font> (←※根拠)
+最後に「<mark><font th:text="${reasonList.word.get(3)}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList.anotherExplanation.get(3)}"></font></mark>
+<mark><font th:text="${reasonList.explanation.get(3)}"></font></mark>
 
-<font th:text="${exampleList.get(4)}"></font> (←※証拠)
+<mark><font th:text="${exampleList.explanation.get(4)}"></font></mark>
 
 以上のことから、
           
 貴社と弊社のギャップを埋める対策として、
           
-「<font th:text="${pyramidList.get(0)}"></font>(←※結論)」
+「<mark><font th:text="${pyramidList.get(0)}"></font></mark>(←※結論)」
           
 をご提案します。
           

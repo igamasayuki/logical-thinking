@@ -26,4 +26,8 @@
             <if test="id == 0">select CURRVAL('second_hierarchies_id_seq');</if>
         </selectKey>
 	</insert>
+	
+	<select id="selectSecondHierarchy" resultType="jp.co.runy.logical_thinking.domain.SecondHierarchy">
+		select * from SecondHierarchy;
+    </select>
 </mapper>

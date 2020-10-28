@@ -34,4 +34,8 @@
             <if test="id == 0">select CURRVAL('logic_trees_id_seq');</if>
         </selectKey>
 	</insert>
+	
+	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
+		select * from LogicTree;
+    </select>
 </mapper>

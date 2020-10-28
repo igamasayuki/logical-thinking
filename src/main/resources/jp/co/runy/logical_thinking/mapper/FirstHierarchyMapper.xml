@@ -28,4 +28,10 @@
             <if test="id == 0">select CURRVAL('first_hierarchies_id_seq');</if>
         </selectKey>
 	</insert>
+	
+	<select id="selectFirstHierarchy" resultType="jp.co.runy.logical_thinking.domain.FirstHierarchy">
+		select * from FirstHierarchy;
+    </select>
 </mapper>
+
+    
