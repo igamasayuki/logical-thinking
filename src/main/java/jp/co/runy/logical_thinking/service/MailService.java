@@ -29,11 +29,17 @@ import jp.co.runy.logical_thinking.mapper.ThirdHierarchyMapper;
 public class MailService {
 	@Autowired
 	private LogicTreeMapper logicTreeMapper;
+	@Autowired
 	private FirstHierarchyMapper firstHierarchyMapper;
+	@Autowired
 	private SecondHierarchyMapper secondHierarchyMapper;
+	@Autowired
 	private ThirdHierarchyMapper thirdHierarchyMapper;
+	@Autowired
 	private PyramidMapper pyramidMapper;
+	@Autowired
 	private ReasonMapper reasonMapper;
+	@Autowired
 	private ExampleMapper exampleMapper;
 	
 	/**
