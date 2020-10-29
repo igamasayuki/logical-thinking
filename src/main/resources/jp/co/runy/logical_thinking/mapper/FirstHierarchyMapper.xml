@@ -30,7 +30,7 @@
 	</insert>
 	
 	<select id="selectFirstHierarchy" resultType="jp.co.runy.logical_thinking.domain.FirstHierarchy">
-		select * from FirstHierarchy;
+		select * from first_hierarchies;
     </select>
 </mapper>
 

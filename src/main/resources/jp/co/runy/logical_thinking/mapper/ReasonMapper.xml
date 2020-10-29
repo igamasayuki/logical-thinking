@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.runy.logical_thinking.mapper.ReasonMapper">
     <select id="selectReason" resultType="jp.co.runy.logical_thinking.domain.Reason">
-		select * from Reason;
+		select * from reasons;
     </select>
 </mapper>

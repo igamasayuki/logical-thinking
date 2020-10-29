@@ -36,6 +36,6 @@
 	</insert>
 	
 	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
-		select * from LogicTree;
+		select * from logic_trees;
     </select>
 </mapper>

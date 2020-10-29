@@ -28,6 +28,6 @@
 	</insert>
 	
 	<select id="selectThirdHierarchy" resultType="jp.co.runy.logical_thinking.domain.ThirdHierarchy">
-		select * from ThirdHierarchy;
+		select * from third_hierarchies;
     </select>
 </mapper>
