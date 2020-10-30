@@ -13,5 +13,5 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 @Mapper
 public interface LogicTreeMapper {
 	int upsert(LogicTree logicTree);
-	public List<LogicTree> selectLogicTree();
+	public LogicTree selectLogicTree();
 }

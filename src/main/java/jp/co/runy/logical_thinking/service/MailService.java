@@ -46,7 +46,7 @@ public class MailService {
 	 * ロジックツリー一覧を取得するメソッド
 	 * @return ロジックツリー一覧
 	 */
-	public List<LogicTree> findLogicTree(){
+	public LogicTree findLogicTree(){
 		return logicTreeMapper.selectLogicTree();
 	}
 

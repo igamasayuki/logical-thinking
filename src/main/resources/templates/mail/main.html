@@ -27,58 +27,61 @@ xxx株式会社の●○です。
 先日お問い合わせいただいた以下の件につき、ご回答申し上げます。
           
 先日のお話しでは、以下の課題が炙り出されました。
-          
-「<mark><font th:text="${logicTreeList.partnerWants}"></font></mark>」と言う貴社のご要望に対して、
-「<mark><font th:text="${logicTreeList.currentState}"></font></mark>」と回答いたしました。このギャップが課題として残りました。
+     
+「<mark><font th:text="${logicTree.partnerWants}"></font></mark>」
+と言う貴社のご要望に対して、
+「<mark><font th:text="${logicTree.currentState}"></font></mark>」
+と回答いたしました。このギャップが課題として残りました。
 
 本日は、この課題についてご報告いたします。
           
 この点につきまして、
           
-「<mark><font th:text="${pyramidList.conclusion}"></font></mark>」
+「<mark><font th:text="${pyramidList[0].conclusion}"></font></mark>」
 
 とさせていただきたく思います。
           
 理由は「<mark>4</mark>」つあります。
+         
+一つ目は、「<mark><font th:text="${reasonList[0].word}"></font></mark>の視点」、二つ目は「<mark><font th:text="${reasonList[1].word}"></font></mark>の視点」、三つ目は「<mark><font th:text="${reasonList[2].word}"></font></mark>の視点」、四つ目は「<mark><font th:text="${reasonList[3].word}"></font></mark>の視点」です。
+    
+まず、「<mark><font th:text="${reasonList[0].word}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList[0].anotherExplanation}"></font></mark>
+<mark><font th:text="${reasonList[0].explanation}"></font></mark>
           
-一つ目は、「<mark><font th:text="${reasonList.word.get(0)}"></font></mark>の視点」、二つ目は「<mark><font th:text="${reasonList.word.get(1)}"></font></mark>の視点」、三つ目は「<mark><font th:text="${reasonList.word.get(2)}"></font></mark>の視点」、四つ目は「<mark><font th:text="${reasonList.word.get(3)}"></font></mark>の視点」です。
-          
-まず、「<mark><font th:text="${reasonList.word.get(0)}"></font></mark>」の視点です。
-<mark><font th:text="${reasonList.anotherExplanation.get(0)}"></font></mark>
-<mark><font th:text="${reasonList.explanation.get(0)}"></font></mark>
-          
-<mark><font th:text="${exampleList.explanation.get(0)}"></font></mark>
+<mark><font th:text="${exampleList[0].explanation}"></font></mark>
 
-次に「<mark><font th:text="${reasonList.word.get(1)}"></font></mark>」の視点です。
-<mark><font th:text="${reasonList.anotherExplanation.get(1)}"></font></mark>
-<mark><font th:text="${reasonList.explanation.get(1)}"></font></mark>
+次に「<mark><font th:text="${reasonList[1].word}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList[1].anotherExplanation}"></font></mark>
+<mark><font th:text="${reasonList[1].explanation}"></font></mark>
 
-<mark><font th:text="${exampleList.explanation.get(1)}"></font></mark>
+<mark><font th:text="${exampleList[1].explanation}"></font></mark>
 
           
-3点目は「<mark><font th:text="${reasonList.word.get(2)}"></font></mark>」の視点です。
-<mark><font th:text="${reasonList.anotherExplanation.get(2)}"></font></mark>
-<mark><font th:text="${reasonList.explanation.get(2)}"></font></mark>
+3点目は「<mark><font th:text="${reasonList[2].word}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList[2].anotherExplanation}"></font></mark>
+<mark><font th:text="${reasonList[2].explanation}"></font></mark>
 
-<mark><font th:text="${exampleList.explanation.get(2)}"></font></mark>
-<mark><font th:text="${exampleList.explanation.get(3)}"></font></mark>
+<mark><font th:text="${exampleList[2].explanation}"></font></mark>
+<mark><font th:text="${exampleList[3].explanation}"></font></mark>
 
 
-最後に「<mark><font th:text="${reasonList.word.get(3)}"></font></mark>」の視点です。
-<mark><font th:text="${reasonList.anotherExplanation.get(3)}"></font></mark>
-<mark><font th:text="${reasonList.explanation.get(3)}"></font></mark>
+最後に「<mark><font th:text="${reasonList[3].word}"></font></mark>」の視点です。
+<mark><font th:text="${reasonList[3].anotherExplanation}"></font></mark>
+<mark><font th:text="${reasonList[3].explanation}"></font></mark>
 
-<mark><font th:text="${exampleList.explanation.get(4)}"></font></mark>
+<mark><font th:text="${exampleList[4].explanation}"></font></mark>
 
 以上のことから、
           
 貴社と弊社のギャップを埋める対策として、
           
-「<mark><font th:text="${pyramidList.get(0)}"></font></mark>(←※結論)」
+「<mark><font th:text="${pyramidList[0].conclusion}"></font></mark>(←※結論)」
           
 をご提案します。
           
  以上、よろしくお願いします。
+ 
           </pre>
       </div>
     </div>

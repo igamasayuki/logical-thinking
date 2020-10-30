@@ -33,8 +33,8 @@ public class MailController {
 	 */
 	@RequestMapping(value = "/logicalthinking/mail")
 	public String testMail(Model model) {
-		List<LogicTree> logicTreeList = mailService.findLogicTree();
-		model.addAttribute("logicTreeList",logicTreeList);
+		LogicTree logicTree = mailService.findLogicTree();
+		model.addAttribute("logicTree",logicTree);
 		
 		List<FirstHierarchy> firstHierarchyList = mailService.findFirstHierarchy();
 		model.addAttribute("firstHierarchyList", firstHierarchyList);
