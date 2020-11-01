@@ -54,6 +54,11 @@
 			third_hierarchies th on sh.id = th.second_hierarchy_id 
 		where lt.session_id = #{sessionId};
 	</select>
+	
+	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
+		select id, partner_wants, current_state, description_type, framework_id, insistence from logic_trees;
+    </select>
+    
 	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
 		<if test="id != null">
 		<!-- update -->
@@ -88,4 +93,5 @@
 	<delete id="deleteBySessionId">
 		delete from logic_trees where session_id = #{sessionId}
 	</delete>
+	
 </mapper>
