@@ -29,7 +29,11 @@ create table if not exists logic_trees (
     framework_id integer,
     -- 主張
     insistence text, 
-    foreign key (framework_id) references frameworks(id)
+    -- sessionId
+    session_id text,
+    foreign key (framework_id) references frameworks(id) 
+    on delete cascade
+    on update cascade
 );
 -- 第一階層
 create table if not exists first_hierarchies (
@@ -38,8 +42,10 @@ create table if not exists first_hierarchies (
     word text,
     -- 言い換えると「〜」
     another_word text,
-    logic_treeid integer,
-    foreign key (logic_tree_id) references logic_trees(id)
+    logic_tree_id integer,
+    foreign key (logic_tree_id) references logic_trees(id) 
+    on delete cascade
+    on update cascade
 );
 -- 第二階層
 create table if not exists second_hierarchies (
@@ -47,7 +53,9 @@ create table if not exists second_hierarchies (
     -- 説明
     explanation text,
     first_hierarchy_id integer,
-    foreign key (first_hierarchy_id) references first_hierarchies(id)
+    foreign key (first_hierarchy_id) references first_hierarchies(id) 
+    on delete cascade
+    on update cascade
 );
 -- 第三階層
 create table if not exists third_hierarchies (
@@ -55,6 +63,8 @@ create table if not exists third_hierarchies (
     explanation text,
     second_hierarchy_id integer,
     foreign key (second_hierarchy_id) references second_hierarchies(id)
+    on delete cascade
+    on update cascade
 );
 -- 
 create table if not exists pyramids (
@@ -64,7 +74,9 @@ create table if not exists pyramids (
     -- 結論
     conclusion text,
     foreign key (framework_kind_id) references framework_kinds(id),
-    foreign key (framework_id) references frameworks(id)
+    foreign key (framework_id) references frameworks(id) 
+    on delete cascade
+    on update cascade
 );
 
 create table if not exists reasons (
@@ -77,6 +89,8 @@ create table if not exists reasons (
     explanation text,
     pyramid_id integer,
     foreign key (pyramid_id) references pyramids(id)
+    on delete cascade
+    on update cascade
 );
 
 create table if not exists examples (
@@ -84,4 +98,6 @@ create table if not exists examples (
     explanation text,
     reason_id integer,
     foreign key (reason_id) references reasons(id)
+    on delete cascade
+    on update cascade
 );
