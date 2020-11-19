@@ -10,9 +10,13 @@ import java.util.List;
 public class Pyramid {
 	
 	private int id;
+	/**	フレームワーク分類ID */
 	private Integer frameworkKindId;
+	/**	フレームワークID */
 	private Integer frameworkId;
+	/**	結論 */
 	private String conclusion;
+	/**	根拠List */
 	private List<Reason> rationaleList = new ArrayList<>();
 	
 	/**

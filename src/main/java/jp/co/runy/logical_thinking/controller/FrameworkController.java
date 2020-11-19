@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import jp.co.runy.logical_thinking.domain.FrameworkElement;
+import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.service.FrameworkService;
 
 /**
@@ -24,5 +24,9 @@ public class FrameworkController {
 	@Autowired
 	private FrameworkService frameworkService;
 	
-	
+	@GetMapping("/get/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<Framework> getFramewaorks(@PathVariable("id") int id) {
+		return frameworkService.findFramework(id);
+	}
 }

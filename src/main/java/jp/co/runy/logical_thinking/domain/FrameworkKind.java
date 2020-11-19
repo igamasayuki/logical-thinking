@@ -10,7 +10,7 @@ import java.util.List;
 public class FrameworkKind {
 	
 	private int id;
-	private String summay;
+	private String summaｒy;
 	private List<Framework> frameworkList = new ArrayList<>();
 	
 	/**
@@ -26,16 +26,16 @@ public class FrameworkKind {
 		this.id = id;
 	}
 	/**
-	 * @return the summay
+	 * @return the summary
 	 */
-	public String getSummay() {
-		return summay;
+	public String getSummary() {
+		return summaｒy;
 	}
 	/**
-	 * @param summay the summay to set
+	 * @param summary the summary to set
 	 */
-	public void setSummay(String summay) {
-		this.summay = summay;
+	public void setSummary(String summary) {
+		this.summaｒy = summary;
 	}
 	/**
 	 * @return the frameworkList

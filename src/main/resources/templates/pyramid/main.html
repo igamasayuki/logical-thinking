@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="fragments/config :: configFragment">
+</head>
+<body>
+	<div class="container">
+		<header th:replace="fragments/header :: headerFragment"></header>
+		<div layout:fragment="content" class="content-inner"></div>
+		<nav aria-label="breadcrumb">
+	        <ol class="breadcrumb">
+	          <li class="breadcrumb-item active">Step1 全体像を把握する</li>
+	          <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
+	          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
+	    	</ol>
+		</nav>
+<section class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Step2 ピラミッド構造=PREPを作成する</h4>
+        <p>
+          以下の質問に答えてください。<br>
+          自動的にピラミッド構造(PREP)を作成し、あなたの意見を論理的にしていきます。
+        </p>
+      </section>
+      <hr>
+      
+      <section class="col-12">
+        <div class="row">
+          Step1で選んだあなたが主張したいこと
+        </div>
+        <div class="alert alert-primary" role="alert">
+          <p th:text="${logicTree.insistence}"/>
+        </div>
+        <div class="alert alert-danger" role="alert">
+          いきなりあなたがこの主張をしても相手は受け入れてくれないでしょう。今から相手が納得してくれるような論理構造を作りましょう。
+        </div>
+
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">今回の課題</h4>
+          「[[${logicTree.partnerWants}]]」に対して
+          「[[${logicTree.currentState}]]」のギャップが課題です
+          <div th:if="${logicTree.descriptionType==0}">【原因を選んだ場合→】この課題に対してどの原因が最も影響していると考えられるか？</div>  
+          <div th:if="${logicTree.descriptionType==1}">【方法を選んだ場合→】この課題に対してどの方法が最適と考えられるか？</div>
+        </div>
+
+        <div class="row mb-5">
+          <a href="img/pyramid.png" target="_blank" class="btn btn-primary">
+            ここまでのピラミッド構造を確認する
+          </a>
+        </div>
+
+      </section>
+
+      <section class="col-12">
+        <div class="row">
+          <label for=""> 今選んだもの【[[${logicTree.partnerWants}]]】を抜け漏れなく正当化する根拠を２から５個程度挙げます。あなたの結論を根拠づけるために使えそうなことは何ですか？
+          </label>
+        </div>
+        <div class="row mb-3">
+        	<select id="frameworkKind" class="form-control" onChange="changeFwk(this)">
+				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+				<option th:each="frameworkKind : ${frameworkKindList}" th:value="${frameworkKind.id}" th:text="${frameworkKind.summary}"></option>
+			</select>
+        </div>
+
+        <div class="row">
+          <label for="d"> 最も適したフレームワークはなんですか？: </label>
+        </div>
+        <div class="row mb-5">
+            <select class="form-control" id="framework">
+<!--             <select name="fw" class="form-control" id="framework" onChange="changeFramework(this)"> -->
+				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+			</select>
+        </div>
+		
+		<section class="reason">
+		</section>
+      </section>
+
+      <section class="col-12">
+        <div class="row">
+          <label for="e"> あなたの結論は何ですか？</label><br>
+        </div>
+        <div class="row mb-3">
+            <input type="text" id="conclusion" class="form-control" value="">
+        </div>
+        <div class="row mb-5">
+            <button type="button" class="btn btn-primary" onClick="submit()">メール文章を作成する</button>
+        </div>
+      </section>
+    </div>
+    <script th:src="@{/javascript/pyramid/main.js}"></script>
+</body>
+</html>

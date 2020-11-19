@@ -29,4 +29,14 @@
 		on 
 			f.id = element.framework_id;
     </select>
+    <select id="findFramework" parameterType="int" resultMap="frameworkResult">
+    	select
+    		id,
+    		framework_kind_id,
+    		content
+    	from
+    		frameworks
+    	where
+    		framework_kind_id = #{id};
+    </select>
 </mapper>
