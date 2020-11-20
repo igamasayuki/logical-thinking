@@ -304,11 +304,10 @@ function keyup(thisEle){
 $(function(){
 //	// 主張の選択肢を追加
 //	$(document).on("blur", ".row2", function(){
-//		if("" !== $(this).val()){
+//		var val = $(this).val(); 
+//		if("" !== val){
 //			var select = document.getElementById("select-claim");
-//			var option = document.createElement("option");
-//			option.text = $(this).val();
-//			option.value = $(this).val();
+//			$('<option>', { text:val, value:val: });
 //			select.appendChild(option);
 //		}
 //	});
