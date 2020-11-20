@@ -379,7 +379,7 @@ $(function(){
                   '</section>';
                   $('#hierarchy').append(new_list);
                     // 「第二階層を追加」ボタンを追加
-                    secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="button(\'' + fhId + '\', \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
+                    secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="button(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
                     $('#fw' + data[index].id).append(secondHierarchyButton);
                     
                     var option = 'addSh';
