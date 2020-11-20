@@ -299,7 +299,24 @@ function keyup(thisEle){
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
 }
 
+
+
 $(function(){
+//	// 主張の選択肢を追加
+//	$(document).on("blur", ".row2", function(){
+//		var val = $(this).val(); 
+//		if("" !== val){
+//			var select = document.getElementById("select-claim");
+//			$('<option>', { text:val, value:val: });
+//			select.appendChild(option);
+//		}
+//	});
+//	
+//	// 主張の選択肢を削除
+//	$(document).on("click", ".row2", function(){
+//		$('#select-claim').children('[value=' + $(this).val() + ']').remove();
+//	});
+	
     // 「相手が欲しいもの」の入力結果を反映
     $( document ).on( 'keyup', '#partnerWants' , function(){ 
         $('#copyPartnerWants').html($( this ).val());
@@ -599,6 +616,7 @@ $(function(){
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
                 '<input type="text" class="form-control col-9" value="">' + 
+//                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
