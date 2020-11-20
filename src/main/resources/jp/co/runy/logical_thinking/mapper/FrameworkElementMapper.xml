@@ -2,11 +2,11 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.runy.logical_thinking.mapper.FrameworkElementMapper">
-	<resultMap type="jp.co.runy.logical_thinking.domain.FrameworkKind" id="frameworkKindResult">
+<mapper namespace="FrameworkElementMapper">
+	<resultMap type="FrameworkKind" id="frameworkKindResult">
 		<id column="id" property="id"/>
 		<result column="summary" property="summary"/>
-		<collection property="frameworkList" ofType="jp.co.runy.logical_thinking.domain.Framework">
+		<collection property="frameworkList" ofType="Framework">
 			<result column="framework_id" property="id"/>
 			<result column="id" property="frameworkKindId"/>
 			<result column="content" property="content"/>
@@ -25,7 +25,7 @@
 		on 
 			kind.id = framework.framework_kind_id;
     </select>
-    <select id="findFrameworkElementById" parameterType="int" resultType="jp.co.runy.logical_thinking.domain.FrameworkElement">
+    <select id="findFrameworkElementById" parameterType="int" resultType="FrameworkElement">
     	select 
     		*
     	from

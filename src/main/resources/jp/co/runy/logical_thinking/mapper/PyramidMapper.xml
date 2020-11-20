@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.runy.logical_thinking.mapper.PyramidMapper">
-    <select id="selectPyramid" resultType="jp.co.runy.logical_thinking.domain.Pyramid">
+<mapper namespace="PyramidMapper">
+    <select id="selectPyramid" resultType="Pyramid">
 		select id, framework_kind_id, conclusion from pyramids;
     </select>
 </mapper>

@@ -57,6 +57,7 @@ public class LogicTreeController {
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String upsert(@RequestBody String json, HttpSession session) throws JsonMappingException, JsonProcessingException {
 		LogicTree bean = mapper.readValue(json, LogicTree.class);
+		System.out.println("test");
 		logicTreeService.upsert(bean, session);
 		return Integer.toString(bean.getId());
 	}

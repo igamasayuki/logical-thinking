@@ -7,4 +7,11 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-#  mapper-locations: classpath*:/jp/co/runy/logical_thinking/mapper/*.xml
+  mapper-locations: classpath*:/jp/co/runy/logical_thinking/*.xml
+  config-location: classpath:/config/mybatis.xml
+  check-config-location: true
+
+logging:
+  level:
+    org:
+      springframework: WARN

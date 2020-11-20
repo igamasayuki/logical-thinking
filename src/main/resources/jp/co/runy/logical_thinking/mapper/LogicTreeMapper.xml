@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.runy.logical_thinking.mapper.LogicTreeMapper">
-	<resultMap type="jp.co.runy.logical_thinking.domain.LogicTree" id="LogicTree">
+<mapper namespace="LogicTreeMapper">
+	<resultMap type="LogicTree" id="LogicTree">
 		<id column="id" property="id"/>
 		<result column="partner_wants" property="partnerWants"/>
 		<result column="current_state" property="currentState"/>
@@ -11,16 +11,16 @@
 		<result column="framework_id" property="frameworkId"/>
 		<result column="insistence" property="insistence"/>
 		<result column="session_id" property="sessionId"/>
-		<collection property="firstHierarchyList" ofType="jp.co.runy.logical_thinking.domain.FirstHierarchy">
+		<collection property="firstHierarchyList" ofType="FirstHierarchy">
 			<result column="fh_id" property="id"/>
 			<result column="fh_word" property="word"/>
 			<result column="fh_another_word" property="anotherWord"/>
 			<result column="id" property="logicTreeId"/>
-			<collection property="secondHierarchyList" ofType="jp.co.runy.logical_thinking.domain.SecondHierarchy">
+			<collection property="secondHierarchyList" ofType="SecondHierarchy">
 				<result column="sh_id" property="id"/>
 				<result column="sh_explanation" property="explanation"/>
 				<result column="fh_id" property="firstHierarchyId"/>
-				<collection property="thirdHierarchyList" ofType="jp.co.runy.logical_thinking.domain.ThirdHierarchy">
+				<collection property="thirdHierarchyList" ofType="ThirdHierarchy">
 					<result column="th_id" property="id"/>
 					<result column="th_explanation" property="explanation"/>
 					<result column="sh_id" property="secondHierarchyId"/>
@@ -55,11 +55,11 @@
 		where lt.session_id = #{sessionId};
 	</select>
 	
-	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
+	<select id="selectLogicTree" resultType="LogicTree">
 		select id, partner_wants, current_state, description_type, framework_id, insistence from logic_trees;
     </select>
     
-	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
+	<insert id="upsert" parameterType="LogicTree">
 		<if test="id != null">
 		<!-- update -->
 		</if>

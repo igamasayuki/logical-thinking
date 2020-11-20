@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="jp.co.runy.logical_thinking.mapper.ThirdHierarchyMapper">
-	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.ThirdHierarchy">
+<mapper namespace="ThirdHierarchyMapper">
+	<insert id="upsert" parameterType="ThirdHierarchy">
 		<if test="id != null">
 		<!-- update -->
 		</if>
@@ -27,7 +27,7 @@
         </selectKey>
 	</insert>
 	
-	<select id="selectThirdHierarchy" resultType="jp.co.runy.logical_thinking.domain.ThirdHierarchy">
+	<select id="selectThirdHierarchy" resultType="ThirdHierarchy">
 		select id, explanation, second_hierarchy_id from third_hierarchies;
     </select>
 </mapper>
