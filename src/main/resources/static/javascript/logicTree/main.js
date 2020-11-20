@@ -1,4 +1,8 @@
-let URL = 'http://localhost:8080//logicalthinking/logictree/api';
+var url = location.href;
+var path = location.pathname;
+var uri = url.replace(path, "");
+
+let URL = uri + '/logicalthinking/logictree/api';
 $(document).ready( function(){
     $.ajax({
         url: URL + '/get/session',
@@ -190,6 +194,9 @@ function test(){
         logicTree.firstHierarchyList.push(firstHierarchy)
     }
     // json化
+    var url = location.href;
+    var path = location.pathname;
+    var uri = url.replace(path, "");
     var param = JSON.stringify(logicTree);
     $.ajax({
         url: URL + '/upsert',
@@ -198,9 +205,9 @@ function test(){
         data: param,
         contentType: "application/json; charset=utf-8"
         // data : {"partnerWants" : "test"}
-
     }).done(function(data){
         // 登録したidを次のページに引き継ぐ
+    	location.href= uri + '/logicalthinking/pyramid';
     })
 }
 function checkedTree(){
@@ -321,8 +328,11 @@ $(function(){
       $('[name="fw"]').change(function () {
           // 記述用の値(原因 or 方法)を取得
           clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
+          var url = location.href;
+          var path = location.pathname;
+          var uri = url.replace(path, "");
           $.ajax({
-              url: 'http://localhost:8080/api/frameworkelement/get/' + $(this).val(),
+              url: uri + '/api/frameworkelement/get/' + $(this).val(),
               type: 'get'
           }).done(function(data){
             frameworkElement = data
@@ -343,7 +353,7 @@ $(function(){
                   '<div id="' + fhId + '">' + 
                   '<div class="row">' + 
                   '<label for="" class="col-11">' +
-                  data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください123' + 
+                  data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
                   '</label>' +
                   '<input type="hidden" value="' + data[index].element +  '">' + 
                   '<button type="button" onclick="button(this, \'delete\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
@@ -589,7 +599,7 @@ $(function(){
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
                 '<input type="text" class="form-control col-9" value="">' + 
-                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除2</button>' + 
+                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
                 '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
