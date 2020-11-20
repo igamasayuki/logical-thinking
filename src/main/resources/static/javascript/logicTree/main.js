@@ -382,7 +382,6 @@ $(function(){
                     secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="button(\'' + fhId + '\', \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
                     $('#fw' + data[index].id).append(secondHierarchyButton);
                     
-                    var option = 'addSh';
                     var name = 'fh' + index;
                     
                     shName = name + '_sh' + $('.fw[name=' + name + '] section').length
