@@ -381,6 +381,29 @@ $(function(){
                     // 「第二階層を追加」ボタンを追加
                     secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="button(\'' + fhId + '\', \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
                     $('#fw' + data[index].id).append(secondHierarchyButton);
+                    
+                    var option = 'addSh';
+                    var name = 'fh' + index;
+                    
+                    shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+
+                    addHtml = '<section class="" name="' + shName + '">' + 
+                    '<div class="row">' + 
+                    '<label for="" class="col-2">第二階層：</label>' + 
+                    '<input type="text" class="form-control col-9" value="">' + 
+//                    '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+                    '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+                    '</div>' + 
+                    '<div class="row">' + 
+                    '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+                    '</div>' + 
+                    '</section>';
+                    if (typeof fhId === 'string') {
+                        // 第二階層入力時に「第三階層を追加する」ボタンを追加する
+                        $('#' + fhId).after(addHtml);
+                    } else if (typeof fhId === 'object'){
+                        $(fhId).parent().before(addHtml);
+                    }
 
                     // 「〇〇」を言い換えるとを追加
                     anotherWordText = '<br>' + 
