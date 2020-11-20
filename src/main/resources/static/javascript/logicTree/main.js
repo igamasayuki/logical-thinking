@@ -373,7 +373,7 @@ $(function(){
                   data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
                   '</label>' +
                   '<input type="hidden" value="' + data[index].element +  '">' + 
-                  '<button type="button" onclick="button(this, \'delete\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
+                  '<button name="fh" type="button" onclick="button(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
                   '</div>' +
                   '</div>' + 
                   '</section>';
@@ -546,7 +546,7 @@ $(function(){
                         // 第一階層毎のnameを変更 → 変更した第二階層のnameを変更 → 変更した第三階層のnameを変更
                         case 'fh':
                             // ボタンの親要素から逆算してfirstHierarchyを削除するsectionのnameを取得
-                            getName = $(selectedId).parent().parent().parent().attr('name');
+                            getName = $(selectedId).parent().parent().attr('name');
                             // section毎に囲まれているため, そのsection以下を削除
                             $(selectedId).parent().parent().parent().remove()
                             // 名前の連番を修正
