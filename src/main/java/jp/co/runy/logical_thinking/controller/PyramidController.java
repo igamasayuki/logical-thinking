@@ -3,6 +3,8 @@ package jp.co.runy.logical_thinking.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +36,12 @@ public class PyramidController {
 	 * @return 「Step2 ピラミッド構造=PREPを作成する」ページ
 	 */
 	@RequestMapping(value = "/logicalthinking/pyramid")
-	public String readPyramid(Model model) {
+	public String readPyramid(Model model, HttpSession session) {
 		List<FrameworkKind> kindList = pyramidService.findFrameworkKind();
 		
 		model.addAttribute("frameworkList", getFrameworkList(kindList));
-		model.addAttribute("logicTree", pyramidService.findLogicTree());
-		model.addAttribute("frameworkKindList",pyramidService.findFrameworkKind());
+		model.addAttribute("logicTree", pyramidService.findLogicTree(session.getId()));
+		model.addAttribute("frameworkKindList", kindList);
 		
 		return "/pyramid/main";
 	}

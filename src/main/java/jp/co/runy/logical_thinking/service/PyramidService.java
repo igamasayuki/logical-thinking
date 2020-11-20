@@ -30,8 +30,8 @@ public class PyramidService {
 	 * step1にて登録された内容を取得する
 	 * @return
 	 */
-	public LogicTree findLogicTree(){
-		return logicTreeMapper.selectLogicTree();
+	public LogicTree findLogicTree(String sessionId) {
+		return logicTreeMapper.findBySessionId(sessionId);
 	}
 	
 }

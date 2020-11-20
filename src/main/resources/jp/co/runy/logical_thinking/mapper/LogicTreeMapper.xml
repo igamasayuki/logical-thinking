@@ -28,7 +28,7 @@
 			</collection>
 		</collection>
 	</resultMap>
-	<select id="findBySessionId" resultMap="LogicTree">
+	<select id="findBySessionId" resultMap="LogicTree" parameterType="string">
 		select 
 			lt.id, 
 			lt.partner_wants, 
