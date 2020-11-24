@@ -268,7 +268,7 @@ function submit(){
 		pyramid.rationaleList.push(rationale);
 	}
 	var form = document.createElement("form");
-	form.setAttribute("action", "/logicalthinking/pyramid/test");
+	form.setAttribute("action", "/logicalthinking/mail");
 	form.setAttribute("method", "post");
 	document.body.appendChild(form);
 	for(var param in pyramid){
