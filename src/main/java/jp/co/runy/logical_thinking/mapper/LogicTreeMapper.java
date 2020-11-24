@@ -1,6 +1,7 @@
 package jp.co.runy.logical_thinking.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import jp.co.runy.logical_thinking.domain.LogicTree;
 
@@ -15,5 +16,5 @@ public interface LogicTreeMapper {
 
 	public LogicTree selectLogicTree();
 
-	public LogicTree findBySessionId(String sessionId);
+	public LogicTree findByIdAndSessionId(@Param("logicTreeId") Integer id, String sessionId);
 }

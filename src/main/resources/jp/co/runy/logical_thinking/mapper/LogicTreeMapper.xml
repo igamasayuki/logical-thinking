@@ -28,7 +28,7 @@
 			</collection>
 		</collection>
 	</resultMap>
-	<select id="findBySessionId" resultMap="LogicTree" parameterType="string">
+	<select id="findByIdAndSessionId" resultMap="LogicTree" parameterType="string">
 		select 
 			lt.id, 
 			lt.partner_wants, 
@@ -52,7 +52,10 @@
 			second_hierarchies sh on fh.id = sh.first_hierarchy_id
 		left join 
 			third_hierarchies th on sh.id = th.second_hierarchy_id 
-		where lt.session_id = #{sessionId};
+		where
+			lt.session_id = #{sessionId}
+		and
+			lt.id = ${logicTreeId};
 	</select>
 	
 	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">

@@ -24,6 +24,11 @@ public class FrameworkController {
 	@Autowired
 	private FrameworkService frameworkService;
 	
+	
+	/** 
+	 * @param id
+	 * @return List<Framework>
+	 */
 	@GetMapping("/get/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Framework> getFramewaorks(@PathVariable("id") int id) {

@@ -18,6 +18,11 @@ public class FrameworkElementService {
 	@Autowired
 	private FrameworkElementMapper frameworkElementMapper;
 	
+	
+	/** 
+	 * @param id
+	 * @return List<FrameworkElement>
+	 */
 	public List<FrameworkElement> findFrameworkElementById(int id){
 		return frameworkElementMapper.findFrameworkElementById(id);
 	}
