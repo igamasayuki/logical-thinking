@@ -15,9 +15,9 @@ import jp.co.runy.logical_thinking.mapper.FrameworkElementMapper;
  */
 @Service
 public class FrameworkElementService {
+	
 	@Autowired
 	private FrameworkElementMapper frameworkElementMapper;
-	
 	
 	/** 
 	 * @param id

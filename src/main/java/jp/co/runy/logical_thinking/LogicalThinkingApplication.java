@@ -8,6 +8,8 @@ public class LogicalThinkingApplication {
 
 	
 	/** 
+	 * メインメソッド.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * フレームワークのクラス
+ * フレームワークのクラス.
  */
 public class Framework {
 	

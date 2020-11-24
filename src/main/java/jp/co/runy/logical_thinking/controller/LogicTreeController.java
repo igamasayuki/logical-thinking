@@ -28,12 +28,15 @@ import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
 @Controller
 @RequestMapping("/logicalthinking/logictree")
 public class LogicTreeController {
+	
 	@Autowired
 	private LogicTreeService logicTreeService;
 	
 	
-	/** 
-	 * @return LogicTreeForm
+	/**
+	 * ロジックツリー作成時に使用するフォーム
+	 * 
+	 * @return LogicTreeForm ロジックツリー作成時に使用するフォーム
 	 */
 	@ModelAttribute
 	public LogicTreeForm getLogicTreeForm() {
@@ -42,7 +45,9 @@ public class LogicTreeController {
 	ObjectMapper mapper = new ObjectMapper();
 
 	/**
-	 * @param model
+	 * 「Step1 全体像を把握する」ページを表示するメソッド.
+	 * 
+	 * @param model モデルオブジェクト
 	 * @return 「Step1 全体像を把握する」ページ
 	 */
 	@RequestMapping(value = "")
@@ -52,8 +57,10 @@ public class LogicTreeController {
 	}
 	
 	/**
-	 * @param json view側(ajax)でjson形式のtextを送信 (本来はLigicTree logicTree で自動的判別にて値を取得したかったがnullになったため, 一旦これで対応)
-	 * @param session 使用者判別のセッション情報
+	 * ロジックツリーを登録し、登録された主キーを取得するメソッド.
+	 * 
+	 * @param json jsonデータ
+	 * @param session セッションオブジェクト
 	 * @return 登録したlogictreeのid
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
@@ -68,20 +75,4 @@ public class LogicTreeController {
 		bean.setId(id);
 		return Integer.toString(bean.getId());
 	}
-	
-	
-	/** 
-	 * @param form
-	 * @param model
-	 * @param session
-	 * @return String
-	 */
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public String test(@ModelAttribute("logicTreeForm") LogicTreeForm form, Model model, HttpSession session) {
-		System.out.println("-------------------------");
-		System.out.println(form);
-		System.out.println(session.getId());
-		return "create";
-	}
-	
 }

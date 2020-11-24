@@ -24,7 +24,6 @@ import jp.co.runy.logical_thinking.mapper.ThirdHierarchyMapper;
  * @author nakagawatomoya
  * 「Step3 生成されたメール文章」で使用するサービスクラス
  */
-
 @Service
 public class MailService {
 	@Autowired

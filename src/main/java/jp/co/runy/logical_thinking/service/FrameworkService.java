@@ -10,9 +10,9 @@ import jp.co.runy.logical_thinking.mapper.FrameworkMapper;
 
 @Service
 public class FrameworkService {
+
 	@Autowired
 	private FrameworkMapper frameworkMapper;
-	
 	
 	/** 
 	 * @param id

@@ -10,11 +10,16 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.mapper.FrameworkKindMapper;
 import jp.co.runy.logical_thinking.mapper.LogicTreeMapper;
 
+/**
+ * @author yokogawayukihiro
+ * 「Step2 ピラミッド構造=PREPを作成する」で使用するサービスクラス.
+ */
 @Service
 public class PyramidService {
 
 	@Autowired
 	public FrameworkKindMapper frameworkKindMapper;
+	
 	@Autowired
 	public LogicTreeMapper logicTreeMapper;
 	
@@ -27,7 +32,7 @@ public class PyramidService {
 	}
 	
 	/**
-	 * step1にて登録された内容を取得する
+	 * step1に登録された内容を取得する
 	 * @return
 	 */
 	public LogicTree findLogicTree(Integer id, String sessionId) {

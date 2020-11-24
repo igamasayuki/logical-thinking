@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * ロジックツリーの第一階層のクラス
+ * ロジックツリーの第一階層のクラス.
  */
 public class FirstHierarchy {
 	

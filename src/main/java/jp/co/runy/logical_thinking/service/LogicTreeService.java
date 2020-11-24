@@ -17,8 +17,10 @@ import jp.co.runy.logical_thinking.mapper.LogicTreeMapper;
  */
 @Service
 public class LogicTreeService {
+
 	@Autowired
 	private LogicTreeMapper logicTreeMapper;
+	
 	@Autowired
 	private FrameworkMapper frameworkMapper;
 	

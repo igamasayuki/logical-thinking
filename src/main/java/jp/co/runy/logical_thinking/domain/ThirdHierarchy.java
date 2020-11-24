@@ -2,7 +2,7 @@ package jp.co.runy.logical_thinking.domain;
 
 /**
  * @author takahashikouhei
- * ロジックツリーの第三階層を表すクラス
+ * ロジックツリーの第三階層を表すクラス.
  */
 public class ThirdHierarchy {
 	

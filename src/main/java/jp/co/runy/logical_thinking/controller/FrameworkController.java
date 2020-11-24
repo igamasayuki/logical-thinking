@@ -26,8 +26,10 @@ public class FrameworkController {
 	
 	
 	/** 
-	 * @param id
-	 * @return List<Framework>
+	 * フレームワークを取得するメソッド.
+	 * 
+	 * @param id フレームワークのID
+	 * @return List<Framework> フレームワーク一覧
 	 */
 	@GetMapping("/get/{id}")
 	@ResponseStatus(HttpStatus.OK)

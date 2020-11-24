@@ -27,6 +27,8 @@ public class MailController {
 	private MailService mailService;
 	
 	/**
+	 * 「Step3 生成されたメール文章」ページを表示するメソッド.
+	 * 
 	 * @param model
 	 * @return 「Step3 生成されたメール文章」ページ
 	 */

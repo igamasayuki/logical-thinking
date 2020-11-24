@@ -17,11 +17,14 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 @RestController
 @RequestMapping(value = "/api/logictree")
 public class LogicTreeApiController {
+	
 	ObjectMapper mapper = new ObjectMapper();
 	
 	/** 
-	 * @param json
-	 * @param session
+	 * ロジックツリーを取得するメソッド.
+	 * 
+	 * @param json jspmデータ
+	 * @param session セッションオブジェクト
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
 	 */

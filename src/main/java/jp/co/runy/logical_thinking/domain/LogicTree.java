@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * ロジックツリーの構成を表すクラス
+ * ロジックツリーの構成を表すクラス.
  */
 public class LogicTree {
 	

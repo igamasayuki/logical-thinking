@@ -20,11 +20,15 @@ import jp.co.runy.logical_thinking.service.FrameworkElementService;
 @RestController
 @RequestMapping("/api/frameworkelement")
 public class FrameworkElementController {
+
 	@Autowired
 	private FrameworkElementService frameworkElementService;
+
 	/**
+	 * フレームワークの要素を取得するメソッド.
+	 * 
 	 * @param id 選択したframeworkのid
-	 * @return
+	 * @return フレームワークの要素一覧
 	 */
 	@GetMapping("/get/{id}")
 	@ResponseStatus(HttpStatus.OK)
