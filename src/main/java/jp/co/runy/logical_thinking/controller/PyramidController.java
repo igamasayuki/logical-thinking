@@ -27,6 +27,10 @@ public class PyramidController {
 	@Autowired
 	PyramidService pyramidService;
 	
+	
+	/** 
+	 * @return PyramidForm
+	 */
 	@ModelAttribute
 	public PyramidForm getPyramidForm() {
 		return new PyramidForm();
@@ -61,6 +65,12 @@ public class PyramidController {
 		return frameworkList;
 	}
 	
+	
+	/** 
+	 * @param form
+	 * @param model
+	 * @return String
+	 */
 	@RequestMapping(value = "/logicalthinking/pyramid/test", method = RequestMethod.POST)
 	public String test(@ModelAttribute("pyramidForm") PyramidForm form , Model model) {
 		System.out.println("-----------------");

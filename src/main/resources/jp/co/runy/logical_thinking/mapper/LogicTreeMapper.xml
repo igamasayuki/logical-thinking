@@ -81,9 +81,9 @@
 					<if test="sessionId != null">, #{sessionId}</if>
 				</trim>
 			)
-			returning id),
+			returning id)
 		<foreach collection="firstHierarchyList" item="firstHierarchy" separator="," index="index1">
-			insert_first_hierarchies_${index1} AS (
+			, insert_first_hierarchies_${index1} AS (
 				insert into first_hierarchies (
 					<trim prefixOverrides=", ">
 						<if test="firstHierarchy.word != null">, word</if>
@@ -99,9 +99,9 @@
 					</trim>
 				from
 					insert_logictree
-				returning id),
+				returning id)
 			<foreach collection="firstHierarchy.secondHierarchyList" item="secondHierarchy" index="index2">
-				insert_second_hierarchies_${index1}_${index2} AS (
+				, insert_second_hierarchies_${index1}_${index2} AS (
 					insert into second_hierarchies (
 						<trim prefixOverrides=", ">
 							<if test="secondHierarchy.explanation != null">, explanation</if>
@@ -116,9 +116,9 @@
 					from
 						insert_first_hierarchies_${index1}
 					returning id
-				),
+				)
 				<foreach collection="secondHierarchy.thirdHierarchyList" item="thirdHierarchy" index="index3">
-					insert_third_hierarchies_${index2}_${index3} AS (
+					, insert_third_hierarchies_${index2}_${index3} AS (
 						insert into third_hierarchies (
 							<trim prefixOverrides=", ">
 								<if test="thirdHierarchy.explanation != null">, explanation</if>

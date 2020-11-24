@@ -19,6 +19,8 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
 import jp.co.runy.logical_thinking.service.LogicTreeService;
 
+import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
+
 /**
  * @author takahashikouhei
  *「Step1 全体像を把握する」で使用するコントローラクラス
@@ -28,14 +30,17 @@ import jp.co.runy.logical_thinking.service.LogicTreeService;
 public class LogicTreeController {
 	@Autowired
 	private LogicTreeService logicTreeService;
-	@Autowired
-	private HttpSession session;
 	
+	
+	/** 
+	 * @return LogicTreeForm
+	 */
 	@ModelAttribute
 	public LogicTreeForm getLogicTreeForm() {
 		return new LogicTreeForm();
 	}
 	ObjectMapper mapper = new ObjectMapper();
+
 	/**
 	 * @param model
 	 * @return 「Step1 全体像を把握する」ページ
@@ -57,10 +62,19 @@ public class LogicTreeController {
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String upsert(@RequestBody String json, HttpSession session) throws JsonMappingException, JsonProcessingException {
 		LogicTree bean = mapper.readValue(json, LogicTree.class);
-		logicTreeService.upsert(bean, session);
+		final int id = logicTreeService.insert(bean);
+		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+		bean.setId(id);
 		return Integer.toString(bean.getId());
 	}
 	
+	
+	/** 
+	 * @param form
+	 * @param model
+	 * @param session
+	 * @return String
+	 */
 	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	public String test(@ModelAttribute("logicTreeForm") LogicTreeForm form, Model model, HttpSession session) {
 		System.out.println("-------------------------");

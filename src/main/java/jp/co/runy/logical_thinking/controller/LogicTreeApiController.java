@@ -18,6 +18,13 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 @RequestMapping(value = "/api/logictree")
 public class LogicTreeApiController {
 	ObjectMapper mapper = new ObjectMapper();
+	
+	/** 
+	 * @param json
+	 * @param session
+	 * @throws JsonMappingException
+	 * @throws JsonProcessingException
+	 */
 	@PostMapping
 	@RequestMapping(method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public void upsert(@RequestBody String json, HttpSession session) throws JsonMappingException, JsonProcessingException {
