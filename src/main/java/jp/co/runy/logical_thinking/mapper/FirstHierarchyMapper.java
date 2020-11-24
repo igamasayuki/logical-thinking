@@ -8,6 +8,5 @@ import jp.co.runy.logical_thinking.domain.FirstHierarchy;
 
 @Mapper
 public interface FirstHierarchyMapper {
-	int upsert(FirstHierarchy firstHierarchy);
 	public List<FirstHierarchy> selectFirstHierarchy();
 }
