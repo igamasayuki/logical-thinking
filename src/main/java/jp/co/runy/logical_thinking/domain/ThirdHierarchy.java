@@ -9,6 +9,7 @@ public class ThirdHierarchy {
 	private int id;
 	private String explanation;
 	private Integer secondHierarchyId;
+	private Integer displayOrder;
 	
 	/**
 	 * @return the id
@@ -46,7 +47,18 @@ public class ThirdHierarchy {
 	public void setSecondHierarchyId(Integer secondHierarchyId) {
 		this.secondHierarchyId = secondHierarchyId;
 	}
-	
-	
 
+	/**
+	 * @return the displayOrder
+	 */
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 }

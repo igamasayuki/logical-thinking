@@ -12,6 +12,7 @@ public class SecondHierarchy {
 	private int id;
 	private String explanation;
 	private Integer firstHierarchyId;
+	private Integer displayOrder;
 	private List<ThirdHierarchy> thirdHierarchyList = new ArrayList<>();
 	
 	/**
@@ -62,7 +63,19 @@ public class SecondHierarchy {
 	public void setThirdHierarchyList(List<ThirdHierarchy> thirdHierarchyList) {
 		this.thirdHierarchyList = thirdHierarchyList;
 	}
-	
-	
 
+	/**
+	 * @return the displayOrder
+	 */
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+	
 }

@@ -169,6 +169,7 @@ function test(){
             word : $('section[name=' + fHName + '] div div input').val(),
             anotherWord : $('section[name=' + fHName + '] input[name=anotherWord]').val(),
             logicTreeId : 0,
+            displayOrder : index + 1,
             secondHierarchyList : []
         }
         // 第二階層の数を取得 (第一階層で取得したnameの直接の子要素のsectionの数を取得)
@@ -179,13 +180,15 @@ function test(){
             // 第二階層の値を取得
             secondHierarchy = {
                 explanation : $('section[name=' + sHName + '] input').val(),
+                displayOrder : index2 + 1,
                 thirdHierarchyList : []
             }
             // 第三階層の数を取得 (第二階層で取得したnameの子要素のsectionの数を取得)
             for(let index3 = 0; index3 < $('section[name=' + sHName + '] section').length; index3++){
                 tHName = sHName + '_th' + index3;
                 thirdHierarchy = {
-                explanation : $('section[name=' + tHName + '] input').val()
+	                explanation : $('section[name=' + tHName + '] input').val(),
+	                displayOrder : index3 + 1
                 }
                 secondHierarchy.thirdHierarchyList.push(thirdHierarchy)
             }
