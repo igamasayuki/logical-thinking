@@ -85,7 +85,7 @@
 				</trim>
 			)
 			returning id)
-		<foreach collection="firstHierarchyList" item="firstHierarchy" separator="," index="index1">
+		<foreach collection="firstHierarchyList" item="firstHierarchy" index="index1">
 			, insert_first_hierarchies_${index1} AS (
 				insert into first_hierarchies (
 					<trim prefixOverrides=", ">
@@ -121,7 +121,7 @@
 					returning id
 				)
 				<foreach collection="secondHierarchy.thirdHierarchyList" item="thirdHierarchy" index="index3">
-					, insert_third_hierarchies_${index2}_${index3} AS (
+					, insert_third_hierarchies_${index1}_${index2}_${index3} AS (
 						insert into third_hierarchies (
 							<trim prefixOverrides=", ">
 								<if test="thirdHierarchy.explanation != null">, explanation</if>
