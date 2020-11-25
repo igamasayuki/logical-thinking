@@ -33,6 +33,7 @@ $(function(){
 
 				for (let j = 0; j < deleteButtonList.length; j++) {
 					deleteButtonList.eq(j).attr('id', `evidenceDelete${evidenceParentId}_${j + 1}`);
+					deleteButtonList.eq(j).attr('data-evidencechildid', j+1);
 				}
 				break;
 			case 'submit' :
