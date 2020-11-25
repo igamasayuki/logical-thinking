@@ -109,7 +109,7 @@ function addHTML(data){
          }
       }
       addFH = '<div class="row">' + 
-          '<button id="addFHButton" onclick="button(this, \'addFH\')" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
+          '<button id="addFHButton" onclick="button(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
           '</div>';
       $('#hierarchy').append(addFH)
 
@@ -297,7 +297,7 @@ function checkedTree(){
 // 「第一階層を追加する」の後処理
 function keyup(thisEle){
     // sectionのnameを取得
-    name = $(thisEle).parent().parent().parent().parent().attr('name')
+    name = $(thisEle).attr('name');
     $('section[name='+ name + '] font[name=word]').html($(thisEle).val())
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
 }
@@ -415,12 +415,12 @@ $(function(){
                     '<div class="row">' + 
                     '<input name="anotherWord" type="text" class="form-control mb-5" value="">' + 
                     '</div>';
-                    $('#fw' + data[index].id).append(anotherWordText)
+                    $('#fw' + data[index].id).prepend(anotherWordText)
 
                     
                 }
                 addFH = '<div class="row">' + 
-                    '<button id="addFHButton" onclick="button(this, \'addFH\')" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
+                    '<button id="addFHButton" onclick="button(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
                     '</div>';
                 $('#hierarchy').append(addFH)
             });
@@ -607,30 +607,75 @@ $(function(){
                 '<div class="row">' + 
                 '<button onclick="button(this, \'addSh\', \'' + name + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
                 '</div>'
-
+                
+                // 「〇〇」について検討します
+                
+                inputHeading = '<br><div><input onkeyup="keyup(this)" type="text" name="' + name + '">' + 
+                'について検討します</div>'
+                
                 // 「〇〇」を言い換えるとを追加
+                
                 anotherWordText = '<br>' + 
                 '<div class="row">' + 
-                '<label for="">「 <font name="word"></font>」を言い換えると何ですか？</label>' + 
+                '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
                 '</div>' + 
                 '<div class="row">' + 
                 '<input name="anotherWord" type="text" class="form-control mb-5" value="">' + 
                 '</div>';
+                
+                var option = 'addSh';
+                
+                shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+                
+                addShHtml = '<section class="" name="' + shName + '">' + 
+                '<div class="row">' + 
+                '<label for="" class="col-2">第二階層：</label>' + 
+                '<input type="text" class="form-control col-9" value="">' + 
+//                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+                '</div>' + 
+                '<div class="row">' + 
+                '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+                '</div>' + 
+                '</section>';
 
                 addHtml = '<section class="fw" name="' + name + '">' + 
+                inputHeading + 
+                anotherWordText + 
                 '<div>' + 
                 '<div class="row">' + 
                 '<label for="" class="col-11">' +
-                '<input onkeyup="keyup(this)" type="text"></input>'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+                '「<font name="word"></font>」'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
                 '</label>' +
                 '<button onclick="button(this, \'delete\')" name="fh" type="button" class="btn btn-danger col-1">削除</button>' + 
                 '</div>' +
                 '</div>' + 
+                addShHtml + 
                 secondHierarchyButton +
-                anotherWordText + 
                 '</section>';
-
+                
                 $(selectedId).parent().before(addHtml);
+                
+
+//                addShHtml = '<section class="" name="' + shName + '">' + 
+//                '<div class="row">' + 
+//                '<label for="" class="col-2">第二階層：</label>' + 
+//                '<input type="text" class="form-control col-9" value="">' + 
+////                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+//                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+//                '</div>' + 
+//                '<div class="row">' + 
+//                '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+//                '</div>' + 
+//                '</section>';
+//                if (typeof fhId === 'string') {
+//                    // 第二階層入力時に「第三階層を追加する」ボタンを追加する
+//                    $('#' + fhId).after(addShHtml);
+//                } else if (typeof fhId === 'object'){
+//                    $(fhId).parent().after(addShHtml);
+//                }
+
+
                 // 「第二階層を追加」ボタンを追加
                 break;
             // 第二階層を追加
