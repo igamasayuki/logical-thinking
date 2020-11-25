@@ -10,8 +10,8 @@ $(function(){
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		switch (targetId) {
 			case `addEvidence${evidenceParentId}`:
-				const insertLine = $(`.evidence${evidenceParentId}textarea`).length - 1;
-				const evidenceId = $(`.evidence${evidenceParentId}textarea`).length;
+				const insertLine = $(`.evidence${evidenceParentId} textarea`).length - 1;
+				const evidenceId = $(`.evidence${evidenceParentId} textarea`).length;
 				const new_evidence =
 					'<div class="row">' +
 					'<textarea id=evidence' + evidenceParentId + '_' + evidenceId + ' class="form-control" rows="3" cols="70">' +
@@ -32,8 +32,7 @@ $(function(){
 				}
 
 				for (let j = 0; j < deleteButtonList.length; j++) {
-					deleteButtonList.eq(j).attr('id', `evidenceDelete${evidenceParentId}_(${j + 1})`);
-					deleteButtonList.eq(j).attr('onclick', `deleteEvidence(${evidenceParentId},(${j + 1}))`);
+					deleteButtonList.eq(j).attr('id', `evidenceDelete${evidenceParentId}_${j + 1}`);
 				}
 				break;
 			case 'submit' :
