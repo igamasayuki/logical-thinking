@@ -2,7 +2,7 @@ package jp.co.runy.logical_thinking.domain;
 
 /**
  * @author takahashikouhei
- * 根拠にクラス
+ * 根拠のクラス.
  */
 public class Example {
 	

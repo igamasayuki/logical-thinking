@@ -2,7 +2,7 @@ package jp.co.runy.logical_thinking.domain;
 
 /**
  * @author takahashikouhei
- * フレームワークの要素を表すクラス
+ * フレームワークの要素を表すクラス.
  */
 public class FrameworkElement {
 	

@@ -1,6 +1,5 @@
 package jp.co.runy.logical_thinking.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,8 @@ public class MailController {
 	private MailService mailService;
 	
 	/**
+	 * 「Step3 生成されたメール文章」ページを表示するメソッド.
+	 * 
 	 * @param model
 	 * @return 「Step3 生成されたメール文章」ページ
 	 */

@@ -24,6 +24,13 @@ public class FrameworkController {
 	@Autowired
 	private FrameworkService frameworkService;
 	
+	
+	/** 
+	 * フレームワークを取得するメソッド.
+	 * 
+	 * @param id フレームワークのID
+	 * @return List<Framework> フレームワーク一覧
+	 */
 	@GetMapping("/get/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public List<Framework> getFramewaorks(@PathVariable("id") int id) {

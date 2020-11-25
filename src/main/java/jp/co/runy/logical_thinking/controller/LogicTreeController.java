@@ -19,6 +19,8 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
 import jp.co.runy.logical_thinking.service.LogicTreeService;
 
+import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
+
 /**
  * @author takahashikouhei
  *「Step1 全体像を把握する」で使用するコントローラクラス
@@ -26,18 +28,26 @@ import jp.co.runy.logical_thinking.service.LogicTreeService;
 @Controller
 @RequestMapping("/logicalthinking/logictree")
 public class LogicTreeController {
+	
 	@Autowired
 	private LogicTreeService logicTreeService;
-	@Autowired
-	private HttpSession session;
 	
+	
+	/**
+	 * ロジックツリー作成時に使用するフォーム
+	 * 
+	 * @return LogicTreeForm ロジックツリー作成時に使用するフォーム
+	 */
 	@ModelAttribute
 	public LogicTreeForm getLogicTreeForm() {
 		return new LogicTreeForm();
 	}
 	ObjectMapper mapper = new ObjectMapper();
+
 	/**
-	 * @param model
+	 * 「Step1 全体像を把握する」ページを表示するメソッド.
+	 * 
+	 * @param model モデルオブジェクト
 	 * @return 「Step1 全体像を把握する」ページ
 	 */
 	@RequestMapping(value = "")
@@ -47,8 +57,10 @@ public class LogicTreeController {
 	}
 	
 	/**
-	 * @param json view側(ajax)でjson形式のtextを送信 (本来はLigicTree logicTree で自動的判別にて値を取得したかったがnullになったため, 一旦これで対応)
-	 * @param session 使用者判別のセッション情報
+	 * ロジックツリーを登録し、登録された主キーを取得するメソッド.
+	 * 
+	 * @param json jsonデータ
+	 * @param session セッションオブジェクト
 	 * @return 登録したlogictreeのid
 	 * @throws JsonMappingException
 	 * @throws JsonProcessingException
@@ -57,16 +69,10 @@ public class LogicTreeController {
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
 	public String upsert(@RequestBody String json, HttpSession session) throws JsonMappingException, JsonProcessingException {
 		LogicTree bean = mapper.readValue(json, LogicTree.class);
-		logicTreeService.upsert(bean, session);
+		bean.setSessionId(session.getId());
+		final int id = logicTreeService.insert(bean);
+		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+		bean.setId(id);
 		return Integer.toString(bean.getId());
 	}
-	
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public String test(@ModelAttribute("logicTreeForm") LogicTreeForm form, Model model, HttpSession session) {
-		System.out.println("-------------------------");
-		System.out.println(form);
-		System.out.println(session.getId());
-		return "create";
-	}
-	
 }

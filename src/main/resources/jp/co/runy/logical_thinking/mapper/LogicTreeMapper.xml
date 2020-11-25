@@ -28,7 +28,7 @@
 			</collection>
 		</collection>
 	</resultMap>
-	<select id="findBySessionId" resultMap="LogicTree" parameterType="string">
+	<select id="findByIdAndSessionId" resultMap="LogicTree" parameterType="string">
 		select 
 			lt.id, 
 			lt.partner_wants, 
@@ -52,18 +52,18 @@
 			second_hierarchies sh on fh.id = sh.first_hierarchy_id
 		left join 
 			third_hierarchies th on sh.id = th.second_hierarchy_id 
-		where lt.session_id = #{sessionId};
+		where
+			lt.session_id = #{sessionId}
+		and
+			lt.id = ${logicTreeId};
 	</select>
 	
 	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
 		select id, partner_wants, current_state, description_type, framework_id, insistence from logic_trees;
     </select>
-    
-	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
-		<if test="id != null">
-		<!-- update -->
-		</if>
-		<if test="id == 0">
+
+	<select id="insert" resultType="int" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
+		with insert_logictree AS (
 			insert into logic_trees (
 				<trim prefixOverrides=", ">
 					<if test="partnerWants != null">, partner_wants</if>
@@ -73,7 +73,7 @@
 					<if test="insistence != null">, insistence</if>
 					<if test="sessionId != null">, session_id</if>
 				</trim>
-			) 
+			)  
 			values (
 				<trim prefixOverrides=",">
 					<if test="partnerWants != null">, #{partnerWants}</if>
@@ -83,13 +83,65 @@
 					<if test="insistence != null">, #{insistence}</if>
 					<if test="sessionId != null">, #{sessionId}</if>
 				</trim>
-			);
-		</if>
-		<selectKey keyProperty="id" resultType="int" order="AFTER">
-            <if test="id != 0">select ${id}</if>
-            <if test="id == 0">select CURRVAL('logic_trees_id_seq');</if>
-        </selectKey>
-	</insert>
+			)
+			returning id)
+		<foreach collection="firstHierarchyList" item="firstHierarchy" index="index1">
+			, insert_first_hierarchies_${index1} AS (
+				insert into first_hierarchies (
+					<trim prefixOverrides=", ">
+						<if test="firstHierarchy.word != null">, word</if>
+						<if test="firstHierarchy.anotherWord != null">, another_word</if>
+						, logic_tree_id
+					</trim>
+				) 
+				select
+					<trim prefixOverrides=",">
+						<if test="firstHierarchy.word != null">, #{firstHierarchy.word}</if>
+						<if test="firstHierarchy.anotherWord != null">, #{firstHierarchy.anotherWord}</if>
+						, id
+					</trim>
+				from
+					insert_logictree
+				returning id)
+			<foreach collection="firstHierarchy.secondHierarchyList" item="secondHierarchy" index="index2">
+				, insert_second_hierarchies_${index1}_${index2} AS (
+					insert into second_hierarchies (
+						<trim prefixOverrides=", ">
+							<if test="secondHierarchy.explanation != null">, explanation</if>
+							, first_hierarchy_id
+						</trim>
+					) 
+					select
+						<trim prefixOverrides=",">
+							<if test="secondHierarchy.explanation != null">, #{secondHierarchy.explanation}</if>
+							, id
+						</trim>
+					from
+						insert_first_hierarchies_${index1}
+					returning id
+				)
+				<foreach collection="secondHierarchy.thirdHierarchyList" item="thirdHierarchy" index="index3">
+					, insert_third_hierarchies_${index1}_${index2}_${index3} AS (
+						insert into third_hierarchies (
+							<trim prefixOverrides=", ">
+								<if test="thirdHierarchy.explanation != null">, explanation</if>
+								, second_hierarchy_id
+							</trim>
+						) 
+						select
+							<trim prefixOverrides=",">
+								<if test="thirdHierarchy.explanation != null">, #{thirdHierarchy.explanation}</if>
+								, id
+							</trim>
+						from
+							insert_second_hierarchies_${index1}_${index2}
+						returning id
+					)
+				</foreach>
+			</foreach>
+		</foreach>
+		select id from insert_logictree;
+	</select>
 	<delete id="deleteBySessionId">
 		delete from logic_trees where session_id = #{sessionId}
 	</delete>

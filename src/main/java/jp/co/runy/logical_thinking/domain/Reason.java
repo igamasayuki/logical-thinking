@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * ピラミッド構造の根拠を表すクラス
+ * ピラミッド構造の根拠を表すクラス.
  */
 public class Reason {
 	

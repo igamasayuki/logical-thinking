@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * ロジックツリーの第二階層を表すクラス
+ * ロジックツリーの第二階層を表すクラス.
  */
 public class SecondHierarchy {
 	

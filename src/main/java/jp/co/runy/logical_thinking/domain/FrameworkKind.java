@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * フレームワークを検索するクラス
+ * フレームワークを検索するクラス.
  */
 public class FrameworkKind {
 	

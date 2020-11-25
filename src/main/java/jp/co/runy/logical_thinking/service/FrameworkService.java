@@ -10,9 +10,14 @@ import jp.co.runy.logical_thinking.mapper.FrameworkMapper;
 
 @Service
 public class FrameworkService {
+
 	@Autowired
 	private FrameworkMapper frameworkMapper;
 	
+	/** 
+	 * @param id
+	 * @return List<Framework>
+	 */
 	public List<Framework> findFramework(int id){
 		return frameworkMapper.findFramework(id);
 	}

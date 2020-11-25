@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author takahashikouhei
- * ピラミッド構造のクラス
+ * ピラミッド構造のクラス.
  */
 public class Pyramid {
 	

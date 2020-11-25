@@ -3,32 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.runy.logical_thinking.mapper.FirstHierarchyMapper">
-	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.FirstHierarchy">
-		<if test="id != null">
-		<!-- update -->
-		</if>
-		<if test="id == 0">
-			insert into first_hierarchies (
-				<trim prefixOverrides=", ">
-					<if test="word != null">, word</if>
-					<if test="anotherWord != null">, another_word</if>
-					<if test="logicTreeId != null">, logic_tree_id</if>
-				</trim>
-			) 
-			values (
-				<trim prefixOverrides=",">
-					<if test="word != null">, #{word}</if>
-					<if test="anotherWord != null">, #{anotherWord}</if>
-					<if test="logicTreeId != null">, #{logicTreeId}</if>
-				</trim>
-			);
-		</if>
-		<selectKey keyProperty="id" resultType="int" order="AFTER">
-            <if test="id != 0">select ${id}</if>
-            <if test="id == 0">select CURRVAL('first_hierarchies_id_seq');</if>
-        </selectKey>
-	</insert>
-	
 	
 	<delete id="deleteBySessionId">
 		delete from first_hierarchies

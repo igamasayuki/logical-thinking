@@ -3,30 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.runy.logical_thinking.mapper.SecondHierarchyMapper">
-	<insert id="upsert" parameterType="jp.co.runy.logical_thinking.domain.SecondHierarchy">
-		<if test="id != null">
-		<!-- update -->
-		</if>
-		<if test="id == 0">
-			insert into second_hierarchies (
-				<trim prefixOverrides=", ">
-					<if test="explanation != null">, explanation</if>
-					<if test="firstHierarchyId != null">, first_hierarchy_id</if>
-				</trim>
-			) 
-			values (
-				<trim prefixOverrides=",">
-					<if test="explanation != null">, #{explanation}</if>
-					<if test="firstHierarchyId != null">, #{firstHierarchyId}</if>
-				</trim>
-			);
-		</if>
-		<selectKey keyProperty="id" resultType="int" order="AFTER">
-            <if test="id != 0">select ${id}</if>
-            <if test="id == 0">select CURRVAL('second_hierarchies_id_seq');</if>
-        </selectKey>
-	</insert>
-	
 	<select id="selectSecondHierarchy" resultType="jp.co.runy.logical_thinking.domain.SecondHierarchy">
 		select id, explanation, first_hierarchy_id from second_hierarchies;
     </select>

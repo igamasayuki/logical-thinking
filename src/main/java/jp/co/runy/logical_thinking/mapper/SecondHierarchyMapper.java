@@ -8,6 +8,5 @@ import jp.co.runy.logical_thinking.domain.SecondHierarchy;
 
 @Mapper
 public interface SecondHierarchyMapper {
-	void upsert(SecondHierarchy secondHierarchy);
 	public List<SecondHierarchy> selectSecondHierarchy();
 }
