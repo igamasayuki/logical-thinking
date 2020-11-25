@@ -1,96 +1,102 @@
-/**
- * 
- */
+import * as UrlUtils from '../util/util.js';
+
+const urlUtil = new UrlUtils.Url;
+const pyramidUrlUtil = new UrlUtils.PyramidUrl;
 
 $(function(){
-	$('#framework').change(function(){
-		$.ajax({
-			url: 'http://localhost:8080/api/frameworkelement/get/' + $(this).val(),
-			type: 'get'
-		}).done(function(data){
-			frameworkElement=data
-			// 既存のフレームワークの要素を削除
-			$('.reason > section').remove();
-			for(let index = 0; index < data.length; index++){
-				//dataId = index;
-				fwId = 'fw' + index;
-				rationaleId = 'rationale' + index;
-				evidenceId = 'evidence' + index;
-				wordId = 'word' + index;
-				explanationId = 'explanation' + index;
-				anotherExplanationId = 'anotherExplanation' + index;
-				deleteId = 'delete' + index;
-				console.log(data[index].element)
-				new_section = '<section class="mb-5" id="' + fwId + '">' + 
-				
-				'<div class="row">' + 
-				'<label for="clientSecret">' + 
-				data[index].element + 'に関する根拠を挙げてください' + 
-				'</label>' + 
-				'<input type="hidden" id="' + wordId + '" value="' + data[index].element + '"/>' + 
-				'</div>' + 
-				
-				'<div class="row">' + 
-				'<textarea id="' + explanationId + '" class="form-control" rows="3" cols="70">' + 
-				'</textarea>' + 
-				'</div>' + 
-				
-				'<div class="row">' + 
-				'上記の根拠を一言で言い換えると何ですか？' + 
-				'</div>' + 
-				
-				'<div class="row">' + 
-				'<input type="text" id="' + anotherExplanationId + '" class="form-control" value=""/>' + 
-				'</div>' + 
-				
-				'<div class="row">' + 
-				'上記の根拠に対する証拠<span style="color:red">' + 
-				'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' + 
-				'</div>' + 
-				'<section class="' + evidenceId + '">' + 
-				'<div class="row">' + 
-				'<textarea id="' + evidenceId + '_0" class="form-conrol" rows="3" cols="70">' + 
-				'</textarea>' + 
-				'</div>' + 
-				'</section>' + 
-				'<div class="row">' + 
-				'<button type="button" class="btn btn-primary" onClick="addEvidence(' + index + ')">証拠を追加する</button>' + 
-				'</div>' + 
-				'</section>'
-				$('.reason').append(new_section);
-			}
-		})
-	})
-});
+	$(document).on('change', function (e) {
+		const targetId = e.target.id;
+		switch (targetId) {
+			case 'framework':
+			case '#':
+				console.log('framework');
+				$.ajax({
+					url: urlUtil.uri + pyramidUrlUtil.apiFrameworkElementUrl + $(`#${targetId}`).val(),
+					type: 'get'
+				}).done(function (data) {
+					// 既存のフレームワークの要素を削除
+					$('.reason > section').remove();
+					for (let index = 0; index < data.length; index++) {
+						//dataId = index;
+						var fwId = 'fw' + index;
+						var evidenceId = 'evidence' + index;
+						var wordId = 'word' + index;
+						var explanationId = 'explanation' + index;
+						var anotherExplanationId = 'anotherExplanation' + index;
+						var new_section = '<section class="mb-5" id="' + fwId + '">' +
 
-function changeFwk(selected){
-	$.ajax({
-           url: 'http://localhost:8080/api/framework/get/' + $(selected).val(),
-           type: 'get'
-	}).done(function(data){
-		$('.reason > section').remove();
-		var select = document.getElementById("framework");
-		$('#framework > option').remove();
-		var defaultOpt = document.createElement('option');
-		defaultOpt.text = '-- 使えそうなフレームワークを１つ選択してください --'
-		defaultOpt.value = '0';
-		select.appendChild(defaultOpt);
-		
-		data.forEach(function(framework){
-			var option = document.createElement("option");
-			option.text = framework.content;
-			option.value = framework.id;
-			
-			select.appendChild(option);
-		});
+							'<div class="row">' +
+							'<label for="clientSecret">' +
+							data[index].element + 'に関する根拠を挙げてください' +
+							'</label>' +
+							'<input type="hidden" id="' + wordId + '" value="' + data[index].element + '"/>' +
+							'</div>' +
+
+							'<div class="row">' +
+							'<textarea id="' + explanationId + '" class="form-control" rows="3" cols="70">' +
+							'</textarea>' +
+							'</div>' +
+
+							'<div class="row">' +
+							'上記の根拠を一言で言い換えると何ですか？' +
+							'</div>' +
+
+							'<div class="row">' +
+							'<input type="text" id="' + anotherExplanationId + '" class="form-control" value=""/>' +
+							'</div>' +
+
+							'<div class="row">' +
+							'上記の根拠に対する証拠<span style="color:red">' +
+							'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+							'</div>' +
+							'<section class="' + evidenceId + '">' +
+							'<div class="row">' +
+							'<textarea id="' + evidenceId + '_0" class="form-conrol" rows="3" cols="70">' +
+							'</textarea>' +
+							'</div>' +
+							'</section>' +
+							'<div class="row">' +
+							'<button type="button" class="btn btn-primary" onClick="addEvidence(' + index + ')">証拠を追加する</button>' +
+							'</div>' +
+							'</section>'
+						$('.reason').append(new_section);
+					}
+				})
+			break;
+			case 'frameworkKind':
+				$.ajax({
+					url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl + $(`#${targetId}`).val(),
+					type: 'get'
+				}).done(function (data) {
+					$('.reason > section').remove();
+					var select = document.getElementById("framework");
+					$('#framework > option').remove();
+					var defaultOpt = document.createElement('option');
+					defaultOpt.text = '-- 使えそうなフレームワークを１つ選択してください --'
+					defaultOpt.value = '0';
+					select.appendChild(defaultOpt);
+
+					data.forEach(function (framework) {
+						var option = document.createElement("option");
+						option.text = framework.content;
+						option.value = framework.id;
+
+						select.appendChild(option);
+					});
+				});
+				break;
+			default:
+				console.log('test');
+		}
 	});
-}
+	
+});
 
 // ファンクションに切り出すとなぜか動かない
 function changeFramework(fw){
 	console.log("3:" + fw);
 	$.ajax({
-		url: 'http://localhost:8080/api/frameworkelement/get/' + fw.value,
+		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkElementUrl + fw.value,
 		type: 'get'
 	}).done(function(data){
 		frameworkElement=data
@@ -317,7 +323,7 @@ function submit(){
 /*$('[name="fwk"]').change(function () {
          //clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
 	$.ajax({
-           url: 'http://localhost:8080/api/framework/get/' + $(this).val(),
+           url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl + $(this).val(),
            type: 'get'
 	}).done(function(data){
 		var select = document.getElementById("fwList");
