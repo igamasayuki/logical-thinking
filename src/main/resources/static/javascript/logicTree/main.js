@@ -70,7 +70,7 @@ function addHTML(data){
         '<input name="anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
         '</div>';
         $('#hierarchy').append(new_list);
-        $('#hierarchy').children('section[name=fh'+ index + ']').append(secondHierarchyButton + anotherWordText)
+        $('#hierarchy').children('section[name=fh'+ index + ']').before(secondHierarchyButton + anotherWordText)
          // $('#fw' + data[index].id).append(anotherWordText)
          // 第二階層を追加
          //TODO 今, idが入っているため, このif文は意味がない
