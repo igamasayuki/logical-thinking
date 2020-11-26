@@ -76,45 +76,6 @@ $(function(){
 					}
 					pyramid.rationaleList.push(rationale);
 				}
-				console.log(pyramid.rationaleList);
-				const form = document.createElement("form");
-				form.setAttribute("action", "/logicalthinking/mail");
-				form.setAttribute("method", "post");
-				document.body.appendChild(form);
-				for (var param in pyramid) {
-					// 根拠のform作成
-					if (param === 'rationaleList') {
-						for (let i = 0; i < pyramid[param].length; i++) {
-							for (var rationaleParam in pyramid[param][i]) {
-								// 証拠のform作成
-								if (rationaleParam === 'evidenceList') {
-									// 証拠に値が入力されている場合
-									for (let j = 0; j < pyramid[param][i][rationaleParam].length; j++) {
-										for (var evidenceParam in pyramid[param][i][rationaleParam][j]) {
-											const inputEvidence = document.createElement('input');
-											inputEvidence.setAttribute('type', 'hidden');
-											inputEvidence.setAttribute('name', param + '[' + i + '].' + rationaleParam + '[' + j + '].' + evidenceParam);
-											inputEvidence.setAttribute('value', pyramid[param][i][rationaleParam][j][evidenceParam]);
-											form.appendChild(inputEvidence);
-										}
-									}
-								} else {
-									const inputRationale = document.createElement('input');
-									inputRationale.setAttribute('type', 'hidden');
-									inputRationale.setAttribute('name', `${param}[${i}].${rationaleParam}`);
-									inputRationale.setAttribute('value', pyramid[param][i][rationaleParam]);
-									form.appendChild(inputRationale);
-								}
-							}
-						}
-					} else {
-						const inputRationale = document.createElement('input');
-						inputRationale.setAttribute('type', 'hidden');
-						inputRationale.setAttribute('name', param);
-						inputRationale.setAttribute('value', pyramid[param]);
-						form.appendChild(inputRationale);
-					}
-				}
 			break;
 			default:
 		}
