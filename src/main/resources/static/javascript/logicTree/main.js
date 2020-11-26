@@ -352,11 +352,10 @@ function createClaimOption(){
 		var target = $(`.row2`);
 		target.each(function(){
 			var row3Val = $(this).find(`.row3-input`);
-			var val = ``;
 			if(0 !== row3Val.length){
 				// 最下層が第三階層の場合
 				row3Val.each(function(){
-					val = $(this).val()
+					var val = $(this).val()
 					if(`` !== val){
 						option = $('<option>', { text: $(this).val(), value:$(this).val() });
 						select.append(option);
