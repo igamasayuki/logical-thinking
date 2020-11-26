@@ -14,4 +14,6 @@ import jp.co.runy.logical_thinking.domain.Pyramid;
 public interface PyramidMapper {
 	public List<Pyramid> selectPyramid();
 
+	public Integer insert(Pyramid bean);
+
 }

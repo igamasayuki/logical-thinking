@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.domain.FrameworkKind;
-import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.domain.Pyramid;
 import jp.co.runy.logical_thinking.exception.SessionTypeConversionExeption;
 import jp.co.runy.logical_thinking.form.PyramidForm;
@@ -96,8 +95,9 @@ public class PyramidController {
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String upsert(@RequestBody String json, HttpSession session)
 			throws JsonMappingException, JsonProcessingException {
-		Pyramid bean = mapper.readValue(json, Pyramid.class);
+		final Pyramid bean = mapper.readValue(json, Pyramid.class);
 		bean.setSessionId(session.getId());
+		pyramidService.insert(bean);
 		// final int id = logicTreeService.insert(bean);
 		// session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
 		// bean.setId(id);
