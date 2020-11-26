@@ -23,8 +23,8 @@ $(function(){
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		switch (targetId) {
 			case `addEvidence${evidenceParentId}`:
-				const insertLine = $(`.evidence${evidenceParentId} textarea`).length - 1;
-				const evidenceId = $(`.evidence${evidenceParentId} textarea`).length;
+				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
+				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
 				const new_evidence =
 					'<div class="row">' +
 					'<textarea id=evidence' + evidenceParentId + '_' + evidenceId + ' class="form-control" rows="3" cols="70">' +
@@ -58,23 +58,25 @@ $(function(){
 				}
 				// 根拠リストを取得
 				for (let i = 0; i < $('.reason').children('section').length; i++) {
-					let rationale = {
-						word: $('#word' + i).val(),
+					const rationale = {
+						word: $(`#word${i}`).val(),
 						explanation: $(`#explanation${i}`).val(),
 						anotherExplanation: $(`#anotherExplanation${i}`).val(),
 						pyramidId: 0,
 						evidenceList: []
 					}
+					console.log($(`#evidence${i}`).children('div').length);
 					// 証拠リストを取得
-					for (let j = 0; j < $(`#evidence${i}`).length; j++) {
-						let evidence = {
+					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
+						const evidence = {
 							explanation: $(`#evidence${i}_${j}`).val(),
-							rationaleId: i
+							rationaleId: 0
 						}
 						rationale.evidenceList.push(evidence);
 					}
 					pyramid.rationaleList.push(rationale);
 				}
+				console.log(pyramid.rationaleList);
 				const form = document.createElement("form");
 				form.setAttribute("action", "/logicalthinking/mail");
 				form.setAttribute("method", "post");
@@ -113,7 +115,6 @@ $(function(){
 						form.appendChild(inputRationale);
 					}
 				}
-				form.submit(); 
 			break;
 			default:
 		}
@@ -159,7 +160,7 @@ $(function(){
 						'上記の根拠に対する証拠<span style="color:red">' +
 						'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
 						'</div>' +
-						'<section class="' + evidenceId + '">' +
+						'<section id="' + evidenceId + '">' +
 						'<div class="row">' +
 						'<textarea id="' + evidenceId + '_0" class="form-control" rows="3" cols="70">' +
 						'</textarea>' +

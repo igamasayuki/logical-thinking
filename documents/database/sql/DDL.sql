@@ -73,6 +73,7 @@ create table if not exists pyramids (
     framework_id integer,
     -- 結論
     conclusion text,
+    session_id text,
     foreign key (framework_kind_id) references framework_kinds(id),
     foreign key (framework_id) references frameworks(id) 
     on delete cascade

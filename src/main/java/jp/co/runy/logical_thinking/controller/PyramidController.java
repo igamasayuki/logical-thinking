@@ -5,14 +5,23 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.domain.FrameworkKind;
+import jp.co.runy.logical_thinking.domain.LogicTree;
+import jp.co.runy.logical_thinking.domain.Pyramid;
 import jp.co.runy.logical_thinking.exception.SessionTypeConversionExeption;
 import jp.co.runy.logical_thinking.form.PyramidForm;
 import jp.co.runy.logical_thinking.service.PyramidService;
@@ -29,6 +38,8 @@ public class PyramidController {
 	
 	@Autowired
 	PyramidService pyramidService;
+	
+	ObjectMapper mapper = new ObjectMapper();
 	
 	/**
 	 * セッション取得時の型を変更するクラスオブジェクト.
@@ -79,4 +90,16 @@ public class PyramidController {
 		}
 		return frameworkList;
 	}
+
+	// @ResponseBody
+	// @RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	// public String upsert(@RequestBody String json, HttpSession session)
+	// 		throws JsonMappingException, JsonProcessingException {
+	// 	Pyramid bean = mapper.readValue(json, Pyramid.class);
+	// 	bean.setSessionId(session.getId());
+	// 	final int id = logicTreeService.insert(bean);
+	// 	session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+	// 	bean.setId(id);
+	// 	return Integer.toString(bean.getId());
+	// }
 }
