@@ -9,12 +9,12 @@
 		<result column="framework_kind_id" property="frameworkKindId"/>
 		<result column="content" property="content"/>
 		<collection property="frameworkElementList" ofType="jp.co.runy.logical_thinking.domain.FrameworkElement">
-			<result column="element_id" property="id"/>
+			<id column="element_id" property="id"/>
 			<result column="framework_id" property="frameworkId"/>
 			<result column="element" property="element"/>
 		</collection>
 	</resultMap>
-    <select id="findramework" resultMap="frameworkResult">
+    <select id="findAll" resultMap="frameworkResult">
 		select 
 			f.id,
 			f.framework_kind_id,
@@ -24,10 +24,12 @@
 			element.element 
 		from 
 			frameworks f 
-		left join 
+		inner join 
 			framework_elements element 
 		on 
-			f.id = element.framework_id;
+			f.id = element.framework_id
+		order by
+			id, element_id;
     </select>
     <select id="findFramework" parameterType="int" resultMap="frameworkResult">
     	select

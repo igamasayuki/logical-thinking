@@ -46,7 +46,4 @@ public class FrameworkElement {
 	public void setElement(String element) {
 		this.element = element;
 	}
-	
-	
-
 }
