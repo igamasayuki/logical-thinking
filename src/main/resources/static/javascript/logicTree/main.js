@@ -148,8 +148,42 @@ window.addEventListener("load", function(){
     //   ]
     // );
 });
+
+// 送信するデータのバリデーションチェックをします.
+function validateValue(){
+	 var validateOk = true;
+	
+	// 「相手が欲しいもの〜」の文字数チェック
+	 var partnerWants = $('#partnerWants').val();
+	 if(partnerWants.length === 0|| partnerWants.length > 100){
+		$(`#partnerWantsError`).text('100文字以下で入力してください');
+		validateOk = false;
+	  }
+	
+	// 「あなたの現状は〜」の文字数チェック
+	var currentState = $('#currentState').val();
+	if(currentState.length === 0 || currentState.length > 100){
+		$(`#currentStateError`).text('100文字以下で入力してください');
+		validateOk = false;
+	  }
+	
+	if($('[name=select-claim]').val() === `0`){
+		$(`#select-claim-error`).text('主張を選択してください');
+		validateOk = false;
+	}
+	
+	if(!validateOk){
+		$(`#submit-value-error`).text('エラー入力項目があります。');
+	}
+	return validateOk;
+}
+ 
 function test(){
-    // ロジックツリーの値を取得
+	// バリデーション
+	if(!validateValue()){
+		return;
+	}
+	// ロジックツリーの値を取得
     logicTree = {
         // 更新処理ではなく, 削除からの新規作成のためidをコメントアウト
         // id : $('#logicTreeId').val(),
@@ -343,6 +377,16 @@ function createClaimOption(){
 $(function(){
 	// 主張の選択肢を追加
 	createClaimOption();
+	
+	// 「今回の課題を明らかにする」の各項目の文字数チェック
+	$(document).on("blur", "#partnerWants, #currentState", function(){
+		var idName = $(this).attr(`id`);
+		if($(this).val().length > 100){
+			$(`#${idName}Error`).text('100文字以下で入力してください');
+		  }else{
+			  $(`#${idName}Error`).text('');
+		  }
+    });
 	
     // 「相手が欲しいもの」の入力結果を反映
     $( document ).on( 'keyup', '#partnerWants' , function(){ 
