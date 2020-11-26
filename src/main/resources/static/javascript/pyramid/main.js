@@ -76,7 +76,17 @@ $(function(){
 					}
 					pyramid.rationaleList.push(rationale);
 				}
-			break;
+				var param = JSON.stringify(pyramid);
+				$.ajax({
+					url: `${urlUtil.uri}/logicalthinking/pyramid/api/upsert`,
+					type: 'post',
+					dataType: 'json',
+					data: param,
+					contentType: "application/json; charset=utf-8"
+				}).done(function(data) {
+					location.href = `${urlUtil.uri}/logicalthinking/mail`;
+				})
+				break;
 			default:
 		}
 	});

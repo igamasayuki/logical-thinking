@@ -34,6 +34,7 @@ import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
  * 「Step2 ピラミッド構造=PREPを作成する」で使用するコントローラクラス
  */
 @Controller
+@RequestMapping("/logicalthinking/pyramid")
 public class PyramidController {
 	
 	@Autowired
@@ -63,7 +64,7 @@ public class PyramidController {
 	 * @return 「Step2 ピラミッド構造=PREPを作成する」ページ
 	 * @throws SessionTypeConversionExeption
 	 */
-	@RequestMapping(value = "/logicalthinking/pyramid")
+	@RequestMapping(value = "")
 	public String readPyramid(Model model, HttpSession session) throws SessionTypeConversionExeption {
 		List<FrameworkKind> kindList = pyramidService.findFrameworkKind();
 		final Integer id = sessionTypeConversion.typeConversionStringToInteger(session.getAttribute(SESSION_LOGICTREE_ID_KEY));
@@ -91,15 +92,15 @@ public class PyramidController {
 		return frameworkList;
 	}
 
-	// @ResponseBody
-	// @RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	// public String upsert(@RequestBody String json, HttpSession session)
-	// 		throws JsonMappingException, JsonProcessingException {
-	// 	Pyramid bean = mapper.readValue(json, Pyramid.class);
-	// 	bean.setSessionId(session.getId());
-	// 	final int id = logicTreeService.insert(bean);
-	// 	session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
-	// 	bean.setId(id);
-	// 	return Integer.toString(bean.getId());
-	// }
+	@ResponseBody
+	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String upsert(@RequestBody String json, HttpSession session)
+			throws JsonMappingException, JsonProcessingException {
+		Pyramid bean = mapper.readValue(json, Pyramid.class);
+		bean.setSessionId(session.getId());
+		// final int id = logicTreeService.insert(bean);
+		// session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+		// bean.setId(id);
+		return Integer.toString(bean.getId());
+	}
 }
