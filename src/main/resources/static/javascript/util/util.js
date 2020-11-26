@@ -8,7 +8,6 @@ export class Url {
 
 export class PyramidUrl {
     constructor () {
-        this.apiFrameworkElementUrl = '/api/frameworkelement/get/';
-        this.apiFrameworkUrl = '/api/framework/get/';
+        this.apiFrameworkUrl = '/api/framework/get';
     }
 }

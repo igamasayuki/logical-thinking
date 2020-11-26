@@ -2,6 +2,19 @@ import * as UrlUtils from '../util/util.js';
 
 const urlUtil = new UrlUtils.Url;
 const pyramidUrlUtil = new UrlUtils.PyramidUrl;
+let frameworks;
+let frameworkElements;
+
+$(document).ready(function () {
+	$.ajax({
+		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
+		type: 'get',
+	}).done(function (data) {
+		// 成功時の処理
+		frameworks = data['Framework'];
+		frameworkElements = data['FrameworkElement'];
+	})
+});
 
 $(function(){
 	$(document).click(function(e){
@@ -110,79 +123,70 @@ $(function(){
 		const targetId = e.target.id;
 		switch (targetId) {
 			case 'framework':
-				$.ajax({
-					url: urlUtil.uri + pyramidUrlUtil.apiFrameworkElementUrl + $(`#${targetId}`).val(),
-					type: 'get'
-				}).done(function (data) {
-					// 既存のフレームワークの要素を削除
-					$('.reason > section').remove();
-					for (let index = 0; index < data.length; index++) {
-						//dataId = index;
-						const fwId = `fw${index}`;
-						const evidenceId = `evidence${index}`;
-						const wordId = `word${index}`;
-						const explanationId = `explanation${index}`;
-						const anotherExplanationId = `anotherExplanation${index}`;
-						const new_section = '<section class="mb-5" id="' + fwId + '">' +
+				// 既存のフレームワークの要素を削除
+				const frameworkElement = frameworkElements[$(`#${targetId}`).val()];
+				$('.reason > section').remove();
+				for (let index = 0; index < frameworkElement.length; index++) {
+					//dataId = index;
+					const fwId = `fw${index}`;
+					const evidenceId = `evidence${index}`;
+					const wordId = `word${index}`;
+					const explanationId = `explanation${index}`;
+					const anotherExplanationId = `anotherExplanation${index}`;
+					const new_section = '<section class="mb-5" id="' + fwId + '">' +
 
-							'<div class="row">' +
-							'<label for="clientSecret">' +
-							data[index].element + 'に関する根拠を挙げてください' +
-							'</label>' +
-							'<input type="hidden" id="' + wordId + '" value="' + data[index].element + '"/>' +
-							'</div>' +
+						'<div class="row">' +
+						'<label for="clientSecret">' +
+						frameworkElement[index].element + 'に関する根拠を挙げてください' +
+						'</label>' +
+						'<input type="hidden" id="' + wordId + '" value="' + frameworkElement[index].element + '"/>' +
+						'</div>' +
 
-							'<div class="row">' +
-							'<textarea id="' + explanationId + '" class="form-control" rows="3" cols="70">' +
-							'</textarea>' +
-							'</div>' +
+						'<div class="row">' +
+						'<textarea id="' + explanationId + '" class="form-control" rows="3" cols="70">' +
+						'</textarea>' +
+						'</div>' +
 
-							'<div class="row">' +
-							'上記の根拠を一言で言い換えると何ですか？' +
-							'</div>' +
+						'<div class="row">' +
+						'上記の根拠を一言で言い換えると何ですか？' +
+						'</div>' +
 
-							'<div class="row">' +
-							'<input type="text" id="' + anotherExplanationId + '" class="form-control" value=""/>' +
-							'</div>' +
+						'<div class="row">' +
+						'<input type="text" id="' + anotherExplanationId + '" class="form-control" value=""/>' +
+						'</div>' +
 
-							'<div class="row">' +
-							'上記の根拠に対する証拠<span style="color:red">' +
-							'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
-							'</div>' +
-							'<section class="' + evidenceId + '">' +
-							'<div class="row">' +
-							'<textarea id="' + evidenceId + '_0" class="form-control" rows="3" cols="70">' +
-							'</textarea>' +
-							'</div>' +
-							'</section>' +
-							'<div class="row">' +
-							'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
-							'</div>' +
-							'</section>'
-						$('.reason').append(new_section);
-					}
-				})
+						'<div class="row">' +
+						'上記の根拠に対する証拠<span style="color:red">' +
+						'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+						'</div>' +
+						'<section class="' + evidenceId + '">' +
+						'<div class="row">' +
+						'<textarea id="' + evidenceId + '_0" class="form-control" rows="3" cols="70">' +
+						'</textarea>' +
+						'</div>' +
+						'</section>' +
+						'<div class="row">' +
+						'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
+						'</div>' +
+						'</section>'
+					$('.reason').append(new_section);
+				}
 			break;
 			case 'frameworkKind':
-				$.ajax({
-					url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl + $(`#${targetId}`).val(),
-					type: 'get'
-				}).done(function (data) {
-					$('.reason > section').remove();
-					const select = document.getElementById("framework");
-					$('#framework > option').remove();
-					const defaultOpt = document.createElement('option');
-					defaultOpt.text = '-- 使えそうなフレームワークを１つ選択してください --'
-					defaultOpt.value = '0';
-					select.appendChild(defaultOpt);
+				const framework = frameworks[$(`#${targetId}`).val()];
+				$('.reason > section').remove();
+				const select = document.getElementById("framework");
+				$('#framework > option').remove();
+				const defaultOpt = document.createElement('option');
+				defaultOpt.text = '-- 使えそうなフレームワークを１つ選択してください --'
+				defaultOpt.value = '0';
+				select.appendChild(defaultOpt);
 
-					data.forEach(function (framework) {
-						const option = document.createElement("option");
-						option.text = framework.content;
-						option.value = framework.id;
-
-						select.appendChild(option);
-					});
+				framework.forEach(function (val) {
+					const option = document.createElement("option");
+					option.text = val.content;
+					option.value = val.id;
+					select.appendChild(option);
 				});
 				break;
 			default:
