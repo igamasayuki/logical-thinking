@@ -29,7 +29,7 @@ public class LogicTreeService {
 	 * @return フレームワーク一覧(要素込み)
 	 */
 	public List<Framework> findFramework(){
-		return frameworkMapper.findramework();
+		return frameworkMapper.findAll();
 	}
 	
 	/**

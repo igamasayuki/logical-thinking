@@ -10,7 +10,7 @@ import java.util.List;
 public class FrameworkKind {
 	
 	private int id;
-	private String summaｒy;
+	private String summary;
 	private List<Framework> frameworkList = new ArrayList<>();
 	
 	/**
@@ -29,13 +29,13 @@ public class FrameworkKind {
 	 * @return the summary
 	 */
 	public String getSummary() {
-		return summaｒy;
+		return summary;
 	}
 	/**
 	 * @param summary the summary to set
 	 */
 	public void setSummary(String summary) {
-		this.summaｒy = summary;
+		this.summary = summary;
 	}
 	/**
 	 * @return the frameworkList

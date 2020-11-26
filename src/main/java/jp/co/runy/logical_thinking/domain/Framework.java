@@ -70,9 +70,4 @@ public class Framework {
 	public void setFrameworkElementList(List<FrameworkElement> frameworkElementList) {
 		this.frameworkElementList = frameworkElementList;
 	}
-	
-
-	
-	
-
 }

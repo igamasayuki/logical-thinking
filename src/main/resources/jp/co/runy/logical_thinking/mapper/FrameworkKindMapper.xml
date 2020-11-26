@@ -21,10 +21,12 @@
 			framework.content
 		from 
 			framework_kinds kind 
-		left join 
+		inner join 
 			frameworks framework 
 		on 
-			kind.id = framework.framework_kind_id;
+			kind.id = framework.framework_kind_id
+		order by
+			id, framework_id;
     </select>
     
 </mapper>

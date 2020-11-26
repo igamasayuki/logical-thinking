@@ -55,7 +55,7 @@
           </label>
         </div>
         <div class="row mb-3">
-        	<select id="frameworkKind" class="form-control" onChange="changeFwk(this)">
+        	<select id="frameworkKind" class="form-control"]>
 				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
 				<option th:each="frameworkKind : ${frameworkKindList}" th:value="${frameworkKind.id}" th:text="${frameworkKind.summary}"></option>
 			</select>
@@ -83,10 +83,10 @@
             <input type="text" id="conclusion" class="form-control" value="">
         </div>
         <div class="row mb-5">
-            <button type="button" class="btn btn-primary" onClick="submit()">メール文章を作成する</button>
+            <button type="button" id='submit' class="btn btn-primary">メール文章を作成する</button>
         </div>
       </section>
     </div>
-    <script th:src="@{/javascript/pyramid/main.js}"></script>
+    <script type="module" th:src="@{/javascript/pyramid/main.js}"></script>
 </body>
 </html>

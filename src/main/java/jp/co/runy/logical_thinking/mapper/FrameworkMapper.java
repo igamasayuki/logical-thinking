@@ -12,6 +12,6 @@ import jp.co.runy.logical_thinking.domain.Framework;
  */
 @Mapper
 public interface FrameworkMapper {
-	List<Framework> findramework();
+	List<Framework> findAll();
 	List<Framework> findFramework(int id);
 }
