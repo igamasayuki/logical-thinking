@@ -302,23 +302,47 @@ function keyup(thisEle){
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
 }
 
-
+// 主張の選択肢を追加
+function createClaimOption(){
+	$(document).on("blur", ".row2", function(){
+		
+		// 主張の選択肢を削除
+		$('#select-claim').children().remove();
+		var select = $('#select-claim');
+		// デフォルト値を設定
+		var defalut = `-- 主張を１つ選択してください --`;
+		var option = $('<option>', { text:defalut, value:defalut });
+		select.append(option);
+		
+		//　各理由の最下層の入力値を選択肢に設定
+		var target = $(`.row2`);
+		target.each(function(){
+			var row3Val = $(this).find(`.row3-input`);
+			var val = ``;
+			if(0 !== row3Val.length){
+				// 最下層が第三階層の場合
+				row3Val.each(function(){
+					val = $(this).val()
+					if(`` !== val){
+						option = $('<option>', { text: $(this).val(), value:$(this).val() });
+						select.append(option);
+					}
+				});
+			}else{
+				//　最下層が第二階層の場合
+				var val = $(this).find(`.row2-input`).val();
+				if(`` !== val){
+					option = $('<option>', { text:val, value:val });
+					select.append(option);
+				}
+			}
+		});
+	});
+}
 
 $(function(){
-//	// 主張の選択肢を追加
-//	$(document).on("blur", ".row2", function(){
-//		var val = $(this).val(); 
-//		if("" !== val){
-//			var select = document.getElementById("select-claim");
-//			$('<option>', { text:val, value:val: });
-//			select.appendChild(option);
-//		}
-//	});
-//	
-//	// 主張の選択肢を削除
-//	$(document).on("click", ".row2", function(){
-//		$('#select-claim').children('[value=' + $(this).val() + ']').remove();
-//	});
+	// 主張の選択肢を追加
+	createClaimOption();
 	
     // 「相手が欲しいもの」の入力結果を反映
     $( document ).on( 'keyup', '#partnerWants' , function(){ 
@@ -389,11 +413,10 @@ $(function(){
                     
                     shName = name + '_sh' + $('.fw[name=' + name + '] section').length
 
-                    addHtml = '<section class="" name="' + shName + '">' + 
+                    addHtml = '<section class="row2" name="' + shName + '">' + 
                     '<div class="row">' + 
                     '<label for="" class="col-2">第二階層：</label>' + 
-                    '<input type="text" class="form-control col-9" value="">' + 
-//                    '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+                    '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                     '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                     '</div>' + 
                     '<div class="row">' + 
@@ -614,7 +637,6 @@ $(function(){
                 'について検討します</div>'
                 
                 // 「〇〇」を言い換えるとを追加
-                
                 anotherWordText = '<br>' + 
                 '<div class="row">' + 
                 '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
@@ -627,11 +649,10 @@ $(function(){
                 
                 shName = name + '_sh' + $('.fw[name=' + name + '] section').length
                 
-                addShHtml = '<section class="" name="' + shName + '">' + 
+                addShHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9" value="">' + 
-//                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
@@ -682,11 +703,10 @@ $(function(){
             case 'addSh':
                 shName = name + '_sh' + $('.fw[name=' + name + '] section').length
 
-                addHtml = '<section class="" name="' + shName + '">' + 
+                addHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9" value="">' + 
-//                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
@@ -706,7 +726,7 @@ $(function(){
                 addHtml = 
                 '<section name="' + thName + '">' + 
                 '<div class="row"><label for="" class="offset-1 col-2">第三階層：</label>' + 
-                '<input type="text" class="form-control col-8 float-right" value="">' +
+                '<input type="text" class="form-control col-8 float-right row3-input" value="">' +
                 '<button name="th" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-info col-1">削除</button>' + 
                 '</div>' + 
                 '</section>';
