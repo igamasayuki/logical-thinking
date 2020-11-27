@@ -437,16 +437,12 @@ $(function(){
       // name="fw"の値が変更されたらイベント発生
       // ドロップダウンの値が変更されたら, 変更後の値に対応したframeworkElementを取得
       $('[name="fw"]').change(function () {
+    	  // フレームワークIDを取得
+    	   frameworkId = $(this).val();
           // 記述用の値(原因 or 方法)を取得
-          clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
-          var url = location.href;
-          var path = location.pathname;
-          var uri = url.replace(path, "");
-          $.ajax({
-              url: uri + '/api/frameworkelement/get/' + $(this).val(),
-              type: 'get'
-          }).done(function(data){
-            frameworkElement = data
+           clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
+           data = frameworkElements[frameworkId];
+            
             // 既存のフレームワークの要素を削除
             $('#hierarchy > div').remove();
             $('#hierarchy > .fw').remove();
