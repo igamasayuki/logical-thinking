@@ -413,6 +413,12 @@ $(function(){
     $( document ).on( 'keyup', '#currentState' , function(){ 
         $('#copyCurrentState').html($( this ).val());
     });
+    // 言い換えの入力結果を反映
+    $( document ).on( 'keyup', '[name=anotherWord]' , function(){ 
+        $(this).parent().next().find('.copyAnotherWord').html($( this ).val());
+        console.log( $(this).parent().next().find('.copyAnotherWord').html());
+    });
+    
     // ラジオボタンが変更されたらイベント発生
     // class="clarify"に対して対象の文言をhtmlで追加
     $('input[name="clarify"]').change(function () {
@@ -458,30 +464,33 @@ $(function(){
                   '<div id="' + fhId + '">' + 
                   '<div class="row">' + 
                   '<label for="" class="col-11">' +
-                  data[index].element + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+                  `<font class="copyAnotherWord">` + 
+                  data[index].element + 
+                 `</font>` + 
+                  'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
                   '</label>' +
                   '<input type="hidden" value="' + data[index].element +  '">' + 
-                  '<button name="fh" type="button" onclick="button(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
+                  '<button name="fh" type="button" onclick="changeHierarchy(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
                   '</div>' +
                   '</div>' + 
                   '</section>';
                   $('#hierarchy').append(new_list);
                     // 「第二階層を追加」ボタンを追加
-                    secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="button(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
+                    secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
                     $('#fw' + data[index].id).append(secondHierarchyButton);
                     
-                    var name = 'fh' + index;
+                    name = 'fh' + index;
                     
                     shName = name + '_sh' + $('.fw[name=' + name + '] section').length
 
                     addHtml = '<section class="row2" name="' + shName + '">' + 
                     '<div class="row">' + 
                     '<label for="" class="col-2">第二階層：</label>' + 
-                    '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
-                    '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+                    '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
+                    '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                     '</div>' + 
                     '<div class="row">' + 
-                    '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+                    '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
                     '</div>' + 
                     '</section>';
                     if (typeof fhId === 'string') {
