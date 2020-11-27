@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	data-layout-decorate="~{layout/default}">
+<div layout:fragment="content">
+	
+	<div id="jsmind_container" style="width:100%;height:900px;"></div>
+	<input id="partnerWants" type="text" name="partnerWants" th:value="${logicTree.partnerWants}">
+	<input id="currentState" type="text" name="currentState" th:value="${logicTree.currentState}">
+	<input id="descriptionType" type="text" name="descriptionType" th:value="${logicTree.descriptionType}">
+	
+	<script th:src="@{/javascript/mindmap/jsmind.js}"></script>
+	<script th:src="@{/javascript/mindmap/mindmap.js}"></script>
+</div>
+</html>
