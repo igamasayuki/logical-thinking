@@ -55,7 +55,4 @@ public class Example {
 	public void setDisplayOrder(Integer displayOrder) {
 		this.displayOrder = displayOrder;
 	}
-	
-	
-
 }

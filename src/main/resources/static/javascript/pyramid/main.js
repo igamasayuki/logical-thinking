@@ -50,35 +50,33 @@ $(function(){
 				}
 				break;
 			case 'submit' :
-				const pyramid = {
+				const pyramidForm = {
 					frameworkKindId: $('#frameworkKind').val(),
 					frameworkId: $('#framework').val(),
 					conclusion: $('#conclusion').val(),
-					rationaleList: []
+					rationaleFormList: []
 				}
 				// 根拠リストを取得
 				for (let i = 0; i < $('.reason').children('section').length; i++) {
-					const rationale = {
+					const rationaleForm = {
 						word: $(`#word${i}`).val(),
 						explanation: $(`#explanation${i}`).val(),
 						anotherExplanation: $(`#anotherExplanation${i}`).val(),
-						pyramidId: 0,
-						evidenceList: [],
+						evidenceFormList: [],
 						displayOrder: i + 1,
 					}
 					console.log($(`#evidence${i}`).children('div').length);
 					// 証拠リストを取得
 					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
-						const evidence = {
+						const evidenceForm = {
 							explanation: $(`#evidence${i}_${j}`).val(),
-							rationaleId: 0,
 							displayOrder: j + 1
 						}
-						rationale.evidenceList.push(evidence);
+						rationaleForm.evidenceFormList.push(evidenceForm);
 					}
-					pyramid.rationaleList.push(rationale);
+					pyramidForm.rationaleFormList.push(rationaleForm);
 				}
-				var param = JSON.stringify(pyramid);
+				var param = JSON.stringify(pyramidForm);
 				$.ajax({
 					url: `${urlUtil.uri}/logicalthinking/pyramid/api/upsert`,
 					type: 'post',

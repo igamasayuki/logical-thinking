@@ -2,6 +2,7 @@ package jp.co.runy.logical_thinking.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,20 +10,25 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.runy.logical_thinking.domain.Example;
 import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.domain.FrameworkKind;
 import jp.co.runy.logical_thinking.domain.Pyramid;
+import jp.co.runy.logical_thinking.domain.Reason;
 import jp.co.runy.logical_thinking.exception.SessionTypeConversionExeption;
 import jp.co.runy.logical_thinking.form.PyramidForm;
+import jp.co.runy.logical_thinking.form.ReasonForm;
 import jp.co.runy.logical_thinking.service.PyramidService;
 import jp.co.runy.logical_thinking.util.SessionTypeConversion;
 
@@ -93,13 +99,33 @@ public class PyramidController {
 
 	@ResponseBody
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String upsert(@RequestBody String json, HttpSession session)
+	public String upsert(
+			@Validated @RequestBody PyramidForm pyramidForm, HttpSession session)
 			throws JsonMappingException, JsonProcessingException {
-		final Pyramid bean = mapper.readValue(json, Pyramid.class);
-		bean.setSessionId(session.getId());
-		final int id = pyramidService.insert(bean);
-		bean.setId(id);
+		final Pyramid pyramid = new Pyramid();
+		BeanUtils.copyProperties(pyramidForm, pyramid);
+		final List<Reason> reasonList = pyramidForm.getRationaleFormList().stream()
+				.map(reasonForm -> convertReason(reasonForm))
+				.collect(Collectors.toList());
+		pyramid.setRationaleList(reasonList);
+		pyramid.setSessionId(session.getId());
+		final int id = pyramidService.insert(pyramid);
+		pyramid.setId(id);
 		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
-		return Integer.toString(bean.getId());
+		return Integer.toString(pyramid.getId());
+	}
+
+	private Reason convertReason(ReasonForm form) {
+		Reason reason = new Reason();
+		BeanUtils.copyProperties(form, reason);
+		final List<Example> exampleList = form.getEvidenceFormList().stream()
+			.map(exampleForm -> {
+				final Example example = new Example();
+				BeanUtils.copyProperties(exampleForm, example);
+				return example;
+			})
+			.collect(Collectors.toList());
+		reason.setEvidenceList(exampleList);
+		return reason;
 	}
 }
