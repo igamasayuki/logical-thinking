@@ -166,24 +166,24 @@ function validateValue(){
 	// 「相手が欲しいもの〜」の文字数チェック
 	 var partnerWants = $('#partnerWants').val();
 	 if(partnerWants.length === 0|| partnerWants.length > 100){
-		$(`#partnerWantsError`).text('100文字以下で入力してください');
+		$(`#partnerWantsError`).text('100文字以内で入力してください');
 		validateOk = false;
 	  }
 	
 	// 「あなたの現状は〜」の文字数チェック
 	var currentState = $('#currentState').val();
 	if(currentState.length === 0 || currentState.length > 100){
-		$(`#currentStateError`).text('100文字以下で入力してください');
+		$(`#currentStateError`).text('100文字以内で入力してください');
 		validateOk = false;
 	  }
 	
-	if($('[name=select-claim]').val() === `0`){
-		$(`#select-claim-error`).text('主張を選択してください');
+	if($('[name=insistence]').val() === ``){
+		$(`#insistence-error`).text('主張を選択してください');
 		validateOk = false;
 	}
 	
 	if(!validateOk){
-		$(`#submit-value-error`).text('エラー入力項目があります。');
+		$(`#submit-value-error`).text('エラー入力項目があります');
 	}
 	return validateOk;
 }
@@ -201,7 +201,7 @@ function test(){
         currentState : $('#currentState').val(),
         descriptionType : $('input[name="clarify"]').val(),
         frameworkId : $('[name="fw"]').val(),
-        insistence : $('#insistence').val(),
+        insistence : $('#insistence option:selected').val(),
         firstHierarchyList : []
     }
     // 第一階層の数を取得
@@ -241,9 +241,6 @@ function test(){
         logicTree.firstHierarchyList.push(firstHierarchy)
     }
     // json化
-    var url = location.href;
-    var path = location.pathname;
-    var uri = url.replace(path, "");
     var param = JSON.stringify(logicTree);
     $.ajax({
         url: URL + '/upsert',
@@ -251,11 +248,21 @@ function test(){
         dataType: 'json',
         data: param,
         contentType: "application/json; charset=utf-8"
-        // data : {"partnerWants" : "test"}
     }).done(function(data){
         // 登録したidを次のページに引き継ぐ
     	location.href= uri + '/logicalthinking/pyramid';
-    })
+    }).fail(function(jqXHR, textStatus, errorThrown){
+    	errors = jqXHR.responseJSON.errors;
+    	errors.forEach(function(error){
+    		target = error.field;
+    		if(`insistence` === target){
+    			$(`#insistence-error`).text('主張を選択してください');
+    		}else{
+    			$(`#${target}Error`).text('100文字以内で入力してください');
+    		}
+    	});
+    	$(`#submit-value-error`).text('エラー入力項目があります');
+    });
 }
 function checkedTree(){
     list = []
@@ -347,15 +354,15 @@ function keyup(thisEle){
 }
 
 // 主張の選択肢を追加
-function createClaimOption(){
+function createInsistenceOption(){
 	$(document).on("blur", ".row2", function(){
 		
 		// 主張の選択肢を削除
-		$('#select-claim').children().remove();
-		var select = $('#select-claim');
+		$('#insistence').children().remove();
+		var select = $('#insistence');
 		// デフォルト値を設定
 		var defalut = `-- 主張を１つ選択してください --`;
-		var option = $('<option>', { text:defalut, value:defalut });
+		var option = $('<option>', { text:defalut, value:`` });
 		select.append(option);
 		
 		//　各理由の最下層の入力値を選択肢に設定
@@ -385,13 +392,14 @@ function createClaimOption(){
 
 $(function(){
 	// 主張の選択肢を追加
-	createClaimOption();
+	createInsistenceOption();
+	
 	
 	// 「今回の課題を明らかにする」の各項目の文字数チェック
 	$(document).on("blur", "#partnerWants, #currentState", function(){
 		var idName = $(this).attr(`id`);
 		if($(this).val().length > 100){
-			$(`#${idName}Error`).text('100文字以下で入力してください');
+			$(`#${idName}Error`).text('100文字以内で入力してください');
 		  }else{
 			  $(`#${idName}Error`).text('');
 		  }
@@ -496,11 +504,11 @@ $(function(){
                     
                 }
                 addFH = '<div class="row">' + 
-                    '<button id="addFHButton" onclick="button(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
+                    '<button id="addFHButton" onclick="changeHierarchy(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
                     '</div>';
                 $('#hierarchy').append(addFH)
             });
-        });
+//        });
 
         // step2へ遷移する処理
         $('#submit').on('click', function(){
@@ -605,7 +613,7 @@ $(function(){
     // selectedId: 押下位置を取得
     // optiin: add(追加), delete(削除)
     // name: 追加したい要素名
-    function button(selectedId, option, name){
+    function changeHierarchy(selectedId, option, name){
         switch (option) {
             // 削除
             case 'delete':
@@ -705,7 +713,7 @@ $(function(){
                 addShHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
@@ -735,7 +743,7 @@ $(function(){
 //                '<div class="row">' + 
 //                '<label for="" class="col-2">第二階層：</label>' + 
 //                '<input type="text" class="form-control col-9" value="">' + 
-////                '<input type="text" class="form-control col-9 row2" value=""　onblur="createClaimOption(this)">' + 
+////                '<input type="text" class="form-control col-9 row2" value=""　onblur="createInsistenceOption(this)">' + 
 //                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
 //                '</div>' + 
 //                '<div class="row">' + 
@@ -759,7 +767,7 @@ $(function(){
                 addHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 

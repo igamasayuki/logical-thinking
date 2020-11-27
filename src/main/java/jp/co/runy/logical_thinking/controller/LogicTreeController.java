@@ -1,6 +1,9 @@
 package jp.co.runy.logical_thinking.controller;
 
+import static jp.co.runy.logical_thinking.util.SessionKeyUtil.SESSION_LOGICTREE_ID_KEY;
+
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +22,13 @@ import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
 import jp.co.runy.logical_thinking.service.LogicTreeService;
 
-import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
-
 /**
  * @author takahashikouhei
  *「Step1 全体像を把握する」で使用するコントローラクラス
  */
 @Controller
 @RequestMapping("/logicalthinking/logictree")
-public class LogicTreeController {
+public class LogicTreeController extends AbstractAjaxController {
 	
 	@Autowired
 	private LogicTreeService logicTreeService;
@@ -67,8 +68,8 @@ public class LogicTreeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces="text/plain;charset=UTF-8")
-	public String upsert(@RequestBody String json, HttpSession session) throws JsonMappingException, JsonProcessingException {
-		LogicTree bean = mapper.readValue(json, LogicTree.class);
+	public String upsert(@RequestBody @Valid LogicTree bean, HttpSession session)
+			throws JsonMappingException, JsonProcessingException {
 		bean.setSessionId(session.getId());
 		final int id = logicTreeService.insert(bean);
 		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
