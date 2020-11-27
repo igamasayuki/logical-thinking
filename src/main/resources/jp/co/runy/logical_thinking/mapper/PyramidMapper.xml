@@ -10,22 +10,22 @@
       with insert_pyramid AS (
         insert into pyramids(
           <trim prefixOverrides=", ">
-            <if test="frameworkKindId != 0">, framework_kind_id</if>
-            <if test="frameworkId != 0">, framework_id</if>
-            <if test="conclusion != null">, conclusion</if>
-            <if test="sessionId != null">, session_id</if>
+            <if test="bean.frameworkKindId != 0">, framework_kind_id</if>
+            <if test="bean.frameworkId != 0">, framework_id</if>
+            <if test="bean.conclusion != null">, conclusion</if>
+            , session_id
           </trim>
         )
         values (
           <trim prefixOverrides=",">
-              <if test="frameworkKindId != 0">, #{frameworkKindId}</if>
-              <if test="frameworkId != 0">, #{frameworkId}</if>
-              <if test="conclusion != null">, #{conclusion}</if>
-              <if test="sessionId != null">, #{sessionId}</if>
+              <if test="bean.frameworkKindId != 0">, #{bean.frameworkKindId}</if>
+              <if test="bean.frameworkId != 0">, #{bean.frameworkId}</if>
+              <if test="bean.conclusion != null">, #{bean.conclusion}</if>
+              , #{sessionId}
           </trim>
         )
       returning id)
-      <foreach collection="rationaleList" item="reason" index="index1">
+      <foreach collection="bean.rationaleList" item="reason" index="index1">
       	, insert_reasons_${index1} AS (
 				  insert into reasons (
             <trim prefixOverrides=", ">
@@ -33,6 +33,7 @@
               <if test="reason.explanation != null">, explanation</if>
               <if test="reason.anotherExplanation != null">, another_explanation</if>
               <if test="reason.displayOrder != 0">, display_order</if>
+              , session_id
               , pyramid_id
             </trim>
           ) 
@@ -42,6 +43,7 @@
               <if test="reason.explanation != null">, #{reason.explanation}</if>
               <if test="reason.anotherExplanation != null">, #{reason.anotherExplanation}</if>
               <if test="reason.displayOrder != 0">, #{reason.displayOrder}</if>
+              , #{sessionId}
               , id
             </trim>
           from
@@ -53,6 +55,7 @@
                 <trim prefixOverrides=", ">
                   <if test="example.explanation != null">, explanation</if>
                   <if test="example.displayOrder != 0">, display_order</if>
+                  , session_id 
                   , reason_id
                 </trim>
               )
@@ -60,6 +63,7 @@
                 <trim prefixOverrides=", ">
                   <if test="example.explanation != null">, #{example.explanation}</if>
                   <if test="example.displayOrder != 0">, #{example.displayOrder}</if>
+                  , #{sessionId}
                   , id
                 </trim>
               from

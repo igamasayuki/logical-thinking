@@ -1,7 +1,7 @@
-import * as UrlUtils from '../util/util.js';
+import * as Utils from '../util/util.js';
 
-const urlUtil = new UrlUtils.Url;
-const pyramidUrlUtil = new UrlUtils.PyramidUrl;
+const urlUtil = new Utils.Url;
+const pyramidUrlUtil = new Utils.PyramidUrl;
 let frameworks;
 let frameworkElements;
 
@@ -65,7 +65,6 @@ $(function(){
 						evidenceFormList: [],
 						displayOrder: i + 1,
 					}
-					console.log($(`#evidence${i}`).children('div').length);
 					// 証拠リストを取得
 					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
 						const evidenceForm = {
@@ -83,9 +82,11 @@ $(function(){
 					dataType: 'json',
 					data: param,
 					contentType: "application/json; charset=utf-8"
-				}).done(function() {
+				}).then(() => {
 					location.href = `${urlUtil.uri}/logicalthinking/mail`;
-				})
+				}).catch((...args) => {
+					console.log(args);
+				});
 				break;
 			default:
 		}

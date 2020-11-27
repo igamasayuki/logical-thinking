@@ -18,13 +18,15 @@ public class PyramidForm extends Pyramid{
     /** フレームワーク分類ID */
     @NotNull
     private Integer frameworkKindId;
+
     /** フレームワークID */
-    
     @NotNull
     private Integer frameworkId;
+
     /** 結論 */
     @NotEmpty(message="入力してください")
     private String conclusion;
+    
     /** 根拠List */
     private List<@Valid ReasonForm> rationaleFormList = new ArrayList<>();
 

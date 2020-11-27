@@ -93,6 +93,7 @@ create table if not exists reasons (
     explanation text,
     pyramid_id integer,
     display_order integer,
+    session_id text,
     foreign key (pyramid_id) references pyramids(id)
     on delete cascade
     on update cascade
@@ -103,6 +104,7 @@ create table if not exists examples (
     explanation text,
     reason_id integer,
     display_order integer,
+    session_id text,
     foreign key (reason_id) references reasons(id)
     on delete cascade
     on update cascade

@@ -108,8 +108,7 @@ public class PyramidController {
 				.map(reasonForm -> convertReason(reasonForm))
 				.collect(Collectors.toList());
 		pyramid.setRationaleList(reasonList);
-		pyramid.setSessionId(session.getId());
-		final int id = pyramidService.insert(pyramid);
+		final int id = pyramidService.insert(pyramid, session.getId());
 		pyramid.setId(id);
 		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
 		return Integer.toString(pyramid.getId());

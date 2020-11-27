@@ -44,8 +44,8 @@ public class PyramidService {
 		return logicTreeMapper.findByIdAndSessionId(id, sessionId);
 	}
 
-	public Integer insert(Pyramid bean) {
-		return pyramidMapper.insert(bean);
+	public Integer insert(Pyramid bean, String sessionId) {
+		return pyramidMapper.insert(bean, sessionId);
 	}
 	
 }
