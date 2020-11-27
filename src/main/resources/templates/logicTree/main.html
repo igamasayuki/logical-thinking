@@ -96,63 +96,68 @@
             MECEとは？
         </button>
         </div>
-
-		<div class="row mb-3">
-			<select name="fw" class="form-control" id="fwradio">
-				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
-				<option th:each="framework : ${frameworkList}" th:value="${framework.id}" th:text="${framework.content}"></option>
-            </select>
-        </div>
-        <section id="hierarchy">
-            <!-- <button>ボタン1</button> -->
-            <!-- <div id="fw1">
-                <div id="fh1">
-                    <div class="row">
-                        <label for="" class="col-11"> ヒトに関する具体的な【原因(理由)/方法】を挙げてください</label>
-                        <button type="button" class="btn btn-danger col-1">削除</button>
-                    </div>
-                    <div id="sh1">
-                        <div class="row">
-                            <label for="" class="col-2">第二階層：</label>
-                            <input type="text" class="form-control col-9" value="30万円のエンジニアを提案する">
-                            <button type="button" class="btn btn-primary col-1">削除</button>
-                        </div>
-                        <div id="th1">
-                            <div>
-                                <div class="row">
-                                    <label for="" class="offset-1 col-2">第三階層：</label>
-                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れないが安いエンジニアを提案する">
-                                    <button type="button" class="btn btn-info col-1">削除</button>
-                                  </div>
-                                  <div class="row">
-                                    <label for="" class="offset-1 col-2">第三階層：</label>
-                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れるがJavaの経験が浅いエンジニアを提案する">
-                                    <button type="button" class="btn btn-info col-1">削除</button>
-                                  </div>
-                            </div>
-                            <div class="row">
-                                <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button id="addSh1" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
-                    </div>
-                </div>
-              </div> -->
-        </section>
-        <div class="row mb-5">
-            <button target="_blank" class="btn btn-primary mr-3">
-              <p>ここまでのロジックツリーを確認する</p>
-              So What?/Why So?の関係になっているか確認してください
-            </button>
-            <!-- <a href="#" target="_blank" class="btn btn-warning">
-              ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
-            </a> -->
-            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
-                So What?/Why So?とは
-            </button>
-          </div>
+		
+		<form target="_blank" th:action="@{/logical-thinking/mindmap}" method="post">
+			<div class="row mb-3">
+				<select name="fw" class="form-control" id="fwradio">
+					<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+					<option th:each="framework : ${frameworkList}" th:value="${framework.id}" th:text="${framework.content}"></option>
+	            </select>
+	        </div>
+	        <section id="hierarchy">
+	            <!-- <button>ボタン1</button> -->
+	            <!-- <div id="fw1">
+	                <div id="fh1">
+	                    <div class="row">
+	                        <label for="" class="col-11"> ヒトに関する具体的な【原因(理由)/方法】を挙げてください</label>
+	                        <button type="button" class="btn btn-danger col-1">削除</button>
+	                    </div>
+	                    <div id="sh1">
+	                        <div class="row">
+	                            <label for="" class="col-2">第二階層：</label>
+	                            <input type="text" class="form-control col-9" value="30万円のエンジニアを提案する">
+	                            <button type="button" class="btn btn-primary col-1">削除</button>
+	                        </div>
+	                        <div id="th1">
+	                            <div>
+	                                <div class="row">
+	                                    <label for="" class="offset-1 col-2">第三階層：</label>
+	                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れないが安いエンジニアを提案する">
+	                                    <button type="button" class="btn btn-info col-1">削除</button>
+	                                  </div>
+	                                  <div class="row">
+	                                    <label for="" class="offset-1 col-2">第三階層：</label>
+	                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れるがJavaの経験が浅いエンジニアを提案する">
+	                                    <button type="button" class="btn btn-info col-1">削除</button>
+	                                  </div>
+	                            </div>
+	                            <div class="row">
+	                                <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="row">
+	                        <button id="addSh1" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
+	                    </div>
+	                </div>
+	              </div> -->
+	        </section>
+	        <div class="row mb-5">
+	            <button class="btn btn-primary mr-3">
+	              <p>ここまでのロジックツリーを確認する</p>
+	              So What?/Why So?の関係になっているか確認してください
+	            </button>
+	            <!-- <a href="#" target="_blank" class="btn btn-warning">
+	              ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+	            </a> -->
+	            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
+	                So What?/Why So?とは
+	            </button>
+	          </div>
+	          <input id="partnerWantsForLogicTree" type="hidden" name="partnerWants">
+	          <input id="currentStateForLogicTree" type="hidden" name="currentState">
+	          <input id="descriptionTypeForLogicTree" type="hidden" name="descriptionType" value="1">
+          </form>
     </section>
     <section class="col-12">
         <div class="alert alert-danger" role="alert">
