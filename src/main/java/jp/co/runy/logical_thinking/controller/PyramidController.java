@@ -97,10 +97,9 @@ public class PyramidController {
 			throws JsonMappingException, JsonProcessingException {
 		final Pyramid bean = mapper.readValue(json, Pyramid.class);
 		bean.setSessionId(session.getId());
-		pyramidService.insert(bean);
-		// final int id = logicTreeService.insert(bean);
-		// session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
-		// bean.setId(id);
+		final int id = pyramidService.insert(bean);
+		bean.setId(id);
+		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
 		return Integer.toString(bean.getId());
 	}
 }

@@ -36,6 +36,11 @@ public class FrameworkController {
 		final Map<Integer, List<Framework>> frameworkMap = frameworkKindService.findAll();
 		final Map<Integer, List<FrameworkElement>> frameworkElementMap = frameworkService.findAll();
 		final Map<String, Map<Integer, List<?>>> map = new HashMap() {
+			/**
+			 * シリアルバージョンUID.
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				put("Framework",frameworkMap);
 				put("FrameworkElement",frameworkElementMap);

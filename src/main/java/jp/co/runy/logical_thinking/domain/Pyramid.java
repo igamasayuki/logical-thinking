@@ -88,8 +88,4 @@ public class Pyramid {
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	
-	
-	
-
 }

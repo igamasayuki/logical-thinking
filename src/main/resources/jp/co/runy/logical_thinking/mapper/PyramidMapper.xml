@@ -6,4 +6,67 @@
     <select id="selectPyramid" resultType="jp.co.runy.logical_thinking.domain.Pyramid">
 		select id, framework_kind_id, conclusion from pyramids;
     </select>
+    <select id="insert"  resultType="int" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
+      with insert_pyramid AS (
+        insert into pyramids(
+          <trim prefixOverrides=", ">
+            <if test="frameworkKindId != 0">, framework_kind_id</if>
+            <if test="frameworkId != 0">, framework_id</if>
+            <if test="conclusion != null">, conclusion</if>
+            <if test="sessionId != null">, session_id</if>
+          </trim>
+        )
+        values (
+          <trim prefixOverrides=",">
+              <if test="frameworkKindId != 0">, #{frameworkKindId}</if>
+              <if test="frameworkId != 0">, #{frameworkId}</if>
+              <if test="conclusion != null">, #{conclusion}</if>
+              <if test="sessionId != null">, #{sessionId}</if>
+          </trim>
+        )
+      returning id)
+      <foreach collection="rationaleList" item="reason" index="index1">
+      	, insert_reasons_${index1} AS (
+				  insert into reasons (
+            <trim prefixOverrides=", ">
+              <if test="reason.word != null">, word</if>
+              <if test="reason.explanation != null">, explanation</if>
+              <if test="reason.anotherExplanation != null">, another_explanation</if>
+              <if test="reason.displayOrder != 0">, display_order</if>
+              , pyramid_id
+            </trim>
+          ) 
+          select
+            <trim prefixOverrides=",">
+              <if test="reason.word != null">, #{reason.word}</if>
+              <if test="reason.explanation != null">, #{reason.explanation}</if>
+              <if test="reason.anotherExplanation != null">, #{reason.anotherExplanation}</if>
+              <if test="reason.displayOrder != 0">, #{reason.displayOrder}</if>
+              , id
+            </trim>
+          from
+            insert_pyramid
+          returning id)
+          <foreach collection="reason.evidenceList" item="example" index="index2">
+            , insert_example_${index1}_${index2} AS (
+              insert into examples (
+                <trim prefixOverrides=", ">
+                  <if test="example.explanation != null">, explanation</if>
+                  <if test="example.displayOrder != 0">, display_order</if>
+                  , reason_id
+                </trim>
+              )
+              select
+                <trim prefixOverrides=", ">
+                  <if test="example.explanation != null">, #{example.explanation}</if>
+                  <if test="example.displayOrder != 0">, #{example.displayOrder}</if>
+                  , id
+                </trim>
+              from
+                insert_reasons_${index1}
+            )
+          </foreach>
+      </foreach>
+      select id from insert_pyramid;
+    </select>
 </mapper>

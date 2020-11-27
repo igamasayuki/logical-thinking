@@ -63,14 +63,16 @@ $(function(){
 						explanation: $(`#explanation${i}`).val(),
 						anotherExplanation: $(`#anotherExplanation${i}`).val(),
 						pyramidId: 0,
-						evidenceList: []
+						evidenceList: [],
+						displayOrder: i + 1,
 					}
 					console.log($(`#evidence${i}`).children('div').length);
 					// 証拠リストを取得
 					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
 						const evidence = {
 							explanation: $(`#evidence${i}_${j}`).val(),
-							rationaleId: 0
+							rationaleId: 0,
+							displayOrder: j + 1
 						}
 						rationale.evidenceList.push(evidence);
 					}
@@ -83,7 +85,7 @@ $(function(){
 					dataType: 'json',
 					data: param,
 					contentType: "application/json; charset=utf-8"
-				}).done(function(data) {
+				}).done(function() {
 					location.href = `${urlUtil.uri}/logicalthinking/mail`;
 				})
 				break;
