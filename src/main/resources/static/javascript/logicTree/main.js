@@ -375,7 +375,6 @@ function createClaimOption(){
 }
 
 $(function(){
-<<<<<<< HEAD
 	// 主張の選択肢を追加
 	createClaimOption();
 	
@@ -427,6 +426,7 @@ $(function(){
               url: uri + '/api/frameworkelement/get/' + $(this).val(),
               type: 'get'
           }).done(function(data){
+        	console.log(data)
             frameworkElement = data
             // 既存のフレームワークの要素を削除
             $('#hierarchy > div').remove();
