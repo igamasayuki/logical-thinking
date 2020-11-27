@@ -12,6 +12,7 @@ public class FirstHierarchy {
 	private String word;
 	private String anotherWord;
 	private int logicTreeId;
+	private Integer displayOrder;
 	private List<SecondHierarchy> secondHierarchyList;
 	
 	/**
@@ -75,6 +76,17 @@ public class FirstHierarchy {
 		this.secondHierarchyList = secondHierarchyList;
 	}
 	
-	
+	/**
+	 * @return the displayOrder
+	 */
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
 
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 }

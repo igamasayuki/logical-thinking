@@ -32,17 +32,19 @@
           <label for="a">
             相手が欲しいものは何ですか？(100字以内で簡潔にまとめてください)
           </label>
+          <div id="partnerWantsError" class="text-danger"></div>
         </div>
         <div class="row mb-3">
-            <textarea id="partnerWants" class="form-control" rows="3" cols="70">コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい</textarea>
+            <textarea id="partnerWants" class="form-control" rows="3" cols="70"></textarea>
         </div>
 
         <div class="row">
           <label for="b"> あなたの現状はどうですか？(100字以内で簡潔にまとめてください)
           </label>
+          <div id="currentStateError" class="text-danger"></div>
         </div>
         <div class="row mb-3">
-          <textarea id="currentState" class="form-control" rows="3" cols="70">コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である</textarea>
+          <textarea id="currentState" class="form-control" rows="3" cols="70"></textarea>
         </div>
 
         <div class="row">
@@ -164,13 +166,14 @@
           <label for=""> 
             ここで作成した全体像を踏まえて、あなたが誰かに説明あるいは納得したい場合には、あなたの主張を一つ選び以下に記入してください。<br>
           </label>
+          <div id="select-claim-error" class="text-danger"></div>
         </div>
         <div class="row mb-3">
-        	<!-- <select name="fw" class="form-control" id="select-claim">
+        	<select name="select-claim" class="form-control" id="select-claim">
 				<option value="0">-- 主張を１つ選択してください --</option>
-            </select> -->
-          <input id="insistence" type="text" class="form-control" value="30万円のエンジニアを提案する">
-        </div>
+            </select> 
+         </div>
+        <div id="submit-value-error" class="row text-danger"></div>
         <div class="row mb-5">
             <button onclick="test()" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
