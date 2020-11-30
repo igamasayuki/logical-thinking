@@ -1,7 +1,7 @@
-import * as UrlUtils from '../util/util.js';
+import * as Utils from '../util/util.js';
 
-const urlUtil = new UrlUtils.Url;
-const pyramidUrlUtil = new UrlUtils.PyramidUrl;
+const urlUtil = new Utils.Url;
+const pyramidUrlUtil = new Utils.PyramidUrl;
 let frameworks;
 let frameworkElements;
 
@@ -23,8 +23,8 @@ $(function(){
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		switch (targetId) {
 			case `addEvidence${evidenceParentId}`:
-				const insertLine = $(`.evidence${evidenceParentId} textarea`).length - 1;
-				const evidenceId = $(`.evidence${evidenceParentId} textarea`).length;
+				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
+				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
 				const new_evidence =
 					'<div class="row">' +
 					'<textarea id=evidence' + evidenceParentId + '_' + evidenceId + ' class="form-control" rows="3" cols="70">' +
@@ -50,71 +50,44 @@ $(function(){
 				}
 				break;
 			case 'submit' :
-				const pyramid = {
+				const pyramidForm = {
 					frameworkKindId: $('#frameworkKind').val(),
 					frameworkId: $('#framework').val(),
 					conclusion: $('#conclusion').val(),
-					rationaleList: []
+					rationaleFormList: []
 				}
 				// 根拠リストを取得
 				for (let i = 0; i < $('.reason').children('section').length; i++) {
-					let rationale = {
-						word: $('#word' + i).val(),
+					const rationaleForm = {
+						word: $(`#word${i}`).val(),
 						explanation: $(`#explanation${i}`).val(),
 						anotherExplanation: $(`#anotherExplanation${i}`).val(),
-						pyramidId: 0,
-						evidenceList: []
+						evidenceFormList: [],
+						displayOrder: i + 1,
 					}
 					// 証拠リストを取得
-					for (let j = 0; j < $(`#evidence${i}`).length; j++) {
-						let evidence = {
+					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
+						const evidenceForm = {
 							explanation: $(`#evidence${i}_${j}`).val(),
-							rationaleId: i
+							displayOrder: j + 1
 						}
-						rationale.evidenceList.push(evidence);
+						rationaleForm.evidenceFormList.push(evidenceForm);
 					}
-					pyramid.rationaleList.push(rationale);
+					pyramidForm.rationaleFormList.push(rationaleForm);
 				}
-				const form = document.createElement("form");
-				form.setAttribute("action", "/logicalthinking/mail");
-				form.setAttribute("method", "post");
-				document.body.appendChild(form);
-				for (var param in pyramid) {
-					// 根拠のform作成
-					if (param === 'rationaleList') {
-						for (let i = 0; i < pyramid[param].length; i++) {
-							for (var rationaleParam in pyramid[param][i]) {
-								// 証拠のform作成
-								if (rationaleParam === 'evidenceList') {
-									// 証拠に値が入力されている場合
-									for (let j = 0; j < pyramid[param][i][rationaleParam].length; j++) {
-										for (var evidenceParam in pyramid[param][i][rationaleParam][j]) {
-											const inputEvidence = document.createElement('input');
-											inputEvidence.setAttribute('type', 'hidden');
-											inputEvidence.setAttribute('name', param + '[' + i + '].' + rationaleParam + '[' + j + '].' + evidenceParam);
-											inputEvidence.setAttribute('value', pyramid[param][i][rationaleParam][j][evidenceParam]);
-											form.appendChild(inputEvidence);
-										}
-									}
-								} else {
-									const inputRationale = document.createElement('input');
-									inputRationale.setAttribute('type', 'hidden');
-									inputRationale.setAttribute('name', `${param}[${i}].${rationaleParam}`);
-									inputRationale.setAttribute('value', pyramid[param][i][rationaleParam]);
-									form.appendChild(inputRationale);
-								}
-							}
-						}
-					} else {
-						const inputRationale = document.createElement('input');
-						inputRationale.setAttribute('type', 'hidden');
-						inputRationale.setAttribute('name', param);
-						inputRationale.setAttribute('value', pyramid[param]);
-						form.appendChild(inputRationale);
-					}
-				}
-				form.submit(); 
-			break;
+				var param = JSON.stringify(pyramidForm);
+				$.ajax({
+					url: `${urlUtil.uri}/logicalthinking/pyramid/api/upsert`,
+					type: 'post',
+					dataType: 'json',
+					data: param,
+					contentType: "application/json; charset=utf-8"
+				}).then(() => {
+					location.href = `${urlUtil.uri}/logicalthinking/mail`;
+				}).catch((...args) => {
+					console.log(args);
+				});
+				break;
 			default:
 		}
 	});
@@ -159,7 +132,7 @@ $(function(){
 						'上記の根拠に対する証拠<span style="color:red">' +
 						'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
 						'</div>' +
-						'<section class="' + evidenceId + '">' +
+						'<section id="' + evidenceId + '">' +
 						'<div class="row">' +
 						'<textarea id="' + evidenceId + '_0" class="form-control" rows="3" cols="70">' +
 						'</textarea>' +
