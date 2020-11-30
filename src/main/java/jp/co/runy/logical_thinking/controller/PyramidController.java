@@ -2,19 +2,33 @@ package jp.co.runy.logical_thinking.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import jp.co.runy.logical_thinking.domain.Example;
 import jp.co.runy.logical_thinking.domain.Framework;
 import jp.co.runy.logical_thinking.domain.FrameworkKind;
+import jp.co.runy.logical_thinking.domain.Pyramid;
+import jp.co.runy.logical_thinking.domain.Reason;
 import jp.co.runy.logical_thinking.exception.SessionTypeConversionExeption;
 import jp.co.runy.logical_thinking.form.PyramidForm;
+import jp.co.runy.logical_thinking.form.ReasonForm;
 import jp.co.runy.logical_thinking.service.PyramidService;
 import jp.co.runy.logical_thinking.util.SessionTypeConversion;
 
@@ -25,10 +39,13 @@ import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
  * 「Step2 ピラミッド構造=PREPを作成する」で使用するコントローラクラス
  */
 @Controller
+@RequestMapping("/logicalthinking/pyramid")
 public class PyramidController {
 	
 	@Autowired
 	PyramidService pyramidService;
+	
+	ObjectMapper mapper = new ObjectMapper();
 	
 	/**
 	 * セッション取得時の型を変更するクラスオブジェクト.
@@ -52,7 +69,7 @@ public class PyramidController {
 	 * @return 「Step2 ピラミッド構造=PREPを作成する」ページ
 	 * @throws SessionTypeConversionExeption
 	 */
-	@RequestMapping(value = "/logicalthinking/pyramid")
+	@RequestMapping(value = "")
 	public String readPyramid(Model model, HttpSession session) throws SessionTypeConversionExeption {
 		List<FrameworkKind> kindList = pyramidService.findFrameworkKind();
 		final Integer id = sessionTypeConversion.typeConversionStringToInteger(session.getAttribute(SESSION_LOGICTREE_ID_KEY));
@@ -78,5 +95,36 @@ public class PyramidController {
 			frameworkList.addAll(frameworkKind.getFrameworkList());
 		}
 		return frameworkList;
+	}
+
+	@ResponseBody
+	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String upsert(
+			@Validated @RequestBody PyramidForm pyramidForm, HttpSession session)
+			throws JsonMappingException, JsonProcessingException {
+		final Pyramid pyramid = new Pyramid();
+		BeanUtils.copyProperties(pyramidForm, pyramid);
+		final List<Reason> reasonList = pyramidForm.getRationaleFormList().stream()
+				.map(reasonForm -> convertReason(reasonForm))
+				.collect(Collectors.toList());
+		pyramid.setRationaleList(reasonList);
+		final int id = pyramidService.insert(pyramid, session.getId());
+		pyramid.setId(id);
+		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+		return Integer.toString(pyramid.getId());
+	}
+
+	private Reason convertReason(ReasonForm form) {
+		Reason reason = new Reason();
+		BeanUtils.copyProperties(form, reason);
+		final List<Example> exampleList = form.getEvidenceFormList().stream()
+			.map(exampleForm -> {
+				final Example example = new Example();
+				BeanUtils.copyProperties(exampleForm, example);
+				return example;
+			})
+			.collect(Collectors.toList());
+		reason.setEvidenceList(exampleList);
+		return reason;
 	}
 }

@@ -79,8 +79,4 @@ public class Pyramid {
 	public void setRationaleList(List<Reason> rationaleList) {
 		this.rationaleList = rationaleList;
 	}
-	
-	
-	
-
 }

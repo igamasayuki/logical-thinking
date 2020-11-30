@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import jp.co.runy.logical_thinking.domain.FrameworkKind;
 import jp.co.runy.logical_thinking.domain.LogicTree;
+import jp.co.runy.logical_thinking.domain.Pyramid;
 import jp.co.runy.logical_thinking.mapper.FrameworkKindMapper;
 import jp.co.runy.logical_thinking.mapper.LogicTreeMapper;
+import jp.co.runy.logical_thinking.mapper.PyramidMapper;
 
 /**
  * @author yokogawayukihiro
@@ -18,11 +20,14 @@ import jp.co.runy.logical_thinking.mapper.LogicTreeMapper;
 public class PyramidService {
 
 	@Autowired
-	public FrameworkKindMapper frameworkKindMapper;
+	private FrameworkKindMapper frameworkKindMapper;
 	
 	@Autowired
-	public LogicTreeMapper logicTreeMapper;
+	private LogicTreeMapper logicTreeMapper;
 	
+	@Autowired
+	private PyramidMapper pyramidMapper;
+
 	/**
 	 * フレームワークカインド(要検討)一覧を取得するメソッド。
 	 * @return　フレームワーク一覧(要素込み)
@@ -37,6 +42,10 @@ public class PyramidService {
 	 */
 	public LogicTree findLogicTree(Integer id, String sessionId) {
 		return logicTreeMapper.findByIdAndSessionId(id, sessionId);
+	}
+
+	public Integer insert(Pyramid bean, String sessionId) {
+		return pyramidMapper.insert(bean, sessionId);
 	}
 	
 }
