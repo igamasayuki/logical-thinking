@@ -92,6 +92,7 @@
 						<if test="firstHierarchy.word != null">, word</if>
 						<if test="firstHierarchy.anotherWord != null">, another_word</if>
 						, logic_tree_id
+						<if test="firstHierarchy.displayOrder != null">, display_order</if>
 					</trim>
 				) 
 				select
@@ -99,6 +100,7 @@
 						<if test="firstHierarchy.word != null">, #{firstHierarchy.word}</if>
 						<if test="firstHierarchy.anotherWord != null">, #{firstHierarchy.anotherWord}</if>
 						, id
+						<if test="firstHierarchy.displayOrder != null">, #{firstHierarchy.displayOrder}</if>
 					</trim>
 				from
 					insert_logictree
@@ -109,12 +111,14 @@
 						<trim prefixOverrides=", ">
 							<if test="secondHierarchy.explanation != null">, explanation</if>
 							, first_hierarchy_id
+							<if test="secondHierarchy.displayOrder != null">, display_order</if>
 						</trim>
 					) 
 					select
 						<trim prefixOverrides=",">
 							<if test="secondHierarchy.explanation != null">, #{secondHierarchy.explanation}</if>
 							, id
+							<if test="secondHierarchy.displayOrder != null">, #{secondHierarchy.displayOrder}</if>
 						</trim>
 					from
 						insert_first_hierarchies_${index1}
@@ -126,12 +130,14 @@
 							<trim prefixOverrides=", ">
 								<if test="thirdHierarchy.explanation != null">, explanation</if>
 								, second_hierarchy_id
+								<if test="thirdHierarchy.displayOrder != null">, display_order</if>
 							</trim>
 						) 
 						select
 							<trim prefixOverrides=",">
 								<if test="thirdHierarchy.explanation != null">, #{thirdHierarchy.explanation}</if>
 								, id
+								<if test="thirdHierarchy.displayOrder != null">, #{thirdHierarchy.displayOrder}</if>
 							</trim>
 						from
 							insert_second_hierarchies_${index1}_${index2}
