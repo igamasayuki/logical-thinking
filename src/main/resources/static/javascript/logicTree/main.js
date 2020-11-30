@@ -183,7 +183,7 @@ function validateValue(){
 	}
 	
 	if(!validateOk){
-		$(`#submit-value-error`).text('エラー入力項目があります');
+		$(`#submit-value-error`).text('エラー入力項目があります。入力欄上のエラーメッセージをご確認ください');
 	}
 	return validateOk;
 }
@@ -261,7 +261,7 @@ function test(){
     			$(`#${target}Error`).text('100文字以内で入力してください');
     		}
     	});
-    	$(`#submit-value-error`).text('エラー入力項目があります');
+    	$(`#submit-value-error`).text('エラー入力項目があります。入力欄上のエラーメッセージをご確認ください');
     });
 }
 function checkedTree(){
@@ -694,7 +694,7 @@ $(function(){
                 clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
                 secondHierarchyButton = 
                 '<div class="row">' + 
-                '<button onclick="button(this, \'addSh\', \'' + name + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
+                '<button onclick="changeHierarchy(this, \'addSh\', \'' + name + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
                 '</div>'
                 
                 // 「〇〇」について検討します
@@ -719,10 +719,10 @@ $(function(){
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
                 '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
-                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+                '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
-                '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+                '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
                 '</div>' + 
                 '</section>';
 
@@ -734,7 +734,7 @@ $(function(){
                 '<label for="" class="col-11">' +
                 '「<font name="word"></font>」'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
                 '</label>' +
-                '<button onclick="button(this, \'delete\')" name="fh" type="button" class="btn btn-danger col-1">削除</button>' + 
+                '<button onclick="changeHierarchy(this, \'delete\')" name="fh" type="button" class="btn btn-danger col-1">削除</button>' + 
                 '</div>' +
                 '</div>' + 
                 addShHtml + 
@@ -749,10 +749,10 @@ $(function(){
 //                '<label for="" class="col-2">第二階層：</label>' + 
 //                '<input type="text" class="form-control col-9" value="">' + 
 ////                '<input type="text" class="form-control col-9 row2" value=""　onblur="createInsistenceOption(this)">' + 
-//                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+//                '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
 //                '</div>' + 
 //                '<div class="row">' + 
-//                '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+//                '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
 //                '</div>' + 
 //                '</section>';
 //                if (typeof fhId === 'string') {
@@ -767,16 +767,16 @@ $(function(){
                 break;
             // 第二階層を追加
             case 'addSh':
-                shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+                shName = name + '_sh' + $('.fw[name=' + name + '] section.row2').length
 
                 addHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
                 '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
-                '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+                '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
-                '<button name="th" onclick="button(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+                '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
                 '</div>' + 
                 '</section>';
                 if (typeof selectedId === 'string') {
@@ -793,7 +793,7 @@ $(function(){
                 '<section name="' + thName + '">' + 
                 '<div class="row"><label for="" class="offset-1 col-2">第三階層：</label>' + 
                 '<input type="text" class="form-control col-8 float-right row3-input" value="">' +
-                '<button name="th" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-info col-1">削除</button>' + 
+                '<button name="th" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-info col-1">削除</button>' + 
                 '</div>' + 
                 '</section>';
                 $(selectedId).parent().before(addHtml)
