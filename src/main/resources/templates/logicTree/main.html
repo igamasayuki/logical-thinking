@@ -36,8 +36,8 @@
           </label>
         </div>
         <div class="row mb-3">
-            <textarea id="partnerWants" class="form-control" rows="3" cols="70"></textarea>
        		<div id="partnerWantsError" class="text-danger font-weight-bold"></div>
+            <textarea id="partnerWants" class="form-control" rows="3" cols="70"></textarea>
         </div>
 
         <div class="row">
@@ -45,7 +45,7 @@
           </label>
         </div>
         <div class="row mb-3">
-          <div id="currentStateError" class="text-danger"></div>
+          <div id="currentStateError" class="text-danger font-weight-bold"></div>
           <textarea id="currentState" class="form-control" rows="3" cols="70"></textarea>
         </div>
 
@@ -168,14 +168,14 @@
           <label for=""> 
             ここで作成した全体像を踏まえて、あなたが誰かに説明あるいは納得したい場合には、あなたの主張を一つ選び以下に記入してください。<br>
           </label>
-          <div id="insistence-error" class="text-danger"></div>
         </div>
         <div class="row mb-3">
-        	<select name="insistence" class="form-control" id="insistence">
+         	<div id="insistence-error" class="text-danger font-weight-bold"></div>
+	       	<select name="insistence" class="form-control" id="insistence">
 				<option value="">-- 主張を１つ選択してください --</option>
-            </select> 
-         </div>
-        <div id="submit-value-error" class="row text-danger"></div>
+	           </select> 
+	        </div>
+        <div id="submit-value-error" class="row text-danger font-weight-bold"></div>
         <div class="row mb-5">
             <button onclick="test()" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
