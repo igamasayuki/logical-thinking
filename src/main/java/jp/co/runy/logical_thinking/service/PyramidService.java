@@ -47,5 +47,9 @@ public class PyramidService {
 	public Integer insert(Pyramid bean, String sessionId) {
 		return pyramidMapper.insert(bean, sessionId);
 	}
+
+	public Pyramid findPyramid(Integer id, String sessionId) {
+		return pyramidMapper.findPyramid(id, sessionId);
+	}
 	
 }

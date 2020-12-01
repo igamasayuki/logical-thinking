@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.runy.logical_thinking.domain.LogicTree;
 
 @RestController
-@RequestMapping(value = "/api/logictree")
+@RequestMapping("/api/logictree")
 public class LogicTreeApiController {
 	
 	ObjectMapper mapper = new ObjectMapper();

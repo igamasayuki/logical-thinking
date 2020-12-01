@@ -2,6 +2,7 @@ import * as Utils from '../util/util.js';
 
 const urlUtil = new Utils.Url;
 const pyramidUrlUtil = new Utils.PyramidUrl;
+let oldPyramidResult;
 let frameworks;
 let frameworkElements;
 
@@ -19,9 +20,91 @@ $(document).ready(function () {
 		// 成功時の処理
 		frameworks = data['Framework'];
 		frameworkElements = data['FrameworkElement'];
+		$.ajax({
+			url: urlUtil.uri + pyramidUrlUtil.getOldPyramidUrl,
+			type: 'get',
+		}).done(function (data) {
+			if (data['Pyramid'] != undefined) {
+				// 成功時の処理
+				addHTML(data['Pyramid']);
+			}
+		})
 	})
+
 });
 
+function addHTML(data) {
+	$("#frameworkKind").val(data['frameworkKindId']);
+	const framework = frameworks[$("#frameworkKind").val()];
+	$('.reason > section').remove();
+	const select = document.getElementById("framework");
+	$('#framework > option').remove();
+	const defaultOpt = document.createElement('option');
+	defaultOpt.text = '-- 使えそうなフレームワークを１つ選択してください --'
+	defaultOpt.value = '0';
+	select.appendChild(defaultOpt);
+
+	framework.forEach(function (val) {
+		const option = document.createElement("option");
+		option.text = val.content;
+		option.value = val.id;
+		select.appendChild(option);
+	});
+	$("#framework").val(data['frameworkId']);
+	 $('.reason > section').remove();
+	 for (let index = 0; index < data["rationaleList"].length; index++) {
+		const fwId = `fw${index}`;
+		const evidenceId = `evidence${index}`;
+		const wordId = `word${index}`;
+		const explanationId = `explanation${index}`;
+		const anotherExplanationId = `anotherExplanation${index}`;
+		let new_section = '<section class="mb-5" id="' + fwId + '">' +
+			'<div class="row">' +
+			'<label for="clientSecret">' +
+			data["rationaleList"][index].word + 'に関する根拠を挙げてください' +
+			'</label>' +
+			'<input type="hidden" id="' + wordId + '" value="' + data["rationaleList"][index].word + '"/>' +
+			'</div>' +
+
+			'<div class="row">' +
+			'<textarea id="' + explanationId + '" class="form-control" rows="3" cols="70">' +
+			data["rationaleList"][index].explanation +
+			'</textarea>' +
+			'</div>' +
+
+			'<div class="row">' +
+			'上記の根拠を一言で言い換えると何ですか？' +
+			'</div>' +
+
+			'<div class="row">' +
+			'<input type="text" id="' + anotherExplanationId + '" class="form-control" value="' + data["rationaleList"][index].anotherExplanation +'"/>' +
+			'</div>' +
+
+			'<div class="row">' +
+			'上記の根拠に対する証拠<span style="color:red">' +
+			'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+			'</div>' +
+			'<section id="' + evidenceId + '">';
+		 for (let index2=0; index2 < data["rationaleList"][index].evidenceList.length; index2++){
+			const evidenceList = data["rationaleList"][index].evidenceList;
+			new_section += '<div class="row">' +
+			'<textarea id="' + evidenceId + '_' + index2 + '" class="form-control" rows="3" cols="70">' +
+			evidenceList[index2].explanation +
+			'</textarea>';
+			if(index2 != 0) {
+				new_section += '<button type="button" id="evidenceDelete' + index + '_' + index2 + '" data-evidenceparentid="' + index + '" data-evidencechildid="' + index2 + '" class="btn btn-danger col-1">削除</button>';
+			};
+			new_section += '</div>';
+		 }
+		 new_section += '</section >' + 
+		'<div class="row">' +
+		'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
+		'</div>' +
+		'</section>'
+		$('.reason').append($(new_section));
+		 $("#conclusion").val(data.conclusion);
+	 }
+}
 
 $(function(){
 	$(document).click(function(e){
