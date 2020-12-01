@@ -57,13 +57,15 @@ function addHTML(data){
         
         // 「第二階層を追加」ボタンを追加
         secondHierarchyButton = '<div name="addSH" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
+        copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word 
         
         new_list = '<section class="fw" name="fh' + index +'">' + 
         '<input type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
         '<div>' + 
         '<div class="row">' + 
         '<label for="" class="col-11">' +
-        firstHierarchy.word + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+        '<font class="copyAnotherWord">'+ copyAnotherWord + '</font>' +
+        'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
         '</label>' +
         '<input type="hidden" value="' + firstHierarchy.word + '">' + 
         '<button type="button" onclick="changeHierarchy(this, \'delete\')" name="fh" class="btn btn-danger col-1">削除</button>' + 
