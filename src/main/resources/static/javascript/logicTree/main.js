@@ -123,6 +123,8 @@ $(document).ready( function(){
 //          '</div>';
 //      $('#hierarchy').append(addFH)
 //
+//		createInsistenceOption();
+//
 //}
 
 // 送信するデータのバリデーションチェックをします.
@@ -170,7 +172,36 @@ function test(){
         insistence : $('#insistence option:selected').val(),
         firstHierarchyList : []
     }
-    // 第一階層の数を取得
+    
+    createLogicTreeData(logicTree);
+    
+    // json化
+    var param = JSON.stringify(logicTree);
+    $.ajax({
+        url: URL + '/upsert',
+        type: 'post',
+        dataType: 'json',
+        data: param,
+        contentType: "application/json; charset=utf-8"
+    }).done(function(data){
+        // 登録したidを次のページに引き継ぐ
+    	location.href= uri + '/logicalthinking/pyramid';
+    }).fail(function(jqXHR, textStatus, errorThrown){
+    	errors = jqXHR.responseJSON.errors;
+    	errors.forEach(function(error){
+    		target = error.field;
+    		if(`insistence` === target){
+    			$(`#insistence-error`).text('主張を選択してください');
+    		}else{
+    			$(`#${target}Error`).text('100文字以内で入力してください');
+    		}
+    	});
+    	$(`#submit-value-error`).text('エラー入力項目があります。入力欄上のエラーメッセージをご確認ください');
+    });
+}
+
+function createLogicTreeData(logicTree){
+	// 第一階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
         // ex. fh0, fh1 ...
         fHName = 'fh' + index;
@@ -206,29 +237,6 @@ function test(){
         }
         logicTree.firstHierarchyList.push(firstHierarchy)
     }
-    // json化
-    var param = JSON.stringify(logicTree);
-    $.ajax({
-        url: URL + '/upsert',
-        type: 'post',
-        dataType: 'json',
-        data: param,
-        contentType: "application/json; charset=utf-8"
-    }).done(function(data){
-        // 登録したidを次のページに引き継ぐ
-    	location.href= uri + '/logicalthinking/pyramid';
-    }).fail(function(jqXHR, textStatus, errorThrown){
-    	errors = jqXHR.responseJSON.errors;
-    	errors.forEach(function(error){
-    		target = error.field;
-    		if(`insistence` === target){
-    			$(`#insistence-error`).text('主張を選択してください');
-    		}else{
-    			$(`#${target}Error`).text('100文字以内で入力してください');
-    		}
-    	});
-    	$(`#submit-value-error`).text('エラー入力項目があります。入力欄上のエラーメッセージをご確認ください');
-    });
 }
 
 // 「第一階層を追加する」の後処理
@@ -241,8 +249,6 @@ function keyup(thisEle){
 
 // 主張の選択肢を追加
 function createInsistenceOption(){
-	$(document).on("blur", ".row2", function(){
-		
 		// 主張の選択肢を削除
 		$('#insistence').children().remove();
 		var select = $('#insistence');
@@ -273,13 +279,13 @@ function createInsistenceOption(){
 				}
 			}
 		});
-	});
 }
 
 $(function(){
 	// 主張の選択肢を追加
-	createInsistenceOption();
-	
+	$(document).on("blur", ".row2", function(){
+		createInsistenceOption();
+	});
 	
 	// 「今回の課題を明らかにする」の各項目の文字数チェック
 	$(document).on("blur", "#partnerWants, #currentState", function(){
