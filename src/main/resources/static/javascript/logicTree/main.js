@@ -10,6 +10,8 @@ let frameworks;
 let frameworkElements;
 
 let URL = uri + '/logicalthinking/logictree/api';
+
+// 初期描画時の処理
 $(document).ready( function(){
 	$.ajax({
 		url: "http://localhost:8080/api/framework/get",
@@ -156,7 +158,9 @@ function validateValue(){
 	return validateOk;
 }
  
-function test(){
+//登録処理
+//Step2(ピラミッド構造=PREP)の作成へ進むボタンを押した際の挙動
+function register(){
 	// バリデーション
 	if(!validateValue()){
 		return;
@@ -200,6 +204,7 @@ function test(){
     });
 }
 
+//登録するロジックツリーの情報を取得します.
 function createLogicTreeData(logicTree){
 	// 第一階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
@@ -239,7 +244,7 @@ function createLogicTreeData(logicTree){
     }
 }
 
-// 「第一階層を追加する」の後処理
+//「第一階層を追加する」の後処理.
 function keyup(thisEle){
     // sectionのnameを取得
     name = $(thisEle).attr('name');
@@ -247,7 +252,7 @@ function keyup(thisEle){
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
 }
 
-// 主張の選択肢を追加
+//主張の選択肢を追加.
 function createInsistenceOption(){
 		// 主張の選択肢を削除
 		$('#insistence').children().remove();
@@ -281,6 +286,7 @@ function createInsistenceOption(){
 		});
 }
 
+//原因(理由)/方法のラジオボタンを選択した時.
 function changeClarify(target){
 	if($(target).val() == 1){
         // 原因(理由)を選択
@@ -336,6 +342,7 @@ $(function(){
     });
 });
 
+// フレームワークを選択した時
 function changeFrameWork(target){
 	// フレームワークIDを取得
 	   frameworkId = $(target).val();
