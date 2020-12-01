@@ -2,12 +2,17 @@ package jp.co.runy.logical_thinking.controller;
 
 import static jp.co.runy.logical_thinking.util.SessionKeyUtil.SESSION_LOGICTREE_ID_KEY;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
 import jp.co.runy.logical_thinking.service.LogicTreeService;
+import jp.co.runy.logical_thinking.service.PyramidService;
 
 /**
  * @author takahashikouhei
@@ -33,7 +39,13 @@ public class LogicTreeController extends AbstractAjaxController {
 	@Autowired
 	private LogicTreeService logicTreeService;
 	
+	@Autowired
+	private PyramidService pyramidService;
+
+	private String registeredSessionId = "";
 	
+	private int registeredLogicTreeId = 0;
+
 	/**
 	 * ロジックツリー作成時に使用するフォーム
 	 * 
@@ -52,9 +64,19 @@ public class LogicTreeController extends AbstractAjaxController {
 	 * @return 「Step1 全体像を把握する」ページ
 	 */
 	@RequestMapping(value = "")
-	public String readLogicTree(Model model) {
+	public String readLogicTree(Model model, HttpSession session) {
 		model.addAttribute("frameworkList",logicTreeService.findFramework());
 		return "/logicTree/main";
+	}
+
+	@ResponseBody
+	@GetMapping(value = "/get")
+	public ResponseEntity<LogicTree> getLogicTree() {
+		LogicTree response = new LogicTree();
+		if (Objects.nonNull(registeredSessionId)) {
+			response = pyramidService.findLogicTree(registeredLogicTreeId, registeredSessionId);
+		}
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	/**
@@ -74,6 +96,8 @@ public class LogicTreeController extends AbstractAjaxController {
 		final int id = logicTreeService.insert(bean);
 		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
 		bean.setId(id);
+		registeredSessionId = session.getId();
+		registeredLogicTreeId = id;
 		return Integer.toString(bean.getId());
 	}
 }
