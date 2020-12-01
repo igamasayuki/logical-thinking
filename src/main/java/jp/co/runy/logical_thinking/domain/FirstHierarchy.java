@@ -89,4 +89,10 @@ public class FirstHierarchy {
 	public void setDisplayOrder(Integer displayOrder) {
 		this.displayOrder = displayOrder;
 	}
+	
+	@Override
+	public String toString() {
+		return "FirstHierarchy [id=" + id + ", word=" + word + ", anotherWord=" + anotherWord + ", logicTreeId="
+				+ logicTreeId + ", displayOrder=" + displayOrder + ", secondHierarchyList=" + secondHierarchyList + "]";
+	}
 }

@@ -1,6 +1,9 @@
 package jp.co.runy.logical_thinking.controller;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.form.MindMapForm;
+import jp.co.runy.logical_thinking.service.FrameworkService;
 
 /**
  * マインドマップを表示するためのコントローラー.
@@ -17,6 +21,9 @@ import jp.co.runy.logical_thinking.form.MindMapForm;
  */
 @Controller
 public class ShowMindMapController {
+	
+	@Autowired
+	private FrameworkService frameworkService;
 	
 	@ModelAttribute
 	public MindMapForm getMindMapForm() {
@@ -34,7 +41,13 @@ public class ShowMindMapController {
 	public String showMindMap (MindMapForm form, Model model) {
 		LogicTree logicTree = new LogicTree();
 		BeanUtils.copyProperties(form, logicTree);
-		model.addAttribute("logicTree", logicTree);
+		logicTree.setFrameworkId(form.getFw());
+		
+		final List<String> elementList = frameworkService.getElementList(logicTree.getFrameworkId());
+
+		model.addAttribute("logicTree", form);
+		model.addAttribute("elementList", elementList);
+		
 		return "logictree/mindmap";
 	}
 }

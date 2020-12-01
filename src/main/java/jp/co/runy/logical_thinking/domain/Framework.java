@@ -70,4 +70,10 @@ public class Framework {
 	public void setFrameworkElementList(List<FrameworkElement> frameworkElementList) {
 		this.frameworkElementList = frameworkElementList;
 	}
+
+	@Override
+	public String toString() {
+		return "Framework [id=" + id + ", frameworkKindId=" + frameworkKindId + ", content=" + content
+				+ ", frameworkElementList=" + frameworkElementList + "]";
+	}
 }

@@ -41,4 +41,21 @@
     	where
     		framework_kind_id = #{id};
     </select>
+    <select id="findById" parameterType="java.lang.Integer" resultMap="frameworkResult">
+    	select
+    		f.id,
+    		f.framework_kind_id,
+    		f.content,
+    		element.id,
+    		element.framework_id,
+    		element.element
+    	from 
+    		frameworks f
+    	inner join
+    		framework_elements element
+    	on 
+			f.id = element.framework_id
+    	where
+    		f.id = #{frameworkId,jdbcType=INTEGER}
+    </select>
 </mapper>
