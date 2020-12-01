@@ -71,6 +71,12 @@ const createChildren = (firstHierarchyList) => {
 	});
 	return children
 }
+
+const createGrandChildren = (secondHierarchyList) => {
+	const grandChildren = secondHierarchyList.map((secondHierarchy) => {
+		return {'id': `${secondHierarchy.element}`,"topic":"30万円のエンジニア<br>を提案する", "direction": "right"}
+	})
+}
  
 /**
  * ロジックツリー課題部分の作成を行う.
