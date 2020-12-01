@@ -21,11 +21,14 @@ public class MindMapForm {
 	private Integer fw;
 	/** 別名 */
 	private List<String> anotherWord;
+	/** 追加要素 */
+	private List<String> additionalWord;
+	/** 第二階層説明文 */
+	private List<String> secondHierarchyTextList;
 	/** 主張*/
 	private String insistence;
 	/** 第一階層リスト */
 	private List<FirstHierarchy> firstHierarchyList;
-	
 	public String getPartnerWants() {
 		return partnerWants;
 	}
@@ -56,6 +59,18 @@ public class MindMapForm {
 	public void setAnotherWord(List<String> anotherWord) {
 		this.anotherWord = anotherWord;
 	}
+	public List<String> getAdditionalWord() {
+		return additionalWord;
+	}
+	public void setAdditionalWord(List<String> additionalWord) {
+		this.additionalWord = additionalWord;
+	}
+	public List<String> getSecondHierarchyTextList() {
+		return secondHierarchyTextList;
+	}
+	public void setSecondHierarchyTextList(List<String> secondHierarchyTextList) {
+		this.secondHierarchyTextList = secondHierarchyTextList;
+	}
 	public String getInsistence() {
 		return insistence;
 	}
@@ -71,7 +86,8 @@ public class MindMapForm {
 	@Override
 	public String toString() {
 		return "MindMapForm [partnerWants=" + partnerWants + ", currentState=" + currentState + ", descriptionType="
-				+ descriptionType + ", fw=" + fw + ", anotherWord=" + anotherWord + ", insistence=" + insistence
+				+ descriptionType + ", fw=" + fw + ", anotherWord=" + anotherWord + ", additionalWord=" + additionalWord
+				+ ", secondHierarchyTextList=" + secondHierarchyTextList + ", insistence=" + insistence
 				+ ", firstHierarchyList=" + firstHierarchyList + "]";
 	}
 }

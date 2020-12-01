@@ -254,6 +254,8 @@ function keyup(thisEle){
     name = $(thisEle).attr('name');
     $('section[name='+ name + '] font[name=word]').html($(thisEle).val())
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
+    //追加
+    $('section[name='+ name + '] input[name=additionalWord]').val($(thisEle).val())
 }
 
 // 主張の選択肢を追加
@@ -385,7 +387,7 @@ $(function(){
                     addHtml = '<section class="row2" name="' + shName + '">' + 
                     '<div class="row">' + 
                     '<label for="" class="col-2">第二階層：</label>' + 
-                    '<input name="secondHierarchyText" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                    '<input name="secondHierarchyTextList" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                     '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                     '</div>' + 
                     '<div class="row">' + 
@@ -609,6 +611,8 @@ $(function(){
                 // 「〇〇」を言い換えるとを追加
                 anotherWordText = '<br>' + 
                 '<div class="row">' + 
+                //追加部分
+                '<input type="hidden" name="additionalWord">' +
                 '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
                 '</div>' + 
                 '<div class="row">' + 
@@ -622,7 +626,7 @@ $(function(){
                 addShHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                '<input name="secondHierarchyTextList" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 

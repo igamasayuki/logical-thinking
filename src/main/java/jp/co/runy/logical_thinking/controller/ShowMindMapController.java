@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -44,7 +45,13 @@ public class ShowMindMapController {
 		logicTree.setFrameworkId(form.getFw());
 		
 		final List<String> elementList = frameworkService.getElementList(logicTree.getFrameworkId());
-
+		
+		if(!CollectionUtils.isEmpty(form.getAdditionalWord())) {
+			form.getAdditionalWord().forEach(additionalWord -> {
+				elementList.add(additionalWord);
+			});
+		}
+		System.out.println(elementList);
 		model.addAttribute("logicTree", form);
 		model.addAttribute("elementList", elementList);
 		
