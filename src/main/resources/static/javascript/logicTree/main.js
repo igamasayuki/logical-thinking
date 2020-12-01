@@ -18,116 +18,116 @@ $(document).ready( function(){
 //		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
 		type: 'get',
 	}).done(function(data){
-        // 成功時の処理
-//        if(data != ''){
-//            // 画面にhtml要素を追加する
-//            addHTML(data)
-//        }
         frameworks = data['Framework'];
 		frameworkElements = data['FrameworkElement'];
     })
+    
+    $.ajax({
+		url: "http://localhost:8080//logicalthinking/logictree/get",
+//		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
+		type: 'get',
+	}).done(function(data){
+		// 成功時の処理
+		if(data != ''){
+			// 画面にhtml要素を追加する
+			addHTML(data)
+		}
+    })
 });
-//function addHTML(data){
-//    // ロジックツリーに関する記述を追加
-//    // 相手が欲しいもの
-//    $('#partnerWants').val(data.partnerWants);
-//    $('#copyPartnerWants').html($('#partnerWants').val());
-//    // あなたの現場
-//    $('#currentState').val(data.currentState);
-//    $('#copyCurrentState').html($('#currentState').val());
-//    // 説明したいもの
-//    $('input[name="clarify"]').eq(data.descriptionType == 1 ? 0 : 1).prop('checked', true);
-//    if($('input[name="clarify"]').val() == 1){
-//        // 原因(理由)を選択
-//        $('#reason').css("display", "block");
-//        $('#method').css("display", "none");
-//        $('.clarify').html('原因(理由)');
-//    } else if($('input[name="clarify"]').val() == 2) {
-//        // 方法を選択
-//        $('#reason').css("display", "none");
-//        $('#method').css("display", "block");
-//        $('.clarify').html('方法');
-//    }
-//    // フレームワーク
-//    $('[name="fw"]').val(data.frameworkId);
-//    $('#logicTreeId').val(data.id)
-//    // 記述用の値(原因 or 方法)を取得
-//    clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
-//    // 第一階層を追加 (取得した要素分を追加)
-//    for (let index = 0; index < data.firstHierarchyList.length; index++) {
-//        firstHierarchy = data.firstHierarchyList[index];
-//        name = 'fh' + index;
-//        new_list = '<section class="fw" name="fh' + index +'">' + 
-//        '<input type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
-//        '<div">' + 
-//        '<div class="row">' + 
-//        '<label for="" class="col-11">' +
-//        firstHierarchy.word + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
-//        '</label>' +
-//        '<input type="hidden" value="' + firstHierarchy.word + '">' + 
-//        '<button type="button" onclick="changeHierarchy(this, \'delete\')" name="fh" class="btn btn-danger col-1">削除</button>' + 
-//        '</div>' +
-//        '</div>' + 
-//        '</section>';
-//        // 「第二階層を追加」ボタンを追加
-//        secondHierarchyButton = '<div name="addSH" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
-//        // $('#fw' + data[index].id).append(secondHierarchyButton);
-//
-//        // 「〇〇」を言い換えるとを追加
-//        anotherWordText = '<br>' + 
-//        '<div class="row">' +
-//        '<label for="">「' + firstHierarchy.word + '」を言い換えると何ですか？</label>' + 
-//        '</div>' + 
-//        '<div class="row">' + 
-//        '<input name="anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
-//        '</div>';
-//        $('#hierarchy').append(new_list);
-//        $('#hierarchy').children('section[name=fh'+ index + ']').before(secondHierarchyButton + anotherWordText)
-//         // $('#fw' + data[index].id).append(anotherWordText)
-//         // 第二階層を追加
-//         //TODO 今, idが入っているため, このif文は意味がない
-//         if(firstHierarchy.secondHierarchyList.length != null){ 
-//             for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
-//               secondHierarchy = firstHierarchy.secondHierarchyList[index2];
-//               // 上記の様にhtmlの追加をしないためにexplanationがnullの場合はbreak
-//               if(secondHierarchy.explanation == null) break;
-//               shName = name + '_sh' + index2;
-//   
-//               addSHSection = '<section class="" name="' + shName + '">' + 
-//               '<div class="row">' + 
-//               '<label for="" class="col-2">第二階層：</label>' + 
-//               '<input type="text" class="form-control col-9" value="' + secondHierarchy.explanation + '">' + 
-//               '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
-//               '</div>' + 
-//               '<div class="row" name="addTH">' + 
-//               '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
-//               '</div>' + 
-//               '</section>';
-//               $('section[name=' + name + ']').children('div[name=addSH]').before(addSHSection);
-//
-//               for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
-//                    thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
-//                    thName = shName + '_th' + index3;
-//                    addTHSection = 
-//                    '<section name="' + thName + '">' + 
-//                    '<div class="row"><label for="" class="offset-1 col-2">第三階層：</label>' + 
-//                    '<input type="text" class="form-control col-8 float-right" value="' + thirdHierarchy.explanation +  '">' +
-//                    '<button name="th" onclick="changeHierarchy(this,\'delete\',\'' + shName + '\')" type="button" class="btn btn-info col-1">削除</button>' + 
-//                    '</div>' + 
-//                    '</section>';
-//                    $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
-//               }
-//             }
-//         }
-//      }
-//      addFH = '<div class="row">' + 
-//          '<button id="addFHButton" onclick="changeHierarchy(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
-//          '</div>';
-//      $('#hierarchy').append(addFH)
-//
-//		createInsistenceOption();
-//
-//}
+function addHTML(data){
+    // ロジックツリーに関する記述を追加
+    // 相手が欲しいもの
+    $('#partnerWants').val(data.partnerWants);
+    $('#copyPartnerWants').html($('#partnerWants').val());
+    // あなたの現場
+    $('#currentState').val(data.currentState);
+    $('#copyCurrentState').html($('#currentState').val());
+    // 説明したいもの
+    $('input[name="clarify"]').eq(data.descriptionType == 1 ? 1 : 2).prop('checked', true);
+    changeClarify($('input[name="clarify"]:checked'));
+    // フレームワーク
+    $('[name="fw"]').val(data.frameworkId);
+    $('#logicTreeId').val(data.id)
+    // 記述用の値(原因 or 方法)を取得
+    clarify = $('input[name="clarify"]:checked').parent().text();
+    // 第一階層を追加 (取得した要素分を追加)
+    for (let index = 0; index < data.firstHierarchyList.length; index++) {
+        firstHierarchy = data.firstHierarchyList[index];
+        name = 'fh' + index;
+        
+        // 「第二階層を追加」ボタンを追加
+        secondHierarchyButton = '<div name="addSH" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
+        
+        new_list = '<section class="fw" name="fh' + index +'">' + 
+        '<input type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
+        '<div>' + 
+        '<div class="row">' + 
+        '<label for="" class="col-11">' +
+        firstHierarchy.word + 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+        '</label>' +
+        '<input type="hidden" value="' + firstHierarchy.word + '">' + 
+        '<button type="button" onclick="changeHierarchy(this, \'delete\')" name="fh" class="btn btn-danger col-1">削除</button>' + 
+        '</div>' +
+        '</div>' + 
+        secondHierarchyButton + 
+        '</section>';
+
+        // 「〇〇」を言い換えるとを追加
+        anotherWordText = '<br>' + 
+        '<div class="row">' +
+        '<label for="">「' + firstHierarchy.word + '」を言い換えると何ですか？</label>' + 
+        '</div>' + 
+        '<div class="row">' + 
+        '<input name="anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
+        '</div>';
+        $('#hierarchy').append(new_list);
+        $('#hierarchy').children('section[name=fh'+ index + ']').before(anotherWordText);
+
+        // 第二階層を追加
+         //TODO 今, idが入っているため, このif文は意味がない
+         if(firstHierarchy.secondHierarchyList.length != null){ 
+             for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
+               secondHierarchy = firstHierarchy.secondHierarchyList[index2];
+               // 上記の様にhtmlの追加をしないためにexplanationがnullの場合はbreak
+               if(secondHierarchy.explanation == null) break;
+               shName = name + '_sh' + index2;
+               
+               value = secondHierarchy.explanation !== null ? secondHierarchy.explanation : ``; 
+               addSHSection = '<section class="row2" name="' + shName + '">' + 
+               '<div class="row">' + 
+               '<label for="" class="col-2">第二階層：</label>' + 
+               '<input type="text" class="form-control col-9 row2-input" value="' + value + '">' + 
+               '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
+               '</div>' + 
+               '<div class="row" name="addTH">' + 
+               '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
+               '</div>' + 
+               '</section>';
+               $('section[name=' + name + ']').children('div[name=addSH]').before(addSHSection);
+
+               for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
+                    thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
+                    thName = shName + '_th' + index3;
+                    value = thirdHierarchy.explanation !== null ? thirdHierarchy.explanation : ``; 
+                    addTHSection = 
+                    '<section name="' + thName + '">' + 
+                    '<div class="row"><label for="" class="offset-1 col-2">第三階層：</label>' + 
+                    '<input type="text" class="form-control col-8 float-right row3-input" value="' + value +  '">' +
+                    '<button name="th" onclick="changeHierarchy(this,\'delete\',\'' + shName + '\')" type="button" class="btn btn-info col-1">削除</button>' + 
+                    '</div>' + 
+                    '</section>';
+                    $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
+               }
+             }
+         }
+      }
+      addFH = '<div class="row">' + 
+          '<button id="addFHButton" onclick="changeHierarchy(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
+          '</div>';
+      $('#hierarchy').append(addFH)
+      createInsistenceOption();
+      $('#insistence').val(data.insistence);
+}
 
 // 送信するデータのバリデーションチェックをします.
 function validateValue(){
@@ -345,14 +345,15 @@ $(function(){
 // フレームワークを選択した時
 function changeFrameWork(target){
 	// フレームワークIDを取得
-	   frameworkId = $(target).val();
+	frameworkId = $(target).val();
    // 記述用の値(原因 or 方法)を取得
-    clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
+	clarify = $('input[name="clarify"]:checked').parent().text();
     data = frameworkElements[frameworkId];
      
      // 既存のフレームワークの要素を削除
      $('#hierarchy > div').remove();
      $('#hierarchy > .fw').remove();
+     $('#hierarchy > br').remove();
        
    // 第一階層を追加 (取得した要素分を追加)
    for (let index = 0; index < data.length; index++) {
@@ -498,7 +499,7 @@ function changeHierarchy(selectedId, option, name){
         // 第一階層を追加
         case 'addFH':
             name = 'fh' + $('.fw').length
-            clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
+            clarify = $('input[name="clarify"]:checked').parent().text();
             secondHierarchyButton = 
             '<div class="row">' + 
             '<button onclick="changeHierarchy(this, \'addSh\', \'' + name + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
