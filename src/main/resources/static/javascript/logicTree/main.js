@@ -281,6 +281,20 @@ function createInsistenceOption(){
 		});
 }
 
+function changeClarify(target){
+	if($(target).val() == 1){
+        // 原因(理由)を選択
+        $('#reason').css("display", "block");
+        $('#method').css("display", "none");
+        $('.clarify').html('原因(理由)');
+    } else if($(target).val() == 2) {
+        // 方法を選択
+        $('#reason').css("display", "none");
+        $('#method').css("display", "block");
+        $('.clarify').html('方法');
+    }
+}
+
 $(function(){
 	// 主張の選択肢を追加
 	$(document).on("blur", ".row2", function(){
@@ -313,17 +327,7 @@ $(function(){
     // ラジオボタンが変更されたらイベント発生
     // class="clarify"に対して対象の文言をhtmlで追加
     $('input[name="clarify"]').change(function () {
-        if($( this ).val() == 1){
-            // 原因(理由)を選択
-            $('#reason').css("display", "block");
-            $('#method').css("display", "none");
-            $('.clarify').html('原因(理由)');
-        } else if($(this).val() == 2) {
-            // 方法を選択
-            $('#reason').css("display", "none");
-            $('#method').css("display", "block");
-            $('.clarify').html('方法');
-        }
+    	changeClarify(this);
       });
       // name="fw"の値が変更されたらイベント発生
       // ドロップダウンの値が変更されたら, 変更後の値に対応したframeworkElementを取得
