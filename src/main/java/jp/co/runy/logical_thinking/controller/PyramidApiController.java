@@ -27,6 +27,13 @@ public class PyramidApiController {
     @Autowired
     PyramidService pyramidService;
     
+    /** 
+     * 直前に登録したピラミッドを取得するメソッド.
+     * 
+     * @param session セッションオブジェクト
+     * @return Map<String, Pyramid> 直前に登録したピラミッド 
+     * @throws SessionTypeConversionExeption セッション型変換エラーのえぐぜぷしょんクラス
+     */
     @GetMapping("/get")
     @ResponseStatus(HttpStatus.OK)
     public Map<String, Pyramid> getPyramid(HttpSession session) throws SessionTypeConversionExeption {

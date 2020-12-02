@@ -37,17 +37,33 @@ public class PyramidService {
 	}
 	
 	/**
-	 * step1に登録された内容を取得する
-	 * @return
+	 * step1に登録された内容を取得するメソッド.
+	 * @return ロジックツリー
 	 */
 	public LogicTree findLogicTree(Integer id, String sessionId) {
 		return logicTreeMapper.findByIdAndSessionId(id, sessionId);
 	}
 
+	
+	/** 
+	 * ピラミッドを登録するメソッド.
+	 * 
+	 * @param bean ピラミッドの登録内容
+	 * @param sessionId セッションID
+	 * @return Integer ピラミッドID
+	 */
 	public Integer insert(Pyramid bean, String sessionId) {
 		return pyramidMapper.insert(bean, sessionId);
 	}
 
+	
+	/** 
+	 * ピラミッドを取得するメソッド.
+	 * 
+	 * @param id ピラミッドID
+	 * @param sessionId セッションID
+	 * @return Pyramid ピラミッド
+	 */
 	public Pyramid findPyramid(Integer id, String sessionId) {
 		return pyramidMapper.findPyramid(id, sessionId);
 	}

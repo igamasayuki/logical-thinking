@@ -97,6 +97,14 @@ public class PyramidController {
 		return frameworkList;
 	}
 
+	
+	/** 
+	 * @param upsert(
+	 * @return String
+	 * @throws JsonMappingException
+	 * @throws JsonProcessingException
+	 * @throws SessionTypeConversionExeption
+	 */
 	@ResponseBody
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String upsert(
@@ -118,6 +126,13 @@ public class PyramidController {
 		return Integer.toString(pyramid.getId());
 	}
 
+	
+	/** 
+	 * Jsonで変換する根拠一覧をマッピングするメソッド.
+	 * 
+	 * @param form 根拠
+	 * @return Reason 根拠
+	 */
 	private Reason convertReason(ReasonForm form) {
 		Reason reason = new Reason();
 		BeanUtils.copyProperties(form, reason);
