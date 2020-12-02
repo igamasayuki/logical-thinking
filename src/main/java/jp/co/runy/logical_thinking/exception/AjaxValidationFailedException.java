@@ -1,4 +1,4 @@
-package jp.co.runy.logical_thinking.controller;
+package jp.co.runy.logical_thinking.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Ajax通信でバリデーションエラー発生時のハンドラー
  *
  */
-public class AbstractAjaxController {
+public abstract class AjaxValidationFailedException {
 
 	/**
 	 * @param e

@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jp.co.runy.logical_thinking.domain.LogicTree;
+import jp.co.runy.logical_thinking.exception.AjaxValidationFailedException;
 import jp.co.runy.logical_thinking.form.LogicTreeForm;
 import jp.co.runy.logical_thinking.service.LogicTreeService;
 import jp.co.runy.logical_thinking.service.PyramidService;
@@ -34,7 +35,7 @@ import jp.co.runy.logical_thinking.service.PyramidService;
  */
 @Controller
 @RequestMapping("/logicalthinking/logictree")
-public class LogicTreeController extends AbstractAjaxController {
+public class LogicTreeController extends AjaxValidationFailedException {
 	
 	@Autowired
 	private LogicTreeService logicTreeService;
