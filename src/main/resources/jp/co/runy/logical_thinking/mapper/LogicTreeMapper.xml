@@ -43,7 +43,8 @@
 			sh.id as sh_id, 
 			sh.explanation as sh_explanation,
 			th.id as th_id, 
-			th.explanation as th_explanation 
+			th.explanation as th_explanation,
+			th.display_order as th_display_order
 		from 
 			logic_trees lt 
 		left join 
@@ -55,7 +56,11 @@
 		where
 			lt.session_id = #{sessionId}
 		and
-			lt.id = ${logicTreeId};
+			lt.id = ${logicTreeId}
+		order by
+			fh.display_order,
+			sh.display_order,
+			th.display_order;
 	</select>
 	
 	<select id="selectLogicTree" resultType="jp.co.runy.logical_thinking.domain.LogicTree">

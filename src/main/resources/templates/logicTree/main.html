@@ -37,7 +37,7 @@
         </div>
         <div class="row mb-3">
        		<div id="partnerWantsError" class="text-danger font-weight-bold"></div>
-            <textarea id="partnerWants" class="form-control" rows="3" cols="70"></textarea>
+            <textarea id="partnerWants" class="form-control" rows="3" cols="70" placeholder="プレースホルダー"></textarea>
         </div>
 
         <div class="row">
@@ -53,22 +53,12 @@
           <label for="clarify"> あなたが相手に説明したい（あるいは自分自身で明確にしたい）のは、以下のどちらですか？ </label>
         </div>
         <div class="row mb-3">
-          <label class="radio-inline">
-            <input type="radio" name="clarify" checked value="1">原因(理由)
-          </label>
-          <label class="radio-inline">
-            <input type="radio" name="clarify" value="2">方法
-          </label>
+          <label class="radio-inline"><input type="radio" name="clarify" checked value="1">原因(理由)</label>
+          <label class="radio-inline"><input type="radio" name="clarify" value="2">方法</label>
         </div>
         <!-- <div id = "copyPartnerWants">テスト</div> -->
         <div class="alert alert-primary" role="alert">
           <h4 class="alert-heading">今回の課題</h4>
-          <!-- <p>
-            「<div id = "copyPartnerWants">コミュニティ</div>」に対して<br>
-            「コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である」のギャップが課題です。<br>
-            【原因を選んだ場合→】この課題の原因にはどのようなものが考えられるか？<br>
-            【方法を選んだ場合→】この課題を解決するにはどのような方法が考えられるか？
-          </p> -->
           「<font id = "copyPartnerWants">
               コミュニケーションが普通に取れる人月30万円程度のJavaのWebエンジニアを派遣して欲しい
           </font>
@@ -108,42 +98,6 @@
             </select>
         </div>
         <section id="hierarchy">
-            <!-- <button>ボタン1</button> -->
-            <!-- <div id="fw1">
-                <div id="fh1">
-                    <div class="row">
-                        <label for="" class="col-11"> ヒトに関する具体的な【原因(理由)/方法】を挙げてください</label>
-                        <button type="button" class="btn btn-danger col-1">削除</button>
-                    </div>
-                    <div id="sh1">
-                        <div class="row">
-                            <label for="" class="col-2">第二階層：</label>
-                            <input type="text" class="form-control col-9" value="30万円のエンジニアを提案する">
-                            <button type="button" class="btn btn-primary col-1">削除</button>
-                        </div>
-                        <div id="th1">
-                            <div>
-                                <div class="row">
-                                    <label for="" class="offset-1 col-2">第三階層：</label>
-                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れないが安いエンジニアを提案する">
-                                    <button type="button" class="btn btn-info col-1">削除</button>
-                                  </div>
-                                  <div class="row">
-                                    <label for="" class="offset-1 col-2">第三階層：</label>
-                                    <input type="text" class="form-control col-8 float-right" value="コミュニケーションは取れるがJavaの経験が浅いエンジニアを提案する">
-                                    <button type="button" class="btn btn-info col-1">削除</button>
-                                  </div>
-                            </div>
-                            <div class="row">
-                                <button type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button id="addSh1" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>
-                    </div>
-                </div>
-              </div> -->
         </section>
         <div class="row mb-5">
             <button target="_blank" class="btn btn-primary mr-3">
@@ -177,7 +131,7 @@
 	        </div>
         <div id="submit-value-error" class="row text-danger font-weight-bold"></div>
         <div class="row mb-5">
-            <button onclick="test()" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
+            <button onclick="register()" class="btn btn-primary">Step2(ピラミッド構造=PREP)の作成へ進む</button>
         </div>
       </section>
     </div>
