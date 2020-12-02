@@ -200,10 +200,11 @@ function test(){
         // ex. fh0, fh1 ...
         fHName = 'fh' + index;
         // 第一階層の値を取得
+        console.log($('section[name=' + fHName + '] input[class=another-word-list]').val())
         firstHierarchy = {
             word : $('section[name=' + fHName + '] div div input').val(),
             //name変更位置
-            anotherWord : $('section[name=' + fHName + '] input[name=firstHierarchyList[' + index + '].anotherWord]').val(),
+            anotherWord : $('section[name=' + fHName + '] input[class=another-word-list]').val(),
             logicTreeId : 0,
             displayOrder : index + 1,
             secondHierarchyList : []
@@ -530,6 +531,7 @@ $(function(){
     // name: 追加したい要素名
     function button(selectedId, option, name){
     	let firstHierarchyIndex = $('.another-word-list').length
+    	//仮の値
     	let secondHierarchyIndex = 0
         switch (option) {
             // 削除
@@ -683,9 +685,7 @@ $(function(){
                 break;
             // 第二階層を追加
             case 'addSh':
-            	firstHierarchyIndex
                 shName = name + '_sh' + $('.fw[name=' + name + '] section').length
-                console.log(name)
 
                 addHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
