@@ -47,14 +47,14 @@ public class ShowMindMapController {
 		final List<String> elementList = frameworkService.getElementList(logicTree.getFrameworkId());
 		
 		if(!CollectionUtils.isEmpty(form.getAdditionalWord())) {
-			form.getAdditionalWord().forEach(additionalWord -> {
+			form.getAdditionalWord().stream().forEach(additionalWord -> {
 				elementList.add(additionalWord);
 			});
 		}
-		System.out.println(elementList);
+		System.out.println(form);
+		
 		model.addAttribute("logicTree", form);
 		model.addAttribute("elementList", elementList);
-		
 		return "logictree/mindmap";
 	}
 }

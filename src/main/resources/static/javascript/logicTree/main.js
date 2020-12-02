@@ -67,7 +67,8 @@ function addHTML(data){
         '<label for="">「' + firstHierarchy.word + '」を言い換えると何ですか？</label>' + 
         '</div>' + 
         '<div class="row">' + 
-        '<input name="anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
+        //name変更位置
+        '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
         '</div>';
         $('#hierarchy').append(new_list);
         $('#hierarchy').children('section[name=fh'+ index + ']').before(secondHierarchyButton + anotherWordText)
@@ -201,7 +202,8 @@ function test(){
         // 第一階層の値を取得
         firstHierarchy = {
             word : $('section[name=' + fHName + '] div div input').val(),
-            anotherWord : $('section[name=' + fHName + '] input[name=anotherWord]').val(),
+            //name変更位置
+            anotherWord : $('section[name=' + fHName + '] input[name=firstHierarchyList[' + index + '].anotherWord]').val(),
             logicTreeId : 0,
             displayOrder : index + 1,
             secondHierarchyList : []
@@ -407,7 +409,9 @@ $(function(){
                     '<label for="">「' + data[index].element + '」を言い換えると何ですか？</label>' + 
                     '</div>' + 
                     '<div class="row">' + 
-                    '<input name="anotherWord" type="text" class="form-control mb-5" value="">' + 
+                    //name変更位置
+                    '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
+                    //'<input name="anotherWord" type="text" class="form-control mb-5" value="">' + 
                     '</div>';
                     $('#fw' + data[index].id).prepend(anotherWordText)
 
@@ -438,7 +442,8 @@ $(function(){
                 // 第一階層の値を取得
                 firstHierarchy = {
                     word : $('section[name=' + fHName + '] div div input').val(),
-                    anotherWord : $('section[name=' + fHName + '] input[name=anotherWord]').val(),
+                    //name変更位置
+                    anotherWord : $('section[name=' + fHName + '] input[name=firstHierarchyList[' + index + '].anotherWord]').val(),
                     logicTreeId : 0,
                     secondHierarchyList : []
                 }
@@ -595,6 +600,7 @@ $(function(){
                 break;
             // 第一階層を追加
             case 'addFH':
+            	const index = $('.another-word-list').length
                 name = 'fh' + $('.fw').length
                 clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
                 secondHierarchyButton = 
@@ -616,7 +622,8 @@ $(function(){
                 '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
                 '</div>' + 
                 '<div class="row">' + 
-                '<input name="anotherWord" type="text" class="form-control mb-5" value="">' + 
+                //name変更位置
+                '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
                 '</div>';
                 
                 var option = 'addSh';
