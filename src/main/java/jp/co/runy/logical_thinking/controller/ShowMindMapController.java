@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jp.co.runy.logical_thinking.domain.LogicTree;
-import jp.co.runy.logical_thinking.form.MindMapForm;
+import jp.co.runy.logical_thinking.form.LogicTreeMindMapForm;
 import jp.co.runy.logical_thinking.service.FrameworkService;
 
 /**
@@ -27,8 +27,8 @@ public class ShowMindMapController {
 	private FrameworkService frameworkService;
 	
 	@ModelAttribute
-	public MindMapForm getMindMapForm() {
-		return new MindMapForm();
+	public LogicTreeMindMapForm getMindMapForm() {
+		return new LogicTreeMindMapForm();
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class ShowMindMapController {
 	 * @return マインドマップページ
 	 */
 	@PostMapping("/logical-thinking/mindmap")
-	public String showMindMap (MindMapForm form, Model model) {
+	public String showMindMap (LogicTreeMindMapForm form, Model model) {
 		LogicTree logicTree = new LogicTree();
 		BeanUtils.copyProperties(form, logicTree);
 		logicTree.setFrameworkId(form.getFw());

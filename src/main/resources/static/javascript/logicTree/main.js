@@ -389,7 +389,7 @@ $(function(){
                     addHtml = '<section class="row2" name="' + shName + '">' + 
                     '<div class="row">' + 
                     '<label for="" class="col-2">第二階層：</label>' + 
-                    '<input name="secondHierarchyTextList" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                    '<input name="firstHierarchyList[' + index + '].secondHierarchyList[0].explanation" type="text" class="second-explanation-list form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                     '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                     '</div>' + 
                     '<div class="row">' + 
@@ -529,6 +529,8 @@ $(function(){
     // optiin: add(追加), delete(削除)
     // name: 追加したい要素名
     function button(selectedId, option, name){
+    	let firstHierarchyIndex = $('.another-word-list').length
+    	let secondHierarchyIndex = 0
         switch (option) {
             // 削除
             case 'delete':
@@ -600,7 +602,6 @@ $(function(){
                 break;
             // 第一階層を追加
             case 'addFH':
-            	const index = $('.another-word-list').length
                 name = 'fh' + $('.fw').length
                 clarify = $('input[name="clarify"]').val() == 1 ? '原因(理由)' : '方法';
                 secondHierarchyButton = 
@@ -623,7 +624,7 @@ $(function(){
                 '</div>' + 
                 '<div class="row">' + 
                 //name変更位置
-                '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
+                '<input name="firstHierarchyList[' + firstHierarchyIndex + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
                 '</div>';
                 
                 var option = 'addSh';
@@ -633,7 +634,7 @@ $(function(){
                 addShHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input name="secondHierarchyTextList" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                '<input name="firstHierarchyList[' + firstHierarchyIndex + '].secondHierarchyList[0].explanation" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 
@@ -682,12 +683,14 @@ $(function(){
                 break;
             // 第二階層を追加
             case 'addSh':
+            	firstHierarchyIndex
                 shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+                console.log(name)
 
                 addHtml = '<section class="row2" name="' + shName + '">' + 
                 '<div class="row">' + 
                 '<label for="" class="col-2">第二階層：</label>' + 
-                '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
+                '<input name="firstHierarchyList[' + firstHierarchyIndex + '].secondHierarchyList[' + secondHierarchyIndex + '].explanation" type="text" class="form-control col-9 row2-input" value=""　onblur="createClaimOption(this)">' + 
                 '<button name="sh" onclick="button(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
                 '</div>' + 
                 '<div class="row">' + 

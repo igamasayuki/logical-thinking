@@ -3,6 +3,7 @@ package jp.co.runy.logical_thinking.form;
 import java.util.List;
 
 import jp.co.runy.logical_thinking.domain.FirstHierarchy;
+import jp.co.runy.logical_thinking.domain.SecondHierarchy;
 
 /**
  * マインドマップ用フォーム.
@@ -10,7 +11,7 @@ import jp.co.runy.logical_thinking.domain.FirstHierarchy;
  * @author nonaka
  *
  */
-public class MindMapForm {
+public class LogicTreeMindMapForm {
 	/** 相手が欲しいもの */
 	private String partnerWants;
 	/** あなたの現場 */
@@ -19,14 +20,12 @@ public class MindMapForm {
 	private Integer descriptionType;
 	/** フレームワークの種類 */
 	private Integer fw;
-	/** 別名 */
-	private List<String> anotherWord;
 	/** 追加要素 */
 	private List<String> additionalWord;
-	/** 主張*/
+	/** 主張 */
 	private String insistence;
 	/** 第一階層リスト */
-	private List<FirstHierarchy> firstHierarchyList;
+	private List<FirstHierarchyForm> firstHierarchyList;
 	public String getPartnerWants() {
 		return partnerWants;
 	}
@@ -51,12 +50,6 @@ public class MindMapForm {
 	public void setFw(Integer fw) {
 		this.fw = fw;
 	}
-	public List<String> getAnotherWord() {
-		return anotherWord;
-	}
-	public void setAnotherWord(List<String> anotherWord) {
-		this.anotherWord = anotherWord;
-	}
 	public List<String> getAdditionalWord() {
 		return additionalWord;
 	}
@@ -69,17 +62,16 @@ public class MindMapForm {
 	public void setInsistence(String insistence) {
 		this.insistence = insistence;
 	}
-	public List<FirstHierarchy> getFirstHierarchyList() {
+	public List<FirstHierarchyForm> getFirstHierarchyList() {
 		return firstHierarchyList;
 	}
-	public void setFirstHierarchyList(List<FirstHierarchy> firstHierarchyList) {
+	public void setFirstHierarchyList(List<FirstHierarchyForm> firstHierarchyList) {
 		this.firstHierarchyList = firstHierarchyList;
 	}
 	@Override
 	public String toString() {
-		return "MindMapForm [partnerWants=" + partnerWants + ", currentState=" + currentState + ", descriptionType="
-				+ descriptionType + ", fw=" + fw + ", anotherWord=" + anotherWord + ", additionalWord=" + additionalWord
-				+ ", insistence=" + insistence
-				+ ", firstHierarchyList=" + firstHierarchyList + "]";
+		return "LogicTreeMindMapForm [partnerWants=" + partnerWants + ", currentState=" + currentState
+				+ ", descriptionType=" + descriptionType + ", fw=" + fw + ", additionalWord=" + additionalWord
+				+ ", insistence=" + insistence + ", firstHierarchyList=" + firstHierarchyList + "]";
 	}
 }

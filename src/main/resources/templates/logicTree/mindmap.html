@@ -4,9 +4,6 @@
 <div layout:fragment="content">
 	
 	<div id="jsmind_container" style="width:100%;height:900px;"></div>
-	<input id="partnerWants" type="text" name="partnerWants" th:value="${logicTree.partnerWants}">
-	<input id="currentState" type="text" name="currentState" th:value="${logicTree.currentState}">
-	<input id="descriptionType" type="text" name="descriptionType" th:value="${logicTree.descriptionType}">
 	
 	<script th:src="@{/javascript/mindmap/jsmind.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
@@ -22,7 +19,7 @@
 				/** 課題部分の作成を行う */
 				const task = createTask(logicTree)
 				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
-				const children = createChildren(logicTree.firstHierarchyListForDisplay);
+				const children = createFirstHierarchy(logicTree.firstHierarchyListForDisplay);
 				/** マインドマップの作成 */
 			    const mind = {
 			        "meta":{
@@ -77,20 +74,30 @@
 			 * @param firstHierarchyList 第一階層情報リスト
 			 * @return 第一階層情報
 			 */
-			const createChildren = (firstHierarchyListForDisplay) => {
+			const createFirstHierarchy = (firstHierarchyListForDisplay) => {
 				/** 第一階層のマインドマップを作成する */
-				const children = firstHierarchyListForDisplay.map((firstHierarchy) => {
-					return {'id': `${firstHierarchy.element}`, 'topic': `${firstHierarchy.element}<br>${firstHierarchy.anotherWord}`, "direction": "right"}
+				const firstHierarchy = firstHierarchyListForDisplay.map((firstHierarchy) => {
+					console.log(firstHierarchy)
+					return {'id': `${firstHierarchy.element}`, 
+							  'topic': `${firstHierarchy.element}<br>${firstHierarchy.anotherWord}`, 
+							  'direction': "right",
+							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
+					}
 				});
-				return children
+				return firstHierarchy
 			}
-			
-			const createGrandChildren = (secondHierarchyList) => {
-				const grandChildren = secondHierarchyList.map((secondHierarchy) => {
-					return {'id': `${secondHierarchy.element}`,"topic":"30万円のエンジニア<br>を提案する", "direction": "right"}
+			/*
+			const createSecondHierarchy = (secondHierarchyList) => {
+				console.log(secondHierarchyList)
+				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
+					return {'id': `${secondHierarchy.explanation}`,
+							  'topic':`${secondHierarchy.explanation}`, 
+							  'direction': "right"
+					}
 				})
+				return secondHierarchy
 			}
-			
+			*/
 			/**
 			 * ロジックツリー課題部分の作成を行う.
 			 * 
@@ -122,6 +129,14 @@
 			const firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
 			/** 表示用第一階層リストの作成 */
 			const firstHierarchyListForDisplay = []
+			/*
+			const secondHierarchyListForDisplay = []
+			console.log(firstHierarchyList)
+			const test = firstHierarchyList.map((firstHierarchy) => {
+				return firstHierarchy.secondHierarchyList
+			})
+			console.log(test)
+			*/
 			for(let i = 0; i < elementList.length; i++) {
 				const firstHierarchy = {
 					element: elementList[i],
@@ -133,10 +148,9 @@
 			
 			/** ロジカルツリーの中身作成 */
 			const logicTree = {
-				partnerWants : $('#partnerWants').val(),
-				currentState : $('#currentState').val(),
-				descriptionType : $('#descriptionType').val(),
-				insistance : $('#insistence').val(),
+				partnerWants : /*[[ ${logicTree.partnerWants} ]]*/,
+				currentState : /*[[ ${logicTree.currentState} ]]*/,
+				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
 				firstHierarchyListForDisplay
 			}	
 			
