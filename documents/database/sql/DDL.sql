@@ -43,6 +43,7 @@ create table if not exists first_hierarchies (
     -- 言い換えると「〜」
     another_word text,
     logic_tree_id integer,
+    display_order integer,
     foreign key (logic_tree_id) references logic_trees(id) 
     on delete cascade
     on update cascade
@@ -53,6 +54,7 @@ create table if not exists second_hierarchies (
     -- 説明
     explanation text,
     first_hierarchy_id integer,
+    display_order integer,
     foreign key (first_hierarchy_id) references first_hierarchies(id) 
     on delete cascade
     on update cascade
@@ -62,6 +64,7 @@ create table if not exists third_hierarchies (
     id serial primary key,
     explanation text,
     second_hierarchy_id integer,
+    display_order integer,
     foreign key (second_hierarchy_id) references second_hierarchies(id)
     on delete cascade
     on update cascade
@@ -73,6 +76,7 @@ create table if not exists pyramids (
     framework_id integer,
     -- 結論
     conclusion text,
+    session_id text,
     foreign key (framework_kind_id) references framework_kinds(id),
     foreign key (framework_id) references frameworks(id) 
     on delete cascade
@@ -88,6 +92,8 @@ create table if not exists reasons (
     another_explanation text,
     explanation text,
     pyramid_id integer,
+    display_order integer,
+    session_id text,
     foreign key (pyramid_id) references pyramids(id)
     on delete cascade
     on update cascade
@@ -97,6 +103,8 @@ create table if not exists examples (
     id serial primary key,
     explanation text,
     reason_id integer,
+    display_order integer,
+    session_id text,
     foreign key (reason_id) references reasons(id)
     on delete cascade
     on update cascade

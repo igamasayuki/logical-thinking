@@ -15,6 +15,7 @@ public class Reason {
 	private String anotherExplanation;
 	private Integer pyramidId;
 	private List<Example> evidenceList = new ArrayList<>();
+	private Integer displayOrder;
 	
 	/**
 	 * @return the id
@@ -88,7 +89,12 @@ public class Reason {
 	public void setEvidenceList(List<Example> evidenceList) {
 		this.evidenceList = evidenceList;
 	}
-	
-	
 
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 }

@@ -9,6 +9,7 @@ public class Example {
 	private int id;
 	private String explanation;
 	private Integer rationaleId;
+	private Integer displayOrder;
 	
 	/**
 	 * @return the id
@@ -46,7 +47,12 @@ public class Example {
 	public void setRationaleId(Integer rationaleId) {
 		this.rationaleId = rationaleId;
 	}
-	
-	
 
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
 }
