@@ -18,6 +18,27 @@ public class Pyramid {
 	private String conclusion;
 	/**	根拠List */
 	private List<Reason> rationaleList = new ArrayList<>();
+	private String sessionId;
+	private Integer displayOrder;
+	
+	/**
+	 * @return the displayOrder
+	 */
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+	/**
+	 * @return the sessionId
+	 */
+	public String getSessionId() {
+		return sessionId;
+	}
 	
 	/**
 	 * @return the id
@@ -79,4 +100,15 @@ public class Pyramid {
 	public void setRationaleList(List<Reason> rationaleList) {
 		this.rationaleList = rationaleList;
 	}
+	
+	/**
+	 * @param sessionId the sessionId to set
+	 */
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	
+	
+	
+
 }

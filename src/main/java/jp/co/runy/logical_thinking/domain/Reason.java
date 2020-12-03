@@ -10,13 +10,42 @@ import java.util.List;
 public class Reason {
 	
 	private int id;
+	/**	視点 */
 	private String word;
+	/**	根拠 */
 	private String explanation;
+	/**	根拠を言い換えたもの */
 	private String anotherExplanation;
 	private Integer pyramidId;
-	private List<Example> evidenceList = new ArrayList<>();
+	private String sessionId;
 	private Integer displayOrder;
+	/**	根拠を言い換えたもの */
+	private List<Example> evidenceList = new ArrayList<>();
 	
+	/**
+	 * @return the displayOrder
+	 */
+	public Integer getDisplayOrder() {
+		return displayOrder;
+	}
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(Integer displayOrder) {
+		this.displayOrder = displayOrder;
+	}
+	/**
+	 * @return the sessionId
+	 */
+	public String getSessionId() {
+		return sessionId;
+	}
+	/**
+	 * @param sessionId the sessionId to set
+	 */
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
 	/**
 	 * @return the id
 	 */
@@ -89,12 +118,7 @@ public class Reason {
 	public void setEvidenceList(List<Example> evidenceList) {
 		this.evidenceList = evidenceList;
 	}
+	
+	
 
-	public Integer getDisplayOrder() {
-		return displayOrder;
-	}
-
-	public void setDisplayOrder(Integer displayOrder) {
-		this.displayOrder = displayOrder;
-	}
 }
