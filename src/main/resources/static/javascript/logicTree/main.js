@@ -9,12 +9,10 @@ var uri = url.replace(path, "");
 let frameworks;
 let frameworkElements;
 
-let URL = uri + '/logicalthinking/logictree/api';
-
 // 初期描画時の処理
 $(document).ready( function(){
 	$.ajax({
-		url: "http://localhost:8080/api/framework/get",
+		url: uri + "/api/framework/get",
 //		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
 		type: 'get',
 	}).done(function(data){
@@ -23,8 +21,7 @@ $(document).ready( function(){
     })
     
     $.ajax({
-		url: "http://localhost:8080//logicalthinking/logictree/get",
-//		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
+		url: uri + "/logicalthinking/logictree/get",
 		type: 'get',
 	}).done(function(data){
 		// 成功時の処理
