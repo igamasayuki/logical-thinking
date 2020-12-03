@@ -439,7 +439,7 @@ function changeFrameWork(target){
 // optiin: add(追加), delete(削除)
 // name: 追加したい要素名
 function changeHierarchy(selectedId, option, name){
-	let firstHierarchyIndex = $('.another-word-list').length
+	let firstHierarchyIndex = $('section.fw').length
 	//仮の値
 	let secondHierarchyIndex = 0
     switch (option) {
