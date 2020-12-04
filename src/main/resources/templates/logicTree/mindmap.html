@@ -138,7 +138,10 @@
 			/** 要素リストの取得 */
 			const elementList = /*[[ ${ logicTree.elementList } ]]*/
 			/** 入力した第一階層リストの取得 */
-			const firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+			let firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
+				return firstHierarchy.anotherWord !== null
+			})
 			/** 表示用第一階層リストの作成 */
 			const firstHierarchyListForDisplay = []
 			/*

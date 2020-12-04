@@ -36,7 +36,7 @@ public class ShowMindMapController {
 				form.getElementList().add(additionalWord);
 			});
 		}
-		
+		System.out.println(form);
 		model.addAttribute("logicTree", form);		
 		return "logictree/mindmap";
 	}
