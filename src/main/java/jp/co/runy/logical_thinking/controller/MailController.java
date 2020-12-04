@@ -1,6 +1,6 @@
 package jp.co.runy.logical_thinking.controller;
 
-import static jp.co.runy.logical_thinking.util.SessionKeyUtil.SESSION_LOGICTREE_ID_KEY;
+import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +44,7 @@ public class MailController {
 	 */
 	@RequestMapping(value = "/logicalthinking/mail")
 	public String testMail(Model model, HttpSession session) throws SessionTypeConversionExeption {
-		
-		final Integer id = sessionTypeConversion.typeConversionStringToInteger(session.getAttribute(SESSION_LOGICTREE_ID_KEY));
-		LogicTree logicTree = mailService.findLogicTree(id, session.getId());
+		LogicTree logicTree = mailService.findLogicTree(session.getId());
 		model.addAttribute("logicTree",logicTree);
 		
 		List<Pyramid> pyramidList = mailService.findPyramid(session.getId());
