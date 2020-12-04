@@ -8,6 +8,7 @@ var path = location.pathname;
 var uri = url.replace(path, "");
 let frameworks;
 let frameworkElements;
+const URL = uri + '/logicalthinking/logictree/api';
 
 // 初期描画時の処理
 $(document).ready( function(){
