@@ -1,5 +1,6 @@
 package jp.co.runy.logical_thinking.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,5 +29,24 @@ public class FrameworkService {
 		.collect(Collectors.toMap(
 				f -> f.getId(), f -> f.getFrameworkElementList()));
 		return frameworkElementMap;
+	}
+	
+	/**
+	 * フレームワークの要素名リストを取得する.
+	 * 
+	 * @author nonaka
+	 * 
+	 * @param frameworkId フレームワークID
+	 * @return フレームワーク要素名リスト
+	 */
+	public List<String> getElementList (Integer frameworkId) {
+		final Framework framework = frameworkMapper.findById(frameworkId);
+		final List<String> elementList = new ArrayList<>();
+		framework.getFrameworkElementList()
+				.stream()
+				.forEach(frameworkElement -> {
+					elementList.add(frameworkElement.getElement());
+				});
+		return elementList;
 	}
 }
