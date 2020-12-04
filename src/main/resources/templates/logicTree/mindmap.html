@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<meta charset="UTF-8">
+	<title>たつや学長の誰でも完璧メール</title>
+	<script th:src="@{/jquery/jquery-3.5.1.min.js}"></script>
+    <!-- Bootstrap CSS-->
+	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+	<!-- JSMindMap CSS -->
+	<link rel="stylesheet" href="/jsmind/style/jsmind.css" th:href="@{/css/jsmind.css}" />
+	<!-- <link rel="text/javascript" th:href="@{/bootstrap/js/bootstrap.min.js}"> -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- <link rel="text/javascript" th:href="@{/jquery/jquery-3.5.1.min.js}"> -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+	<div id="jsmind_container" style="width:100%;height:900px;"></div>
+	
+	<script th:src="@{/javascript/mindmap/jsmind.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			/**
+			 * ロジカルツリー図の作成を行う.
+			 * 
+			 * @author nonaka
+			 * 
+			 * @param logicTree ロジックツリー情報
+			 */
+			const loadJsmind = (logicTree) => {
+				/** 課題部分の作成を行う */
+				const task = createTask(logicTree)
+				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
+				const children = createFirstHierarchy(logicTree.firstHierarchyListForDisplay);
+				/** マインドマップの作成 */
+			    const mind = {
+			        "meta":{
+			            "name":"jsMind remote"
+			        },
+			        "format":"node_tree",
+			        "data":{"id":"root","topic":`課題<br>${task}`, children
+			        //ロジックマップ作成後消去予定
+			//        	[
+			//            {"id":"easy","topic":"ヒト<br>Javaエンジニア","direction":"right","children":[
+			//                {"id":"test1","topic":"30万円のエンジニア<br>を提案する", "direction": "right", "children": [
+			//                	{"id": "test11", "topic":"コミュニケーションは取れないが、<br>安いエンジニアを提供する"},
+			//                	{"id": "test12", "topic":"コミュニケーションは取れるが、<br>Java経験の浅いエンジニアを提供する"}
+			//                ]},
+			//                {"id":"test2","topic":"相場通りのエンジニア<br>をご検討いただく", "direction": "right", "children": [
+			//                	{"id": "test21", "topic": "値段は高いがコミュニケーションが<br>取れるJavaのエンジニアを<br>ご検討いただく"}
+			//                ]},
+			//            ]},
+			//            {"id":"open","topic":"モノ<br>設備","direction":"bottom","children":[
+			//                {"id":"open1","topic":"リモートワークにする"},
+			//                {"id":"open2","topic":"ハイスペックPCを支給する"},
+			//                {"id":"open3","topic":"たつや学長の誰でも完璧<br>メールを使う"}
+			//            ]},
+			//            {"id":"powerful","topic":"カネ<br>エンジニア単価","direction":"bottom","children":[
+			//                {"id":"powerful1","topic":"3ヵ月分一括払い<br>にしてもらえれば<br>20%ディスカウントにする"},
+			//                {"id":"powerful2","topic":"成果が出せていなければ<br>値引きする"}
+			//            ]},
+			//            {"id":"other","topic":"情報<br>エンジニア派遣の市況","direction":"bottom","children":[
+			//                {"id":"other1","topic":"派遣したエンジニアから<br>取れないような情報の差分<br>を自社から提供する"},
+			//                {"id":"other2","topic":"毎月お得な技術方法をお客様に配信する"}
+			//            ]}
+			//        ]
+			        }
+			    };
+				
+			    const options = {
+			        container:'jsmind_container',
+			        editable:true,
+			        theme:'primary'
+			    }
+			    
+			    const jm = jsMind.show(options,mind);
+			    jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
+			    jm.set_node_color('sub21', 'green', '#ccc');
+			}
+			
+			/**
+			 * 文章の改行を行う.
+			 * 
+			 * @author nonaka
+			 * 
+			 * @param sentense 文章
+			 * @return 14字で改行された文章
+			 */
+			const handleSentense = (sentense) => {
+				let sentenseList = [];
+				for(let i = 0; i <= sentense.length; i++){
+					let letter = sentense.slice(i, i+1)
+					if(i != 0 && i % 14 === 0){
+						letter += `<br>`
+					}
+					sentenseList.push(letter)
+				}
+				return sentenseList.join('')
+			}
+			
+			/**
+			 * ロジックツリーの子要素を追加する.
+			 * 
+			 * @author nonaka
+			 * 
+			 * @param firstHierarchyList 第一階層情報リスト
+			 * @return 第一階層情報
+			 */
+			const createFirstHierarchy = (firstHierarchyListForDisplay) => {
+				/** 第一階層のマインドマップを作成する */
+				const firstHierarchy = firstHierarchyListForDisplay.map((firstHierarchy) => {
+					console.log(firstHierarchy)
+					return {'id': `${firstHierarchy.element}`, 
+							  'topic': `${firstHierarchy.element}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
+							  'direction': "right",
+							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
+					}
+				});
+				return firstHierarchy
+			}
+			/*
+			const createSecondHierarchy = (secondHierarchyList) => {
+				console.log(secondHierarchyList)
+				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
+					return {'id': `${secondHierarchy.explanation}`,
+							  'topic':`${secondHierarchy.explanation}`, 
+							  'direction': "right"
+					}
+				})
+				return secondHierarchy
+			}
+			*/
+			
+			/**
+			 * ロジックツリー課題部分の作成を行う.
+			 * 
+			 * @author nonaka
+			 * 
+			 * @param partnerWants 求めるもの
+			 * @param currentState 現状
+			 * @param descriptionType 説明文の種類(1=原因,2=方法)
+			 * @return 課題情報
+			 */
+			const createTask = ({ partnerWants, currentState, descriptionType }) => {
+				const type = descriptionType === '1' ? `この課題の原因にはどのようなものが考えられるか？` : `この課題を解決するにはどのような方法が考えられるか？` ;
+				const inputTaskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
+				const taskSentense = handleSentense(inputTaskSentense)
+				return taskSentense
+			}
+			
+			/** 要素リストの取得 */
+			const elementList = /*[[ ${ logicTree.elementList } ]]*/
+			/** 入力した第一階層リストの取得 */
+			let firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
+				return firstHierarchy.anotherWord !== null
+			})
+			/** 表示用第一階層リストの作成 */
+			const firstHierarchyListForDisplay = []
+			/*
+			const secondHierarchyListForDisplay = []
+			console.log(firstHierarchyList)
+			const test = firstHierarchyList.map((firstHierarchy) => {
+				return firstHierarchy.secondHierarchyList
+			})
+			console.log(test)
+			*/
+
+			for(let i = 0; i < elementList.length; i++) {
+				if(!!firstHierarchyList[i]){
+					const firstHierarchy = {
+						element: elementList[i],
+						anotherWord: firstHierarchyList[i].anotherWord ? firstHierarchyList[i].anotherWord : '',
+					}
+					firstHierarchyListForDisplay.push(firstHierarchy)
+				}
+			}
+			console.log(firstHierarchyListForDisplay)
+			
+			/** ロジカルツリーの中身作成 */
+			const logicTree = {
+				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
+				currentState : /*[[ 「 + ${logicTree.currentState} + 」 ]]*/,
+				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
+				firstHierarchyListForDisplay
+			}	
+			console.log(logicTree.partnerWants)
+			loadJsmind(logicTree)	
+		/*]]>*/
+	</script>
+</body>
+</html>

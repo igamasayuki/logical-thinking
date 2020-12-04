@@ -46,4 +46,9 @@ public class FrameworkElement {
 	public void setElement(String element) {
 		this.element = element;
 	}
+	
+	@Override
+	public String toString() {
+		return "FrameworkElement [id=" + id + ", frameworkId=" + frameworkId + ", element=" + element + "]";
+	}
 }

@@ -5,6 +5,12 @@ const pyramidUrlUtil = new Utils.PyramidUrl;
 let frameworks;
 let frameworkElements;
 
+let errors = {
+	pyramidError: [],
+	rationalError: [],
+	evidenceError: [],
+}
+
 $(document).ready(function () {
 	$.ajax({
 		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
@@ -15,6 +21,7 @@ $(document).ready(function () {
 		frameworkElements = data['FrameworkElement'];
 	})
 });
+
 
 $(function(){
 	$(document).on("click", "#check-pyramid", function(){
@@ -59,6 +66,7 @@ $(function(){
 					conclusion: $('#conclusion').val(),
 					rationaleFormList: []
 				}
+				errors.pyramidError.push(new Utils.Error($('#conclusion').val(), 'conclusion'));
 				// 根拠リストを取得
 				for (let i = 0; i < $('.reason').children('section').length; i++) {
 					const rationaleForm = {
@@ -68,17 +76,25 @@ $(function(){
 						evidenceFormList: [],
 						displayOrder: i + 1,
 					}
+					errors.rationalError.push(new Utils.Error(rationaleForm.explanation, `explanation${i}`, true));
+					errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false));
 					// 証拠リストを取得
 					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
 						const evidenceForm = {
 							explanation: $(`#evidence${i}_${j}`).val(),
 							displayOrder: j + 1
 						}
+						errors.evidenceError.push(new Utils.Error(evidenceForm.explanation, `evidence${i}_${j}`, true));
 						rationaleForm.evidenceFormList.push(evidenceForm);
 					}
 					pyramidForm.rationaleFormList.push(rationaleForm);
 				}
-				var param = JSON.stringify(pyramidForm);
+				if(validation()){
+					$(`#submit_error`).length == 0 ? $(`#submit`).parent().before($("<div id='submit_error' class='row text-danger'>エラー入力項目があります。入力欄上のエラーメッセージをご確認ください</div></br>")) : null;
+					return;
+				}
+				$(`#submit_error`).remove();
+				const param = JSON.stringify(pyramidForm);
 				$.ajax({
 					url: `${urlUtil.uri}/logicalthinking/pyramid/api/upsert`,
 					type: 'post',
@@ -113,7 +129,7 @@ $(function(){
 
 						'<div class="row">' +
 						'<label for="clientSecret">' +
-						frameworkElement[index].element + 'に関する根拠を挙げてください' +
+						frameworkElement[index].element + 'に関する根拠を挙げてください(100字以内)' +
 						'</label>' +
 						'<input type="hidden" id="' + wordId + '" value="' + frameworkElement[index].element + '"/>' +
 						'</div>' +
@@ -133,7 +149,7 @@ $(function(){
 
 						'<div class="row">' +
 						'上記の根拠に対する証拠<span style="color:red">' +
-						'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+						'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください(100字以内で簡潔にまとめてください)' +
 						'</div>' +
 						'<section id="' + evidenceId + '">' +
 						'<div class="row">' +
@@ -169,6 +185,23 @@ $(function(){
 		}
 	});
 });
+
+function validation () {
+	let validatedError = false;
+	Object.keys(errors).forEach(key => {
+		errors[key].forEach(error => {
+			error.validation();
+			if (error.errorElement.validatedError) {
+				$(`#${error.errorElement.elementName}_error`).length == 0 ? $(`#${error.errorElement.elementName}`).before(error.errorElement.message) : null;
+				validatedError = true;
+			} else {
+				$(`#${error.errorElement.elementName}_error`).remove();
+			}
+		})
+		errors[key] = [];
+	})
+	return validatedError;
+}
 
 function checkPyramid(){
 	$.ajax({

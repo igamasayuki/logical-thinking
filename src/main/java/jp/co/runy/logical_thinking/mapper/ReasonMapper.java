@@ -13,6 +13,6 @@ import jp.co.runy.logical_thinking.domain.Reason;
 
 @Mapper
 public interface ReasonMapper {
-	public List<Reason> selectReason();
+	public List<Reason> selectReason(String sessionId);
 
 }
