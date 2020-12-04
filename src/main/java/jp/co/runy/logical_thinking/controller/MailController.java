@@ -34,12 +34,19 @@ public class MailController {
 	private MailService mailService;
 	
 	/**
+	 * セッション取得時の型を変更するクラスオブジェクト.
+	 */
+	final SessionTypeConversion sessionTypeConversion = new SessionTypeConversion();
+	
+	/**
 	 * @param model
 	 * @return 「Step3 生成されたメール文章」ページ
 	 */
 	@RequestMapping(value = "/logicalthinking/mail")
-	public String testMail(Model model, HttpSession session) {
-		LogicTree logicTree = mailService.findLogicTree(session.getId());
+	public String testMail(Model model, HttpSession session) throws SessionTypeConversionExeption {
+		
+		final Integer id = sessionTypeConversion.typeConversionStringToInteger(session.getAttribute(SESSION_LOGICTREE_ID_KEY));
+		LogicTree logicTree = mailService.findLogicTree(id, session.getId());
 		model.addAttribute("logicTree",logicTree);
 		
 		List<Pyramid> pyramidList = mailService.findPyramid(session.getId());

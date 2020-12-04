@@ -34,8 +34,8 @@ public class MailService {
 	 * ロジックツリー一覧を取得するメソッド
 	 * @return ロジックツリー一覧
 	 */
-	public LogicTree findLogicTree(String sessionId){
-		return logicTreeMapper.findBySessionId(sessionId);
+	public LogicTree findLogicTree(Integer id, String sessionId){
+		return logicTreeMapper.findByIdAndSessionId(id, sessionId);
 	}
 
 	/**
