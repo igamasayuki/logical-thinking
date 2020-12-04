@@ -17,6 +17,9 @@ $(document).ready(function () {
 });
 
 $(function(){
+	$(document).on("click", "#check-pyramid", function(){
+		checkPyramid();
+	});
 	$(document).click(function(e){
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
@@ -166,3 +169,12 @@ $(function(){
 		}
 	});
 });
+
+function checkPyramid(){
+	$.ajax({
+		url: "http://localhost:8080/logical-thinking/mindmap,
+		type: 'get',
+	}).done(function(data){
+        console.log("成功")
+    })
+}
