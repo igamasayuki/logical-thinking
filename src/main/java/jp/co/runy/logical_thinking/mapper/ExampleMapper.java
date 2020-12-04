@@ -13,6 +13,6 @@ import jp.co.runy.logical_thinking.domain.Example;
 
 @Mapper
 public interface ExampleMapper {
-	public List<Example> selectExample();
+	public List<Example> selectExample(String sessionId);
 
 }

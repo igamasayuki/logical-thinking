@@ -12,7 +12,7 @@ import jp.co.runy.logical_thinking.domain.Pyramid;
  */
 @Mapper
 public interface PyramidMapper {
-	public List<Pyramid> selectPyramid();
+	public List<Pyramid> selectPyramid(String sessionId);
 
 	public Integer insert(Pyramid bean, String sessionId);
 
