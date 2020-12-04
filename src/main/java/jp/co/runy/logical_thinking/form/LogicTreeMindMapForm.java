@@ -2,9 +2,6 @@ package jp.co.runy.logical_thinking.form;
 
 import java.util.List;
 
-import jp.co.runy.logical_thinking.domain.FirstHierarchy;
-import jp.co.runy.logical_thinking.domain.SecondHierarchy;
-
 /**
  * マインドマップ用フォーム.
  * 
@@ -20,6 +17,8 @@ public class LogicTreeMindMapForm {
 	private Integer descriptionType;
 	/** フレームワークの種類 */
 	private Integer fw;
+	/** 要素リスト */
+	private List<String> elementList;
 	/** 追加要素 */
 	private List<String> additionalWord;
 	/** 主張 */
@@ -50,6 +49,12 @@ public class LogicTreeMindMapForm {
 	public void setFw(Integer fw) {
 		this.fw = fw;
 	}
+	public List<String> getElementList() {
+		return elementList;
+	}
+	public void setElementList(List<String> elementList) {
+		this.elementList = elementList;
+	}
 	public List<String> getAdditionalWord() {
 		return additionalWord;
 	}
@@ -71,7 +76,8 @@ public class LogicTreeMindMapForm {
 	@Override
 	public String toString() {
 		return "LogicTreeMindMapForm [partnerWants=" + partnerWants + ", currentState=" + currentState
-				+ ", descriptionType=" + descriptionType + ", fw=" + fw + ", additionalWord=" + additionalWord
-				+ ", insistence=" + insistence + ", firstHierarchyList=" + firstHierarchyList + "]";
+				+ ", descriptionType=" + descriptionType + ", fw=" + fw + ", elementList=" + elementList
+				+ ", additionalWord=" + additionalWord + ", insistence=" + insistence + ", firstHierarchyList="
+				+ firstHierarchyList + "]";
 	}
 }

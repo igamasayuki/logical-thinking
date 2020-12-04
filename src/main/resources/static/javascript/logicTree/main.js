@@ -386,7 +386,7 @@ function changeFrameWork(target){
       `</font>` + 
        'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
        '</label>' +
-       '<input type="hidden" value="' + data[index].element +  '">' + 
+       '<input name="elementList" type="hidden" value="' + data[index].element +  '">' + 
        '<button name="fh" type="button" onclick="changeHierarchy(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
        '</div>' +
        '</div>' + 

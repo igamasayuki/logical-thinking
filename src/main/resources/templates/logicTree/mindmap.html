@@ -136,7 +136,7 @@
 			}
 			
 			/** 要素リストの取得 */
-			const elementList = /*[[ ${ elementList } ]]*/
+			const elementList = /*[[ ${ logicTree.elementList } ]]*/
 			/** 入力した第一階層リストの取得 */
 			const firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
 			/** 表示用第一階層リストの作成 */
@@ -154,7 +154,7 @@
 				if(!!firstHierarchyList[i]){
 					const firstHierarchy = {
 						element: elementList[i],
-						anotherWord: firstHierarchyList[i].anotherWord,
+						anotherWord: firstHierarchyList[i].anotherWord ? firstHierarchyList[i].anotherWord : '',
 					}
 					firstHierarchyListForDisplay.push(firstHierarchy)
 				}
