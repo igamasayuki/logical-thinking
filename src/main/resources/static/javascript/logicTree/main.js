@@ -217,11 +217,10 @@ function createLogicTreeData(logicTree){
         // ex. fh0, fh1 ...
         fHName = 'fh' + index;
         // 第一階層の値を取得
-        console.log($('section[name=' + fHName + '] input[class=another-word-list]').val())
         firstHierarchy = {
             word : $('section[name=' + fHName + '] div div input').val(),
             //name変更位置
-            anotherWord : $('section[name=' + fHName + '] input[class=another-word-list]').val(),
+            anotherWord : $('section[name=' + fHName + '] input').val(),
             logicTreeId : 0,
             displayOrder : index + 1,
             secondHierarchyList : []
@@ -424,7 +423,7 @@ function changeFrameWork(target){
          '<label for="">「' + data[index].element + '」を言い換えると何ですか？</label>' + 
          '</div>' + 
          '<div class="row">' + 
-         '<input  name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
+         '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
          '</div>';
          $('#fw' + data[index].id).prepend(anotherWordText)
      }
