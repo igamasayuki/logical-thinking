@@ -126,7 +126,7 @@
 				let taskSentense = [];
 				for(let i = 0; i <= inputTaskSentense.length; i++){
 					let letter = inputTaskSentense.slice(i, i+1)
-					if(i != 0 && i % 15 === 0){
+					if(i != 0 && i % 16 === 0){
 						letter += `<br>`
 					}
 					taskSentense.push(letter)
@@ -149,12 +149,15 @@
 			})
 			console.log(test)
 			*/
+
 			for(let i = 0; i < elementList.length; i++) {
-				const firstHierarchy = {
-					element: elementList[i],
-					anotherWord: firstHierarchyList[i].anotherWord,
+				if(!!firstHierarchyList[i]){
+					const firstHierarchy = {
+						element: elementList[i],
+						anotherWord: firstHierarchyList[i].anotherWord,
+					}
+					firstHierarchyListForDisplay.push(firstHierarchy)
 				}
-				firstHierarchyListForDisplay.push(firstHierarchy)
 			}
 			console.log(firstHierarchyListForDisplay)
 			

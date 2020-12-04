@@ -186,6 +186,7 @@ function register(){
     
     // json化
     var param = JSON.stringify(logicTree);
+    console.log(param)
     $.ajax({
         url: URL + '/upsert',
         type: 'post',
