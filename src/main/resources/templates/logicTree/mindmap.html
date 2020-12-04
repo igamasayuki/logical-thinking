@@ -79,6 +79,26 @@
 			}
 			
 			/**
+			 * 文章の改行を行う.
+			 * 
+			 * @author nonaka
+			 * 
+			 * @param sentense 文章
+			 * @return 14字で改行された文章
+			 */
+			const handleSentense = (sentense) => {
+				let sentenseList = [];
+				for(let i = 0; i <= sentense.length; i++){
+					let letter = sentense.slice(i, i+1)
+					if(i != 0 && i % 14 === 0){
+						letter += `<br>`
+					}
+					sentenseList.push(letter)
+				}
+				return sentenseList.join('')
+			}
+			
+			/**
 			 * ロジックツリーの子要素を追加する.
 			 * 
 			 * @author nonaka
@@ -91,7 +111,7 @@
 				const firstHierarchy = firstHierarchyListForDisplay.map((firstHierarchy) => {
 					console.log(firstHierarchy)
 					return {'id': `${firstHierarchy.element}`, 
-							  'topic': `${firstHierarchy.element}<br>${firstHierarchy.anotherWord}`, 
+							  'topic': `${firstHierarchy.element}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
 							  'direction': "right",
 							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
 					}
@@ -110,6 +130,7 @@
 				return secondHierarchy
 			}
 			*/
+			
 			/**
 			 * ロジックツリー課題部分の作成を行う.
 			 * 
@@ -123,15 +144,7 @@
 			const createTask = ({ partnerWants, currentState, descriptionType }) => {
 				const type = descriptionType === '1' ? `この課題の原因にはどのようなものが考えられるか？` : `この課題を解決するにはどのような方法が考えられるか？` ;
 				const inputTaskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
-				let taskSentense = [];
-				for(let i = 0; i <= inputTaskSentense.length; i++){
-					let letter = inputTaskSentense.slice(i, i+1)
-					if(i != 0 && i % 16 === 0){
-						letter += `<br>`
-					}
-					taskSentense.push(letter)
-				}
-				taskSentense = taskSentense.join('')
+				const taskSentense = handleSentense(inputTaskSentense)
 				return taskSentense
 			}
 			
