@@ -340,7 +340,7 @@ $(function(){
         $('#currentStateForLogicTree').val($(this).val());
     });
     // 言い換えの入力結果を反映
-    $( document ).on( 'keyup', '[name=anotherWord]' , function(){ 
+    $( document ).on( 'keyup', '.another-word-list' , function(){ 
         $(this).parent().next().find('.copyAnotherWord').html($( this ).val());
     });
     
