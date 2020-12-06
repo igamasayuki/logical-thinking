@@ -210,6 +210,28 @@ function register(){
     });
 }
 
+/**
+ * マインドマップページに遷移する.
+ */
+const createLogicTreeMap = () => {
+    const logicTree = {
+        partnerWants : $('#partnerWants').val(),
+        currentState : $('#currentState').val(),
+        descriptionType : $('input[name="clarify"]').val(),
+        frameworkId : $('[name="fw"]').val(),
+        firstHierarchyList : []
+    }
+    
+    //ロジックツリー(第一階層から第三階層までの作成)の作成を行う.
+    createLogicTreeData(logicTree);
+    // json化
+    const param = JSON.stringify(logicTree);
+    //エンコード
+    const encoded = encodeURIComponent(param)
+    //エンコードしたJSONをparamとして遷移させる
+    location.href= uri + `/logicalthinking/mindmap?json=${encoded}`;
+}
+
 //登録するロジックツリーの情報を取得します.
 function createLogicTreeData(logicTree){
 	// 第一階層の数を取得

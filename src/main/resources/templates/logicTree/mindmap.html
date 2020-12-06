@@ -31,7 +31,7 @@
 				/** 課題部分の作成を行う */
 				const task = createTask(logicTree)
 				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
-				const children = createFirstHierarchy(logicTree.firstHierarchyListForDisplay);
+				const children = createFirstHierarchy(logicTree.firstHierarchyList);
 				/** マインドマップの作成 */
 			    const mind = {
 			        "meta":{
@@ -106,12 +106,12 @@
 			 * @param firstHierarchyList 第一階層情報リスト
 			 * @return 第一階層情報
 			 */
-			const createFirstHierarchy = (firstHierarchyListForDisplay) => {
+			const createFirstHierarchy = (firstHierarchyList) => {
 				/** 第一階層のマインドマップを作成する */
-				const firstHierarchy = firstHierarchyListForDisplay.map((firstHierarchy) => {
+				const firstHierarchy = firstHierarchyList.map((firstHierarchy) => {
 					console.log(firstHierarchy)
-					return {'id': `${firstHierarchy.element}`, 
-							  'topic': `${firstHierarchy.element}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
+					return {'id': `${firstHierarchy.word}`, 
+							  'topic': `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
 							  'direction': "right",
 							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
 					}
@@ -148,43 +148,22 @@
 				return taskSentense
 			}
 			
-			/** 要素リストの取得 */
-			const elementList = /*[[ ${ logicTree.elementList } ]]*/
 			/** 入力した第一階層リストの取得 */
 			let firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+			
+			/** 言い換えがnull以外でない項目のみ表示を行う */
 		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
 				return firstHierarchy.anotherWord !== null
 			})
-			/** 表示用第一階層リストの作成 */
-			const firstHierarchyListForDisplay = []
-			/*
-			const secondHierarchyListForDisplay = []
-			console.log(firstHierarchyList)
-			const test = firstHierarchyList.map((firstHierarchy) => {
-				return firstHierarchy.secondHierarchyList
-			})
-			console.log(test)
-			*/
-
-			for(let i = 0; i < elementList.length; i++) {
-				if(!!firstHierarchyList[i]){
-					const firstHierarchy = {
-						element: elementList[i],
-						anotherWord: firstHierarchyList[i].anotherWord ? firstHierarchyList[i].anotherWord : '',
-					}
-					firstHierarchyListForDisplay.push(firstHierarchy)
-				}
-			}
-			console.log(firstHierarchyListForDisplay)
 			
 			/** ロジカルツリーの中身作成 */
 			const logicTree = {
 				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
 				currentState : /*[[ 「 + ${logicTree.currentState} + 」 ]]*/,
 				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
-				firstHierarchyListForDisplay
+				firstHierarchyList
 			}	
-			console.log(logicTree.partnerWants)
+			console.log(logicTree)
 			loadJsmind(logicTree)	
 		/*]]>*/
 	</script>

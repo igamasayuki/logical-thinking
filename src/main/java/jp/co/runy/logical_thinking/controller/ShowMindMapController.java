@@ -2,11 +2,13 @@ package jp.co.runy.logical_thinking.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import jp.co.runy.logical_thinking.form.LogicTreeMindMapForm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jp.co.runy.logical_thinking.domain.LogicTree;
 
 /**
  * マインドマップを表示するためのコントローラー.
@@ -17,27 +19,22 @@ import jp.co.runy.logical_thinking.form.LogicTreeMindMapForm;
 @Controller
 public class ShowMindMapController {
 	
-	@ModelAttribute
-	public LogicTreeMindMapForm getMindMapForm() {
-		return new LogicTreeMindMapForm();
-	}
-	
 	/**
 	 * マインドマップページに遷移する.
 	 * 
 	 * @param form マインドマップフォーム
 	 * @param model リクエストスコープ
 	 * @return マインドマップページ
+	 * @throws JsonProcessingException 
+	 * @throws JsonMappingException 
 	 */
-	@PostMapping("/logical-thinking/mindmap")
-	public String showMindMap (LogicTreeMindMapForm form, Model model) {
-		if(!CollectionUtils.isEmpty(form.getAdditionalWord())) {
-			form.getAdditionalWord().stream().forEach(additionalWord -> {
-				form.getElementList().add(additionalWord);
-			});
-		}
-		System.out.println(form);
-		model.addAttribute("logicTree", form);		
-		return "logictree/mindmap";
+	@GetMapping("/logicalthinking/mindmap")
+	public String showMindMap (String json, Model model) throws JsonMappingException, JsonProcessingException {
+		//JacksonのObjectMapperインスタンスを作成
+		ObjectMapper mapper = new ObjectMapper();
+		//JSON⇒Javaオブジェクトに変換
+		LogicTree logicTree = mapper.readValue(json, LogicTree.class);	
+		model.addAttribute("logicTree", logicTree);
+		return "logicTree/mindmap.html";
 	}
 }
