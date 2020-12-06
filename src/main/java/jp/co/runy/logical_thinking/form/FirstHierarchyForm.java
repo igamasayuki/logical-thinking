@@ -2,14 +2,24 @@ package jp.co.runy.logical_thinking.form;
 
 import java.util.List;
 
-import jp.co.runy.logical_thinking.domain.SecondHierarchy;
-
+/**
+ * 第一階層フォーム.
+ * 
+ * @author nonaka
+ *
+ */
 public class FirstHierarchyForm {
+	/** ID */
 	private int id;
+	/** 単語 */
 	private String word;
+	/** 言い換え */
 	private String anotherWord;
+	/** ロジックツリーID */
 	private int logicTreeId;
+	/** 表示 */
 	private Integer displayOrder;
+	/** 第二階層リスト */
 	private List<SecondHierarchyForm> secondHierarchyList;
 	public int getId() {
 		return id;
