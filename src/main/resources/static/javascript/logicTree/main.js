@@ -51,38 +51,27 @@ function addHTML(data){
     // 記述用の値(原因 or 方法)を取得
     clarify = $('input[name="clarify"]:checked').parent().text();
     // 第一階層を追加 (取得した要素分を追加)
+	frameworkId = data.frameworkId;
+	targetFrameworkElements = frameworkElements[frameworkId];
     for (let index = 0; index < data.firstHierarchyList.length; index++) {
         firstHierarchy = data.firstHierarchyList[index];
         name = 'fh' + index;
         
         // 「第二階層を追加」ボタンを追加
-        secondHierarchyButton = '<div name="addSH" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
         copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word 
         
-        new_list = '<section class="fw" name="fh' + index +'">' + 
-        '<input id="framework-element" type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
-        '<div>' + 
-        '<div class="row">' + 
-        '<label for="" class="col-11">' +
-        '<font class="copyAnotherWord">'+ copyAnotherWord + '</font>' +
-        'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
-        '</label>' +
-        '<input type="hidden" value="' + firstHierarchy.word + '">' + 
-        '<button type="button" onclick="changeHierarchy(this, \'delete\')" name="fh" class="btn btn-danger col-1">削除</button>' + 
-        '</div>' +
-        '</div>' + 
-        secondHierarchyButton + 
-        '</section>';
+        targetFrameworkElementsId = targetFrameworkElements[index].id;
+        fwId = 'fw' + targetFrameworkElementsId;
+        fhId = 'fh' + targetFrameworkElementsId;
+        deleteFh = 'deleteFh' + targetFrameworkElementsId;
+        
+        new_list = createFirstHierarchyHtml(fwId, index, fhId, data, deleteFh, copyAnotherWord);
+        
+        frameWorkElement = firstHierarchy.word;
+        
+        anotherWordText = createAnotherWordHtml(frameWorkElement, index, copyAnotherWord);
 
         // 「〇〇」を言い換えるとを追加
-        anotherWordText = '<br>' + 
-        '<div class="row">' +
-        '<label for="">「' + firstHierarchy.word + '」を言い換えると何ですか？</label>' + 
-        '</div>' + 
-        '<div class="row">' + 
-        //name変更位置
-        '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
-        '</div>';
         $('#hierarchy').append(new_list);
         $('#hierarchy').children('section[name=fh'+ index + ']').before(anotherWordText);
 
@@ -115,7 +104,7 @@ function addHTML(data){
                     thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
                     thName = shName + '_th' + index3;
                     value = thirdHierarchy.explanation !== null ? thirdHierarchy.explanation : ``; 
-                    addTHSection =  createThirdHierarchyHtml(value, shName, thName){
+                    addTHSection =  createThirdHierarchyHtml(value, shName, thName);
 
                     $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
                }
@@ -374,25 +363,12 @@ function changeFrameWork(target){
        fhId = 'fh' + dataId;
        deleteFh = 'deleteFh' + dataId;
        shId = 'sh' + dataId;
+       copyAnotherWord = data[index].element;
+       
+       new_list = createFirstHierarchyHtml(fwId, index, fhId, data, deleteFh, copyAnotherWord);
 
-       new_list = '<section class="fw" id="'+ fwId +'" name="fh' + index +'">' + 
-       '<div id="' + fhId + '">' + 
-       '<div class="row">' + 
-       '<label for="" class="col-11">' +
-       `<font class="copyAnotherWord">` + 
-       data[index].element + 
-      `</font>` + 
-       'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
-       '</label>' +
-       '<input name="elementList" type="hidden" value="' + data[index].element +  '">' + 
-       '<button name="fh" type="button" onclick="changeHierarchy(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
-       '</div>' +
-       '</div>' + 
-       '</section>';
        $('#hierarchy').append(new_list);
          // 「第二階層を追加」ボタンを追加
-         secondHierarchyButton = '<div name="addSH" id="addSh' + data[index].id + '" class="row"><button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button></div>'
-         $('#fw' + data[index].id).append(secondHierarchyButton);
          
          name = 'fh' + index;
          
@@ -406,14 +382,10 @@ function changeFrameWork(target){
              $(fhId).parent().before(addHtml);
          }
 
+         frameWorkElement = data[index].element;
          // 「〇〇」を言い換えるとを追加
-         anotherWordText = '<br>' + 
-         '<div class="row">' +
-         '<label for="">「' + data[index].element + '」を言い換えると何ですか？</label>' + 
-         '</div>' + 
-         '<div class="row">' + 
-         '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
-         '</div>';
+         anotherWordText = createAnotherWordHtml(frameWorkElement, index, '');
+
          $('#fw' + data[index].id).prepend(anotherWordText)
      }
      addFH = 
@@ -573,6 +545,44 @@ function changeHierarchy(selectedId, option, name){
         default:
             break;
     }
+}
+
+//第一階層の要素を作成します.
+function createFirstHierarchyHtml(fwId, index, fhId, data, deleteFh, copyAnotherWord){
+     addFirstHierarchyHtml = 
+    '<section class="fw" id="'+ fwId +'" name="fh' + index +'">' + 
+    // 第一階層を追加ボタン押下時
+//    '<input id="framework-element" type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
+    '<div id="' + fhId + '">' + 
+    '<div class="row">' + 
+    '<label for="" class="col-11">' +
+    `<font class="copyAnotherWord">` + 
+    copyAnotherWord + 
+   `</font>` + 
+    'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+    '</label>' +
+    '<input name="elementList" type="hidden" value="' + copyAnotherWord +  '">' + 
+    '<button name="fh" type="button" onclick="changeHierarchy(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
+    '</div>' +
+    '</div>' +
+    // ボタンの追加
+    '<div name="addSH" class="row">' + 
+    '<button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
+    '</div>' + 
+    '</section>';
+     return addFirstHierarchyHtml;
+}
+
+function createAnotherWordHtml(frameWorkElement, index, anotherWord){
+	 anotherWordText = '<br>' + 
+     '<div class="row">' +
+     '<label for="">「' + frameWorkElement + '」を言い換えると何ですか？</label>' + 
+     '</div>' + 
+     '<div class="row">' + 
+     //name変更位置
+     '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="' + anotherWord + '">' + 
+     '</div>';
+	 return anotherWordText;
 }
 
 // 第二階層の要素を作成します.
