@@ -36,9 +36,7 @@
 			            "name":"jsMind remote"
 			        },
 			        "format":"node_tree",
-			        "data":{"id":"root","topic":`課題<br>${task}`, "children": children
-			        //ロジックマップ作成後消去予定
-
+			        "data":{"id":"root","topic":`課題<br>${task}`, children
 			        }
 			    };
 				console.log(mind)
@@ -81,13 +79,13 @@
 				thirdHierarchyList = thirdHierarchyList.filter((thirdHierarchy) => {
 					return !!thirdHierarchy.explanation
 				})
-				const thirdHierarchy = thirdHierarchyList.map((thirdHierarchy) => {
+				const thirdHierarchyListForDisplay = thirdHierarchyList.map((thirdHierarchy) => {
 					return {"id": `${thirdHierarchy.explanation}`,
 							  "topic":`${handleSentense(thirdHierarchy.explanation)}`, 
 							  "direction": "right"
 					}
 				})
-				return thirdHierarchy
+				return thirdHierarchyListForDisplay
 			}
 			
 			/**
@@ -100,14 +98,14 @@
 				secondHierarchyList = secondHierarchyList.filter((secondHierarchy) => {
 					return !!secondHierarchy.explanation
 				})
-				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
+				const secondHierarchyForDisplay = secondHierarchyList.map((secondHierarchy) => {
 						return {"id": `${secondHierarchy.explanation}`,
 								  "topic":`${handleSentense(secondHierarchy.explanation)}`, 
 								  "direction": "right",
 								  "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
 						}						
 				})
-				return secondHierarchy
+				return secondHierarchyForDisplay
 			}
 			
 			/**
@@ -118,14 +116,14 @@
 			 */
 			const createFirstHierarchy = (firstHierarchyList) => {
 				/** 第一階層のマインドマップを作成する */
-				const firstHierarchy = firstHierarchyList.map((firstHierarchy) => {
+				const firstHierarchyListForDisplay = firstHierarchyList.map((firstHierarchy) => {
 					return {"id": `${firstHierarchy.word}`, 
 							  "topic": `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
 							  "direction": "right",
 							  "children": createSecondHierarchy(firstHierarchy.secondHierarchyList)
 					}
 				});
-				return firstHierarchy
+				return firstHierarchyListForDisplay
 			}
 			
 			/**
@@ -150,15 +148,7 @@
 		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
 				return firstHierarchy.anotherWord !== null
 			})
-			
-			firstHierarchyList.forEach((firstHierarchy) => {
-				firstHierarchy.secondHierarchyList.filter((secondHierarchy) => {
-					console.log(!!secondHierarchy.explanation)
-					return !!secondHierarchy.explanation
-				})
-			})
-			console.log(firstHierarchyList)
-			
+		
 			/** ロジカルツリーの中身作成 */
 			const logicTree = {
 				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
