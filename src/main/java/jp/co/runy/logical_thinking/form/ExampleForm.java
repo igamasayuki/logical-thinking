@@ -22,10 +22,18 @@ public class ExampleForm {
         this.explanation = explanation;
     }
 
+    
+    /** 
+     * @return Integer
+     */
     public Integer getDisplayOrder() {
         return displayOrder;
     }
 
+    
+    /** 
+     * @param displayOrder
+     */
     public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
     }

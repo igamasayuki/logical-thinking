@@ -8,13 +8,12 @@ var path = location.pathname;
 var uri = url.replace(path, "");
 let frameworks;
 let frameworkElements;
-
-let URL = uri + '/logicalthinking/logictree/api';
+const URL = uri + '/logicalthinking/logictree/api';
 
 // 初期描画時の処理
 $(document).ready( function(){
 	$.ajax({
-		url: "http://localhost:8080/api/framework/get",
+		url: uri + "/api/framework/get",
 //		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
 		type: 'get',
 	}).done(function(data){
@@ -23,8 +22,7 @@ $(document).ready( function(){
     })
     
     $.ajax({
-		url: "http://localhost:8080//logicalthinking/logictree/get",
-//		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
+		url: uri + "/logicalthinking/logictree/get",
 		type: 'get',
 	}).done(function(data){
 		// 成功時の処理
@@ -62,7 +60,7 @@ function addHTML(data){
         copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word 
         
         new_list = '<section class="fw" name="fh' + index +'">' + 
-        '<input type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
+        '<input id="framework-element" type="hidden" name="fh' + index + '_id" value="' + firstHierarchy.id + '">' +
         '<div>' + 
         '<div class="row">' + 
         '<label for="" class="col-11">' +
@@ -170,19 +168,8 @@ function register(){
 	if(!validateValue()){
 		return;
 	}
-	// ロジックツリーの値を取得
-    logicTree = {
-        // 更新処理ではなく, 削除からの新規作成のためidをコメントアウト
-        // id : $('#logicTreeId').val(),
-        partnerWants : $('#partnerWants').val(),
-        currentState : $('#currentState').val(),
-        descriptionType : $('input[name="clarify"]').val(),
-        frameworkId : $('[name="fw"]').val(),
-        insistence : $('#insistence option:selected').val(),
-        firstHierarchyList : []
-    }
     
-    createLogicTreeData(logicTree);
+    logicTree = createLogicTreeData();
     
     // json化
     var param = JSON.stringify(logicTree);
@@ -233,7 +220,19 @@ const createLogicTreeMap = () => {
 }
 
 //登録するロジックツリーの情報を取得します.
-function createLogicTreeData(logicTree){
+function createLogicTreeData(){
+	// ロジックツリーの値を取得
+    logicTree = {
+        // 更新処理ではなく, 削除からの新規作成のためidをコメントアウト
+        // id : $('#logicTreeId').val(),
+        partnerWants : $('#partnerWants').val(),
+        currentState : $('#currentState').val(),
+        descriptionType : $('input[name="clarify"]').val(),
+        frameworkId : $('[name="fw"]').val(),
+        insistence : $('#insistence option:selected').val(),
+        firstHierarchyList : []
+    }
+    
 	// 第一階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
         // ex. fh0, fh1 ...
@@ -271,6 +270,7 @@ function createLogicTreeData(logicTree){
         }
         logicTree.firstHierarchyList.push(firstHierarchy)
     }
+    return logicTree;
 }
 
 //「第一階層を追加する」の後処理.
@@ -570,8 +570,9 @@ function changeHierarchy(selectedId, option, name){
             '<div>' + 
             '<div class="row">' + 
             '<label for="" class="col-11">' +
-            '「<font name="word"></font>」'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
+            '「<font class="copyAnotherWord"></font>」'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
             '</label>' +
+            '<input id="framework-element" type="hidden" value="">' +
             '<button onclick="changeHierarchy(this, \'delete\')" name="fh" type="button" class="btn btn-danger col-1">削除</button>' + 
             '</div>' +
             '</div>' + 

@@ -8,9 +8,9 @@
 		<div layout:fragment="content" class="content-inner"></div>
 		<nav aria-label="breadcrumb">
 	        <ol class="breadcrumb">
-	          <li class="breadcrumb-item active">Step1 全体像を把握する</li>
+	          <li class="breadcrumb-item active"><a th:href="@{/logicalthinking/logictree}">Step1 全体像を把握する</a></li>
 	          <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
-	          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
+	          <li class="breadcrumb-item" style="color: #6c757d;" aria-current="page">Step3 生成されたメール文章</li>
 	    	</ol>
 		</nav>
 <section class="alert alert-danger" role="alert">
@@ -41,11 +41,7 @@
           <div th:if="${logicTree.descriptionType==1}">【方法を選んだ場合→】この課題に対してどの方法が最適と考えられるか？</div>
         </div>
 
-        <div class="row mb-5">
-          <a href="img/pyramid.png" target="_blank" class="btn btn-primary">
-            ここまでのピラミッド構造を確認する
-          </a>
-        </div>
+        
 
       </section>
 
@@ -74,6 +70,14 @@
 		<section class="reason">
 		</section>
       </section>
+      
+      <section>
+      	<div class="row mb-5">
+          <div id="check-pyramid" class="btn btn-primary">
+            ここまでのピラミッド構造を確認する
+          </div>
+        </div>
+	  </section>
 
       <section class="col-12">
         <div class="row">

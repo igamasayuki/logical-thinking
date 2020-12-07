@@ -14,7 +14,7 @@ public interface LogicTreeMapper {
 
 	int insert(LogicTree logicTree);
 
-	public LogicTree selectLogicTree();
+	public LogicTree findBySessionId(String sessionId);
 
 	public LogicTree findByIdAndSessionId(@Param("logicTreeId") Integer id, String sessionId);
 }
