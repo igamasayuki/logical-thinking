@@ -30,6 +30,12 @@ public class FrameworkController {
 	@Autowired
 	private FrameworkKindService frameworkKindService;
 
+	
+	/** 
+	 * フレームワークを取得するメソッド.
+	 * 
+	 * @return Map<String, Map<Integer, List<?>>> フレームワークとフレームワークカインド（要件等）のマップオブジェクト
+	 */
 	@GetMapping("/get")
 	@ResponseStatus(HttpStatus.OK)
 	public Map<String, Map<Integer, List<?>>> get() {

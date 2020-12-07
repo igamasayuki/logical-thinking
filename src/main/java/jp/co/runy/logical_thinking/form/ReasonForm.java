@@ -75,10 +75,18 @@ public class ReasonForm {
         this.evidenceFormList = evidenceFormList;
     }
 
+    
+    /** 
+     * @return Integer
+     */
     public Integer getDisplayOrder() {
         return displayOrder;
     }
 
+    
+    /** 
+     * @param displayOrder
+     */
     public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
     }

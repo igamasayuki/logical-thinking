@@ -97,23 +97,42 @@ public class PyramidController {
 		return frameworkList;
 	}
 
+	
+	/** 
+	 * @param upsert(
+	 * @return String
+	 * @throws JsonMappingException
+	 * @throws JsonProcessingException
+	 * @throws SessionTypeConversionExeption
+	 */
 	@ResponseBody
 	@RequestMapping(value ="/api/upsert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String upsert(
 			@Validated @RequestBody PyramidForm pyramidForm, HttpSession session)
-			throws JsonMappingException, JsonProcessingException {
+			throws JsonMappingException, JsonProcessingException, SessionTypeConversionExeption {
 		final Pyramid pyramid = new Pyramid();
 		BeanUtils.copyProperties(pyramidForm, pyramid);
+		if(session.getAttribute(SESSION_PYRAMID_ID_KEY) != null) {
+			pyramid.setId(new SessionTypeConversion().typeConversionStringToInteger(
+					session.getAttribute(SESSION_PYRAMID_ID_KEY)));
+		};
 		final List<Reason> reasonList = pyramidForm.getRationaleFormList().stream()
 				.map(reasonForm -> convertReason(reasonForm))
 				.collect(Collectors.toList());
 		pyramid.setRationaleList(reasonList);
 		final int id = pyramidService.insert(pyramid, session.getId());
 		pyramid.setId(id);
-		session.setAttribute(SESSION_LOGICTREE_ID_KEY, id);
+		session.setAttribute(SESSION_PYRAMID_ID_KEY, id);
 		return Integer.toString(pyramid.getId());
 	}
 
+	
+	/** 
+	 * Jsonで変換する根拠一覧をマッピングするメソッド.
+	 * 
+	 * @param form 根拠
+	 * @return Reason 根拠
+	 */
 	private Reason convertReason(ReasonForm form) {
 		Reason reason = new Reason();
 		BeanUtils.copyProperties(form, reason);
