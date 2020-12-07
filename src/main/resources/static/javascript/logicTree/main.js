@@ -101,6 +101,51 @@ function addHTML(data){
       $('#insistence').val(data.insistence);
 }
 
+$(function(){
+	// 主張の選択肢を追加
+	$(document).on("blur", ".row2", function(){
+		createInsistenceOption();
+	});
+	
+	// 「今回の課題を明らかにする」の各項目の文字数チェック
+	$(document).on("blur", "#partnerWants, #currentState", function(){
+		var idName = $(this).attr(`id`);
+		if($(this).val().length > 100){
+			$(`#${idName}Error`).text('100文字以内で入力してください');
+		  }else{
+			  $(`#${idName}Error`).text('');
+		  }
+    });
+	
+    // 「相手が欲しいもの」の入力結果を反映
+    $( document ).on( 'keyup', '#partnerWants' , function(){ 
+        $('#copyPartnerWants').html($( this ).val());
+        //ロジックツリー表示のため追加
+        $('#partnerWantsForLogicTree').val($(this).val());
+    });
+    // 「あなたの現場」の入力結果を反映
+    $( document ).on( 'keyup', '#currentState' , function(){ 
+        $('#copyCurrentState').html($( this ).val());
+      //ロジックツリー表示のため追加
+        $('#currentStateForLogicTree').val($(this).val());
+    });
+    // 言い換えの入力結果を反映
+    $( document ).on( 'keyup', '.another-word-list' , function(){ 
+        $(this).parent().next().find('.copyAnotherWord').html($( this ).val());
+    });
+    
+    // ラジオボタンが変更されたらイベント発生
+    // class="clarify"に対して対象の文言をhtmlで追加
+    $('input[name="clarify"]').change(function () {
+    	changeClarify(this);
+    });
+      // name="fw"の値が変更されたらイベント発生
+      // ドロップダウンの値が変更されたら, 変更後の値に対応したframeworkElementを取得
+     $('[name="fw"]').change(function () {
+    	 changeFrameWork(this);
+    });
+});
+
 // 送信するデータのバリデーションチェックをします.
 function validateValue(){
 	 var validateOk = true;
@@ -278,50 +323,7 @@ function changeClarify(target){
 	$('descriptionTypeForLogicTree').val($(target).val())
 }
 
-$(function(){
-	// 主張の選択肢を追加
-	$(document).on("blur", ".row2", function(){
-		createInsistenceOption();
-	});
-	
-	// 「今回の課題を明らかにする」の各項目の文字数チェック
-	$(document).on("blur", "#partnerWants, #currentState", function(){
-		var idName = $(this).attr(`id`);
-		if($(this).val().length > 100){
-			$(`#${idName}Error`).text('100文字以内で入力してください');
-		  }else{
-			  $(`#${idName}Error`).text('');
-		  }
-    });
-	
-    // 「相手が欲しいもの」の入力結果を反映
-    $( document ).on( 'keyup', '#partnerWants' , function(){ 
-        $('#copyPartnerWants').html($( this ).val());
-        //ロジックツリー表示のため追加
-        $('#partnerWantsForLogicTree').val($(this).val());
-    });
-    // 「あなたの現場」の入力結果を反映
-    $( document ).on( 'keyup', '#currentState' , function(){ 
-        $('#copyCurrentState').html($( this ).val());
-      //ロジックツリー表示のため追加
-        $('#currentStateForLogicTree').val($(this).val());
-    });
-    // 言い換えの入力結果を反映
-    $( document ).on( 'keyup', '.another-word-list' , function(){ 
-        $(this).parent().next().find('.copyAnotherWord').html($( this ).val());
-    });
-    
-    // ラジオボタンが変更されたらイベント発生
-    // class="clarify"に対して対象の文言をhtmlで追加
-    $('input[name="clarify"]').change(function () {
-    	changeClarify(this);
-    });
-      // name="fw"の値が変更されたらイベント発生
-      // ドロップダウンの値が変更されたら, 変更後の値に対応したframeworkElementを取得
-     $('[name="fw"]').change(function () {
-    	 changeFrameWork(this);
-    });
-});
+
 
 // フレームワークを選択した時
 function changeFrameWork(target){
