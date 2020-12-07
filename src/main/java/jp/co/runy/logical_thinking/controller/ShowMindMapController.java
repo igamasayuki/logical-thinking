@@ -35,7 +35,6 @@ public class ShowMindMapController {
 		//JSON⇒Javaオブジェクトに変換
 		LogicTree logicTree = mapper.readValue(json, LogicTree.class);	
 		model.addAttribute("logicTree", logicTree);
-		System.out.println(logicTree);
 		return "logicTree/mindmap.html";
 	}
 }

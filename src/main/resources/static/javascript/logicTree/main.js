@@ -203,7 +203,6 @@ function register(){
 const createLogicTreeMap = () => {    
     //ロジックツリー(第一階層から第三階層までの作成)の作成を行う.
     const logicTree = createLogicTreeData();
-    console.log(logicTree)
     // json化
     const param = JSON.stringify(logicTree);
     //エンコード
