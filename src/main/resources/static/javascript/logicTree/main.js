@@ -371,140 +371,49 @@ function changeHierarchy(selectedId, option, name){
     switch (option) {
         // 削除
         case 'delete':
-            // 現在, 未使用
-            // 特定できる要素(id)の場合
-            if (typeof selectedId === 'string') {
-                $('#' + selectedId).remove();
-                for (let index = 0; index < $('.fw').length; index++) {
-                    $('.fw').eq(index).attr('name','fh' + index)  
-                }
-            } else if(typeof selectedId === 'object'){
-                // selecterIdがthisの場合
-                // 押下たボタンの所属で処理を分岐
-                switch ($(selectedId).attr('name')) {
-                    // 「第一階層の削除」ボタンを押した場合
-                    // 第一階層毎のnameを変更 → 変更した第二階層のnameを変更 → 変更した第三階層のnameを変更
-                    case 'fh':
-                        // ボタンの親要素から逆算してfirstHierarchyを削除するsectionのnameを取得
-                        getName = $(selectedId).parent().parent().attr('name');
-                        // section毎に囲まれているため, そのsection以下を削除
-                        $(selectedId).parent().parent().parent().remove()
-                        // 名前の連番を修正
-                        // 第一階層の数を取得 (class="fw"は第一階層のsecsionに割り当てられている)
-                        for (let index = 0; index < $('.fw').length; index++) {
-                            // 第一階層のnameを変更する (ex. fh0, fh1 ...)
-                            $('.fw').eq(index).attr('name','fh' + index)
-                            // 第一階層直下の第二階層の数を取得 (childrenの使用: 孫要素以下を含めたくないため)
-                            for(let index2 = 0; index2 < $('section[name=fh' + index + ']').children('section').length; index2++){
-                                // 新規の第二階層の名前
-                                newSHName = 'fh' + index + '_sh' + index2;
-                                oldSHName =  $('section[name=fh' + index + ']').children('section').eq(index2).attr('name');
-                                // 1つづつsection[name=fh0]の子要素の名前を変更
-                                $('section[name=fh' + index + ']').children('section').eq(index2).attr('name', newSHName);
-                                // 対応する第二階層の直下の第三階層の数を取得
-                                for(let index3 = 0; index3 < $('section[name=' + newSHName + '] section').length; index3++) {
-                                    $('section[name=' + newSHName + '] section').eq(index3).attr('name', newSHName + '_th' + index3)
-                                }
-                            }
-                        }
-                        break;
-                        // 「第二階層の削除」ボタンを押した場合
-                        case 'second-hierarchy':
-                            getName = $(selectedId).parent().parent().parent().attr('name');
-                            $(selectedId).parent().parent().remove();
-                            selecter = 'section[name=' + getName + ']';
-                            for (let index = 0; index < $(selecter).children('section').length; index++) {
-                                newSHName = getName + '_sh' + index;
-                                $(selecter).children('section').eq(index).attr('name',newSHName)
-                                // 第三階層のnameを変更
-                                for(let index2 = 0; index2 < $('section[name=' + getName + '_sh' + index + '] section').length; index2++) {
-                                    $('section[name=' + getName + '_sh' + index + '] section').eq(index2).attr('name', newSHName + '_th' + index2)
-                                }
-                            }
-                            break;
-                        // 「第三階層の削除」ボタンを押した場合
-                        case 'third-hierarchy':
-                            $(selectedId).parent().parent().remove();
-                            selecter = 'section[name=' + name + '] section';
-
-                            for (let index = 0; index < $(selecter).length; index++) {
-                                $(selecter).eq(index).attr('name', name + '_th' + index)
-                            }
-                            break;
-                    default:
-                        break;
-                }
-            }
+        	selectedId.parent().parent().remove();
             break;
         // 第一階層を追加
-        case 'addFH':
-            name = 'fh' + $('.fw').length
-            clarify = $('input[name="clarify"]:checked').parent().text();
-            secondHierarchyButton = 
-            '<div class="row">' + 
-            '<button onclick="changeHierarchy(this, \'addSh\', \'' + name + '\')" type="button" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
-            '</div>'
+        case 'add-first-hierarchy':
             
-            // 「〇〇」について検討します
+        	targetFrameworkElementId = $(`#fwradio option:selected`).val();
+        	
+        	fwId = 'fw' + targetFrameworkElementId;
+        	index = $('.fw').length
+        	fhId = 'fh' + targetFrameworkElementId;
+            copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word;
+            name = 'fh' + $('.fw').length;
+            considerArea = '<br><div><input onkeyup="keyup(this)" type="text" name="' + name + '">' + 
+            'について検討します</div>';
             
-            inputHeading = '<br><div><input onkeyup="keyup(this)" type="text" name="' + name + '">' + 
-            'について検討します</div>'
-            
-            // 「〇〇」を言い換えるとを追加
-            anotherWordText = '<br>' + 
-            '<div class="row">' + 
-            //追加部分
-            '<input type="hidden" name="additionalWord">' +
-            '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
-            '</div>' + 
-            '<div class="row">' + 
-            '<input name="firstHierarchyList[' + firstHierarchyIndex + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
-            '</div>';
-            
-            var option = 'addSh';
-            
-            shName = name + '_sh' + $('.fw[name=' + name + '] section').length
-            
-            addShHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy');
-
-            addHtml = '<section class="fw" name="' + name + '">' + 
-            inputHeading + 
-            anotherWordText + 
-            '<div>' + 
-            '<div class="row">' + 
-            '<label for="" class="col-11">' +
-            '「<font class="copyAnotherWord"></font>」'+ 'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
-            '</label>' +
-            '<input id="framework-element" type="hidden" value="">' +
-            '<button onclick="changeHierarchy(this, \'delete\')" name="fh" type="button" class="btn btn-danger col-1">削除</button>' + 
-            '</div>' +
-            '</div>' + 
-            addShHtml + 
-            secondHierarchyButton +
-            '</section>';
-            
+            //第一階層を設定
+            addHtml = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, "", considerArea);
             $(selectedId).parent().before(addHtml);
+            
+            // 第二階層を設定
+            name = 'fh' + index;
+     	   	shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+     	   	addHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy', '');
+     	   	$('#' + fhId).after(addHtml);
             
             // 「第二階層を追加」ボタンを追加
             break;
         // 第二階層を追加
-        case 'addSh':
+        case 'add-second-hierarchy':
             shName = name + '_sh' + $('.fw[name=' + name + '] section.row2').length
-
-            addHtml　= createSecondHierarchyHtml(shName, firstHierarchyIndex, name, secondHierarchyIndex);
-
-            if (typeof selectedId === 'string') {
-                // 第二階層入力時に「第三階層を追加する」ボタンを追加する
-                $('#' + selectedId).after(addHtml);
-            } else if (typeof selectedId === 'object'){
-                $(selectedId).parent().before(addHtml);
-            }
+            addHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy', '');
+            $(selectedId).parent().before(addHtml);
             break;
             // 第三階層を追加
         case 'add-third-hierarchy':
             thName = name + '_th' + $('section[name=' + name + '] section').length;
-            addHtml =  createHierarchyHtml(3, thName, 'third-hierarchy', 'fourth-hierarchy');
-
+            addHtml =  createHierarchyHtml(3, thName, 'third-hierarchy', 'fourth-hierarchy', '');
+            $(selectedId).parent().before(addHtml)
+            break;
+            // 第四階層を追加
+        case 'add-fourth-hierarchy':
+            fourthName = name + '_fh' + $('section[name=' + name + '] section').length;
+            addHtml =  createHierarchyHtml(4, fourthName, 'forth-hierarchy', 'fifth-hierarchy','');
             $(selectedId).parent().before(addHtml)
             break;
         default:
