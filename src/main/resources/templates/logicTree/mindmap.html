@@ -23,8 +23,6 @@
 			/**
 			 * ロジカルツリー図の作成を行う.
 			 * 
-			 * @author nonaka
-			 * 
 			 * @param logicTree ロジックツリー情報
 			 */
 			const loadJsmind = (logicTree) => {
@@ -38,7 +36,7 @@
 			            "name":"jsMind remote"
 			        },
 			        "format":"node_tree",
-			        "data":{"id":"root","topic":`課題<br>${task}`, children
+			        "data":{"id":"root","topic":`課題<br>${task}`, "children": children
 			        //ロジックマップ作成後消去予定
 			//        	[
 			//            {"id":"easy","topic":"ヒト<br>Javaエンジニア","direction":"right","children":[
@@ -66,7 +64,7 @@
 			//        ]
 			        }
 			    };
-				
+				console.log(mind)
 			    const options = {
 			        container:'jsmind_container',
 			        editable:true,
@@ -80,8 +78,6 @@
 			
 			/**
 			 * 文章の改行を行う.
-			 * 
-			 * @author nonaka
 			 * 
 			 * @param sentense 文章
 			 * @return 14字で改行された文章
@@ -99,42 +95,64 @@
 			}
 			
 			/**
+			 * 第三階層リストの作成を行う.
+			 * 
+			 * @param thirdHierarchyList 第三階層リスト
+			 * @return 第三階層リスト
+			 */
+			const createThirdHierarchy = (thirdHierarchyList) => {
+				thirdHierarchyList = thirdHierarchyList.filter((thirdHierarchy) => {
+					return !!thirdHierarchy.explanation
+				})
+				const thirdHierarchy = thirdHierarchyList.map((thirdHierarchy) => {
+					return {"id": `${thirdHierarchy.explanation}`,
+							  "topic":`${handleSentense(thirdHierarchy.explanation)}`, 
+							  "direction": "right"
+					}
+				})
+				return thirdHierarchy
+			}
+			
+			/**
+			 * 第二階層リストの作成を行う.
+			 * 
+			 * @param secondHierarchyList 第二階層リスト
+			 * @return 第二階層リスト
+			 */
+			const createSecondHierarchy = (secondHierarchyList) => {
+				secondHierarchyList = secondHierarchyList.filter((secondHierarchy) => {
+					return !!secondHierarchy.explanation
+				})
+				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
+						return {"id": `${secondHierarchy.explanation}`,
+								  "topic":`${handleSentense(secondHierarchy.explanation)}`, 
+								  "direction": "right",
+								  "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
+						}						
+				})
+				return secondHierarchy
+			}
+			
+			/**
 			 * ロジックツリーの子要素を追加する.
-			 * 
-			 * @author nonaka
-			 * 
+			 *  * 
 			 * @param firstHierarchyList 第一階層情報リスト
 			 * @return 第一階層情報
 			 */
 			const createFirstHierarchy = (firstHierarchyList) => {
 				/** 第一階層のマインドマップを作成する */
 				const firstHierarchy = firstHierarchyList.map((firstHierarchy) => {
-					console.log(firstHierarchy)
-					return {'id': `${firstHierarchy.word}`, 
-							  'topic': `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
-							  'direction': "right",
-							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
+					return {"id": `${firstHierarchy.word}`, 
+							  "topic": `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
+							  "direction": "right",
+							  "children": createSecondHierarchy(firstHierarchy.secondHierarchyList)
 					}
 				});
 				return firstHierarchy
 			}
-			/*
-			const createSecondHierarchy = (secondHierarchyList) => {
-				console.log(secondHierarchyList)
-				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
-					return {'id': `${secondHierarchy.explanation}`,
-							  'topic':`${secondHierarchy.explanation}`, 
-							  'direction': "right"
-					}
-				})
-				return secondHierarchy
-			}
-			*/
 			
 			/**
 			 * ロジックツリー課題部分の作成を行う.
-			 * 
-			 * @author nonaka
 			 * 
 			 * @param partnerWants 求めるもの
 			 * @param currentState 現状
@@ -156,6 +174,14 @@
 				return firstHierarchy.anotherWord !== null
 			})
 			
+			firstHierarchyList.forEach((firstHierarchy) => {
+				firstHierarchy.secondHierarchyList.filter((secondHierarchy) => {
+					console.log(!!secondHierarchy.explanation)
+					return !!secondHierarchy.explanation
+				})
+			})
+			console.log(firstHierarchyList)
+			
 			/** ロジカルツリーの中身作成 */
 			const logicTree = {
 				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
@@ -163,7 +189,6 @@
 				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
 				firstHierarchyList
 			}	
-			console.log(logicTree)
 			loadJsmind(logicTree)	
 		/*]]>*/
 	</script>
