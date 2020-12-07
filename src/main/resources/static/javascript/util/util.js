@@ -25,7 +25,7 @@ export class Error {
     };
 
     validation () {
-        const regExpEmpty = "\s+";
+        const regExpEmpty = "^[ ]*$";
         const value = this.errorElement.value;
         this.errorElement.validatedError = false;
         if (value.match(regExpEmpty) || value == '' || value.length > 100) {

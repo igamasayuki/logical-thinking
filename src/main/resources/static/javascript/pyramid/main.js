@@ -253,7 +253,7 @@ function validation () {
 
 function checkPyramid(){
 	$.ajax({
-		url: "http://localhost:8080/logical-thinking/mindmap,
+		url: "http://localhost:8080/logical-thinking/mindmap",
 		type: 'get',
 	}).done(function(data){
         console.log("成功")
