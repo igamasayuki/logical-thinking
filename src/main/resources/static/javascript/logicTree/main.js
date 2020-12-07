@@ -548,26 +548,6 @@ function changeHierarchy(selectedId, option, name){
             
             $(selectedId).parent().before(addHtml);
             
-
-//                addShHtml = '<section class="" name="' + shName + '">' + 
-//                '<div class="row">' + 
-//                '<label for="" class="col-2">第二階層：</label>' + 
-//                '<input type="text" class="form-control col-9" value="">' + 
-////                '<input type="text" class="form-control col-9 row2" value=""　onblur="createInsistenceOption(this)">' + 
-//                '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
-//                '</div>' + 
-//                '<div class="row">' + 
-//                '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
-//                '</div>' + 
-//                '</section>';
-//                if (typeof fhId === 'string') {
-//                    // 第二階層入力時に「第三階層を追加する」ボタンを追加する
-//                    $('#' + fhId).after(addShHtml);
-//                } else if (typeof fhId === 'object'){
-//                    $(fhId).parent().after(addShHtml);
-//                }
-
-
             // 「第二階層を追加」ボタンを追加
             break;
         // 第二階層を追加
