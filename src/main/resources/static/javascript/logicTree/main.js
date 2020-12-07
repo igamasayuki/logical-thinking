@@ -56,24 +56,17 @@ function addHTML(data){
     for (let index = 0; index < data.firstHierarchyList.length; index++) {
         firstHierarchy = data.firstHierarchyList[index];
         name = 'fh' + index;
-        
         // 「第二階層を追加」ボタンを追加
         copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word 
-        
         targetFrameworkElementsId = targetFrameworkElements[index].id;
         fwId = 'fw' + targetFrameworkElementsId;
         fhId = 'fh' + targetFrameworkElementsId;
-        deleteFh = 'deleteFh' + targetFrameworkElementsId;
-        
-        new_list = createFirstHierarchyHtml(fwId, index, fhId, data, deleteFh, copyAnotherWord);
-        
         frameWorkElement = firstHierarchy.word;
         
-        anotherWordText = createAnotherWordHtml(frameWorkElement, index, copyAnotherWord);
 
-        // 「〇〇」を言い換えるとを追加
+       
+        new_list = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkElement, "");
         $('#hierarchy').append(new_list);
-        $('#hierarchy').children('section[name=fh'+ index + ']').before(anotherWordText);
 
         // 第二階層を追加
          //TODO 今, idが入っているため, このif文は意味がない
@@ -86,25 +79,14 @@ function addHTML(data){
                
                value = secondHierarchy.explanation !== null ? secondHierarchy.explanation : ``; 
                
-//               addSHSection　= createSecondHierarchyHtml(shName, firstHierarchyIndex, name, secondHierarchyIndex);
-
-               addSHSection = '<section class="row2" name="' + shName + '">' + 
-               '<div class="row">' + 
-               '<label for="" class="col-2">第二階層：</label>' + 
-               '<input type="text" class="form-control col-9 row2-input" value="' + value + '">' + 
-               '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
-               '</div>' + 
-               '<div class="row" name="addTH">' + 
-               '<button name="th" onclick="changeHierarchy(this, \'addTH\',\'' + shName + '\')" type="button" class="btn btn-info offset-1 col-3 mb-2">第三階層を追加</button>' + 
-               '</div>' + 
-               '</section>';
+               addSHSection =  createHierarchyHtml(2, shName, 'secound-hierarchy', 'third-hierarchy', value);
                $('section[name=' + name + ']').children('div[name=addSH]').before(addSHSection);
 
                for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
                     thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
                     thName = shName + '_th' + index3;
                     value = thirdHierarchy.explanation !== null ? thirdHierarchy.explanation : ``; 
-                    addTHSection =  createHierarchyHtml(3, thName, 'third-hierarchy', 'forth-hierarchy');
+                    addTHSection =  createHierarchyHtml(3, thName, 'third-hierarchy', 'forth-hierarchy', value);
 
 
                     $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
@@ -205,7 +187,7 @@ function createLogicTreeData(){
         fHName = 'fh' + index;
         // 第一階層の値を取得
         firstHierarchy = {
-            word : $('section[name=' + fHName + '] div div input').val(),
+            word : $('section[name=' + fHName + '] div input').val(),
             //name変更位置
             anotherWord : $('section[name=' + fHName + '] input').val(),
             logicTreeId : 0,
@@ -245,8 +227,6 @@ function keyup(thisEle){
     name = $(thisEle).attr('name');
     $('section[name='+ name + '] font[name=word]').html($(thisEle).val())
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
-    //追加
-    $('section[name='+ name + '] input[name=additionalWord]').val($(thisEle).val())
 }
 
 //主張の選択肢を追加.
@@ -362,38 +342,22 @@ function changeFrameWork(target){
        dataId = data[index].id;
        fwId = 'fw' + dataId;
        fhId = 'fh' + dataId;
-       deleteFh = 'deleteFh' + dataId;
        shId = 'sh' + dataId;
        copyAnotherWord = data[index].element;
+       frameWorkElement = data[index].element;
        
-       new_list = createFirstHierarchyHtml(fwId, index, fhId, data, deleteFh, copyAnotherWord);
-
+       new_list = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord,frameWorkElement, "");
        $('#hierarchy').append(new_list);
-         // 「第二階層を追加」ボタンを追加
-         
-         name = 'fh' + index;
-         
-         shName = name + '_sh' + $('.fw[name=' + name + '] section').length
-
-         addHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy');
-         
-         if (typeof fhId === 'string') {
-             // 第二階層入力時に「第三階層を追加する」ボタンを追加する
-             $('#' + fhId).after(addHtml);
-         } else if (typeof fhId === 'object'){
-             $(fhId).parent().before(addHtml);
-         }
-
-         frameWorkElement = data[index].element;
-         // 「〇〇」を言い換えるとを追加
-         anotherWordText = createAnotherWordHtml(frameWorkElement, index, '');
-
-         $('#fw' + data[index].id).prepend(anotherWordText)
+	   // 「第二階層を追加」ボタンを追加
+	   name = 'fh' + index;
+	   shName = name + '_sh' + $('.fw[name=' + name + '] section').length
+	   addHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy', '');
+	   $('#' + fhId).after(addHtml);
+	
      }
-     addFH = 
- 	'<div class="row">' + 
-     '<button id="addFHButton" onclick="changeHierarchy(this, `addFH`, ``)" type="button" class="btn btn-danger col-3 mb-5">第一階層を追加する</button>' + 
-     '</div>';
+   
+   	
+     addFH = createAddFHButton();
      $('#hierarchy').append(addFH)
 }
 
@@ -595,21 +559,24 @@ function createAnotherWordHtml(frameWorkElement, index, anotherWord){
  * hierarchyButtonName : third-hierarchy
  * hierarchyNextButtonName : forth-hierarchy
  * */
-function createHierarchyHtml(hierarchyIndex, hierarchyName, hierarchyButtonName, hierarchyNextButtonName){
-	// hierarchyIndex : 1
-	// hierarchyName : fh0_sh0_th2
-	// hierarchyButtonName : fh
+function createHierarchyHtml(hierarchyIndex, hierarchyName, hierarchyButtonName, hierarchyNextButtonName, inputValue){
 	let hierarchyNextIndex = hierarchyIndex + 1;
-	
 	
 	return addHierarchyHtml = 
 		`<section class="row${hierarchyIndex}" name="${hierarchyName}">` + 
 		`<div class="row"><label for="" class="col-2">第${hierarchyIndex}階層：</label>` + 
-	    `<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">` + 
-	    `<button name="${hierarchyButtonName}" onclick="changeHierarchy(this,'delete', '${hierarchyName}')" type="button" class="btn btn-primary col-1">削除</button>` + 
+	    `<input type="text" class="form-control col-9 row${hierarchyIndex}-input" value="${inputValue}"　onblur="createInsistenceOption(this)">` + 
+	    `<button name="${hierarchyButtonName}" onclick="changeHierarchy($(this),'delete', '${hierarchyName}')" type="button" class="btn btn-primary col-1">削除</button>` + 
 	    `</div>` + 
 	    `<div class="row">` + 
 	    `<button name="${hierarchyNextButtonName}" onclick="changeHierarchy(this, 'add-${hierarchyNextButtonName}','${hierarchyName}')" type="button" class="btn btn-info col-3 mb-2">第${hierarchyNextIndex}階層を追加</button>` + 
 	    `</div>` + 
 	    `</section>`;
 }
+// 追加ボタンを押した際の挙動
+function clickAddHierarchyButton(){
+	fourthName = name + '_th' + $('section[name=' + name + '] section').length;
+    addHtml =  createHierarchyHtml(4, fourthName, 'forth-hierarchy', 'fifth-hierarchy');
+    $(selectedId).parent().before(addHtml)
+}
+
