@@ -6,6 +6,7 @@ let frameworks;
 let frameworkElements;
 
 let errors = {
+	selectedError: [],
 	pyramidError: [],
 	rationalError: [],
 	evidenceError: [],
@@ -152,13 +153,15 @@ $(function(){
 				}
 				break;
 			case 'submit' :
+				errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
+				errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));
 				const pyramidForm = {
 					frameworkKindId: $('#frameworkKind').val(),
 					frameworkId: $('#framework').val(),
 					conclusion: $('#conclusion').val(),
 					rationaleFormList: []
 				}
-				errors.pyramidError.push(new Utils.Error($('#conclusion').val(), 'conclusion'));
+				errors.pyramidError.push(new Utils.Error($('#conclusion').val(), 'conclusion', false, false));
 				// 根拠リストを取得
 				for (let i = 0; i < $('.reason').children('section').length; i++) {
 					const rationaleForm = {
@@ -168,15 +171,15 @@ $(function(){
 						evidenceFormList: [],
 						displayOrder: i + 1,
 					}
-					errors.rationalError.push(new Utils.Error(rationaleForm.explanation, `explanation${i}`, true));
-					errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false));
+					errors.rationalError.push(new Utils.Error(rationaleForm.explanation, `explanation${i}`, true, false));
+					errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false, false));
 					// 証拠リストを取得
 					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
 						const evidenceForm = {
 							explanation: $(`#evidence${i}_${j}`).val(),
 							displayOrder: j + 1
 						}
-						errors.evidenceError.push(new Utils.Error(evidenceForm.explanation, `evidence${i}_${j}`, true));
+						errors.evidenceError.push(new Utils.Error(evidenceForm.explanation, `evidence${i}_${j}`, true, false));
 						rationaleForm.evidenceFormList.push(evidenceForm);
 					}
 					pyramidForm.rationaleFormList.push(rationaleForm);
@@ -236,6 +239,9 @@ $(function(){
 
 function validation () {
 	let validatedError = false;
+	if ($("#frameworkKind").value == 0 || $("#framework").value == 0){
+		validatedError = true;
+	}
 	Object.keys(errors).forEach(key => {
 		errors[key].forEach(error => {
 			error.validation();
@@ -253,7 +259,7 @@ function validation () {
 
 function checkPyramid(){
 	$.ajax({
-		url: "http://localhost:8080/logical-thinking/mindmap,
+		url: "http://localhost:8080/logical-thinking/mindmap",
 		type: 'get',
 	}).done(function(data){
         console.log("成功")
