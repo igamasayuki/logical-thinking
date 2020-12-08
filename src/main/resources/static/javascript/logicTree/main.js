@@ -61,44 +61,37 @@ function addHTML(data){
         name = 'fh' + index;
         // 「第二階層を追加」ボタンを追加
         copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word 
-        targetFrameworkElementsId = targetFrameworkElements[index].id;
-        fwId = 'fw' + targetFrameworkElementsId;
-        fhId = 'fh' + targetFrameworkElementsId;
+        targetFrameworkElementId = targetFrameworkElements[index].id;
+        fwId = 'fw' + targetFrameworkElementId;
+        fhId = 'fh' + targetFrameworkElementId;
         frameWorkElement = firstHierarchy.word;
-        
-
        
         new_list = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkElement, "");
         $('#hierarchy').append(new_list);
 
         // 第二階層を追加
          //TODO 今, idが入っているため, このif文は意味がない
-         if(firstHierarchy.secondHierarchyList.length != null){ 
+//         if(firstHierarchy.secondHierarchyList.length != null){ 
              for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
                secondHierarchy = firstHierarchy.secondHierarchyList[index2];
                // 上記の様にhtmlの追加をしないためにexplanationがnullの場合はbreak
                if(secondHierarchy.explanation == null) break;
                shName = name + '_sh' + index2;
-               
                value = secondHierarchy.explanation !== null ? secondHierarchy.explanation : ``; 
-               
                addSHSection =  createHierarchyHtml(2, shName, 'secound-hierarchy', 'third-hierarchy', value);
                $('section[name=' + name + ']').children('div[name=addSH]').before(addSHSection);
-
                for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
                     thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
+                    if(thirdHierarchy.explanation == null) break;
                     thName = shName + '_th' + index3;
                     value = thirdHierarchy.explanation !== null ? thirdHierarchy.explanation : ``; 
                     addTHSection =  createHierarchyHtml(3, thName, 'third-hierarchy', 'forth-hierarchy', value);
-
-
                     $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
-               }
+//               }
              }
          }
       }
       addFH = createAddFHButton();
-
       $('#hierarchy').append(addFH)
       createInsistenceOption();
       $('#insistence').val(data.insistence);
@@ -112,7 +105,7 @@ $(function(){
 	
 	// 「今回の課題を明らかにする」の各項目の文字数チェック
 	$(document).on("blur", "#partnerWants, #currentState", function(){
-		var idName = $(this).attr(`id`);
+		let idName = $(this).attr(`id`);
 		if($(this).val().length > 100){
 			$(`#${idName}Error`).text('100文字以内で入力してください');
 		  }else{
@@ -151,17 +144,17 @@ $(function(){
 
 // 送信するデータのバリデーションチェックをします.
 function validateValue(){
-	 var validateOk = true;
+	 let validateOk = true;
 	
 	// 「相手が欲しいもの〜」の文字数チェック
-	 var partnerWants = $('#partnerWants').val();
+	 let partnerWants = $('#partnerWants').val();
 	 if(partnerWants.length === 0|| partnerWants.length > 100){
 		$(`#partnerWantsError`).text('100文字以内で入力してください');
 		validateOk = false;
 	  }
 	
 	// 「あなたの現状は〜」の文字数チェック
-	var currentState = $('#currentState').val();
+	let currentState = $('#currentState').val();
 	if(currentState.length === 0 || currentState.length > 100){
 		$(`#currentStateError`).text('100文字以内で入力してください');
 		validateOk = false;
@@ -280,28 +273,38 @@ function keyup(thisEle){
 function createInsistenceOption(){
 		// 主張の選択肢を削除
 		$('#insistence').children().remove();
-		var select = $('#insistence');
+		let select = $('#insistence');
 		// デフォルト値を設定
-		var defalut = `-- 主張を１つ選択してください --`;
-		var option = $('<option>', { text:defalut, value:`` });
+		let defalut = `-- 主張を１つ選択してください --`;
+		let option = $('<option>', { text:defalut, value:`` });
 		select.append(option);
 		
 		//　各理由の最下層の入力値を選択肢に設定
-		var target = $(`.row2`);
+		let target = $(`.row2`);
 		target.each(function(){
-			var row3Val = $(this).find(`.row3-input`);
+			let row3Val = $(this).find(`.row3-input`);
 			if(0 !== row3Val.length){
 				// 最下層が第三階層の場合
+				let anyValueInput = false
 				row3Val.each(function(){
-					var val = $(this).val()
+					let val = $(this).val()
 					if(`` !== val){
 						option = $('<option>', { text: $(this).val(), value:$(this).val() });
 						select.append(option);
+						anyValueInput = true;
 					}
 				});
+				if(!anyValueInput){
+					// 第三階層の入力値が存在しない場合は第二階層の入力値を反映させる。
+					 val = $(this).find(`.row2-input`).val();
+					if(`` !== val){
+						option = $('<option>', { text:val, value:val });
+						select.append(option);
+					}
+				}
 			}else{
 				//　最下層が第二階層の場合
-				var val = $(this).find(`.row2-input`).val();
+				let val = $(this).find(`.row2-input`).val();
 				if(`` !== val){
 					option = $('<option>', { text:val, value:val });
 					select.append(option);
@@ -325,8 +328,6 @@ function changeClarify(target){
     }
 	$('descriptionTypeForLogicTree').val($(target).val())
 }
-
-
 
 // フレームワークを選択した時
 function changeFrameWork(target){
@@ -365,10 +366,12 @@ function changeFrameWork(target){
      $('#hierarchy').append(addFH)
 }
 
-// 追加, 削除ボタンを押下場合にイベント発生
-// selectedId: 押下位置を取得
-// optiin: add(追加), delete(削除)
-// name: 追加したい要素名
+/*
+ * 追加, 削除ボタンを押下場合にイベント発生
+ * selectedId: 押下位置を取得　
+ * optiin: add(追加), delete(削除)
+ * name: 追加したい要素名
+ * */
 function changeHierarchy(selectedId, option, name){
 	let firstHierarchyIndex = $('section.fw').length
 	//仮の値
@@ -434,7 +437,6 @@ function changeHierarchy(selectedId, option, name){
  * copyAnotherWord: 言い換え
  * frameWorkElement: フレームワークの要素
  * considerArea: 検討領域のHTML構造（第一階層を追加する際の「〇〇について検討します」の部分）
- * 　
  * */
 function createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkElement, considerArea){
 	anotherWordText = createAnotherWordHtml(frameWorkElement, index, copyAnotherWord);
@@ -487,7 +489,6 @@ function createAddFHButton(){
 	'</div>';
 }
 
-
 /*
  * 第n階層の要素を作成します.
  * 例) 第三階層の要素を追加
@@ -510,6 +511,7 @@ function createHierarchyHtml(hierarchyIndex, hierarchyName, hierarchyButtonName,
 	    `</div>` + 
 	    `</section>`;
 }
+
 // 追加ボタンを押した際の挙動
 function clickAddHierarchyButton(){
 	fourthName = name + '_th' + $('section[name=' + name + '] section').length;
