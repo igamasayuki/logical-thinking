@@ -81,7 +81,7 @@ function addHTML(data){
         '</div>' + 
         '<div class="row">' + 
         //name変更位置
-        '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
+        '<input type="text" class="form-control mb-5" value="' + firstHierarchy.anotherWord + '">' + 
         '</div>';
         $('#hierarchy').append(new_list);
         $('#hierarchy').children('section[name=fh'+ index + ']').before(anotherWordText);
@@ -197,6 +197,20 @@ function register(){
     });
 }
 
+/**
+ * マインドマップページに遷移する.
+ */
+const createLogicTreeMap = () => {    
+    //ロジックツリー(第一階層から第三階層までの作成)の作成を行う.
+    const logicTree = createLogicTreeData();
+    // json化
+    const param = JSON.stringify(logicTree);
+    //エンコード
+    const encoded = encodeURIComponent(param)
+    //エンコードしたJSONをparamとして遷移させる
+    location.href= uri + `/logicalthinking/mindmap?json=${encoded}`;
+}
+
 //登録するロジックツリーの情報を取得します.
 function createLogicTreeData(){
 	// ロジックツリーの値を取得
@@ -257,8 +271,6 @@ function keyup(thisEle){
     name = $(thisEle).attr('name');
     $('section[name='+ name + '] font[name=word]').html($(thisEle).val())
     $('section[name='+ name + '] input[name=word]').val($(thisEle).val())
-    //追加
-    $('section[name='+ name + '] input[name=additionalWord]').val($(thisEle).val())
 }
 
 //主張の選択肢を追加.
@@ -330,14 +342,10 @@ $(function(){
     // 「相手が欲しいもの」の入力結果を反映
     $( document ).on( 'keyup', '#partnerWants' , function(){ 
         $('#copyPartnerWants').html($( this ).val());
-        //ロジックツリー表示のため追加
-        $('#partnerWantsForLogicTree').val($(this).val());
     });
     // 「あなたの現場」の入力結果を反映
     $( document ).on( 'keyup', '#currentState' , function(){ 
         $('#copyCurrentState').html($( this ).val());
-      //ロジックツリー表示のため追加
-        $('#currentStateForLogicTree').val($(this).val());
     });
     // 言い換えの入力結果を反映
     $( document ).on( 'keyup', '.another-word-list' , function(){ 
@@ -386,7 +394,7 @@ function changeFrameWork(target){
       `</font>` + 
        'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
        '</label>' +
-       '<input name="elementList" type="hidden" value="' + data[index].element +  '">' + 
+       '<input type="hidden" value="' + data[index].element +  '">' + 
        '<button name="fh" type="button" onclick="changeHierarchy(this, \'delete\', \'\')" id="' + deleteFh + '" class="btn btn-danger col-1">削除</button>' + 
        '</div>' +
        '</div>' + 
@@ -403,7 +411,7 @@ function changeFrameWork(target){
          addHtml = '<section class="row2" name="' + shName + '">' + 
          '<div class="row">' + 
          '<label for="" class="col-2">第二階層：</label>' + 
-         '<input name="firstHierarchyList[' + index + '].secondHierarchyList[0].explanation type="text" class="second-explanation-list form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
+         '<input type="text" class="second-explanation-list form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
          '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
          '</div>' + 
          '<div class="row">' + 
@@ -423,7 +431,7 @@ function changeFrameWork(target){
          '<label for="">「' + data[index].element + '」を言い換えると何ですか？</label>' + 
          '</div>' + 
          '<div class="row">' + 
-         '<input name="firstHierarchyList[' + index + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
+         '<input type="text" class="another-word-list form-control mb-5" value="">' + 
          '</div>';
          $('#fw' + data[index].id).prepend(anotherWordText)
      }
@@ -527,12 +535,10 @@ function changeHierarchy(selectedId, option, name){
             // 「〇〇」を言い換えるとを追加
             anotherWordText = '<br>' + 
             '<div class="row">' + 
-            //追加部分
-            '<input type="hidden" name="additionalWord">' +
             '<label for="">「<font name="word"></font>」を言い換えると何ですか？</label>' + 
             '</div>' + 
             '<div class="row">' + 
-            '<input name="firstHierarchyList[' + firstHierarchyIndex + '].anotherWord" type="text" class="another-word-list form-control mb-5" value="">' + 
+            '<input type="text" class="another-word-list form-control mb-5" value="">' + 
             '</div>';
             
             var option = 'addSh';
@@ -542,7 +548,7 @@ function changeHierarchy(selectedId, option, name){
             addShHtml = '<section class="row2" name="' + shName + '">' + 
             '<div class="row">' + 
             '<label for="" class="col-2">第二階層：</label>' + 
-            '<input name="firstHierarchyList[' + firstHierarchyIndex + '].secondHierarchyList[0].explanation" type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
+            '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
             '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
             '</div>' + 
             '<div class="row">' + 
@@ -597,7 +603,7 @@ function changeHierarchy(selectedId, option, name){
             addHtml = '<section class="row2" name="' + shName + '">' + 
             '<div class="row">' + 
             '<label for="" class="col-2">第二階層：</label>' + 
-            '<input name="firstHierarchyList[' + firstHierarchyIndex + '].secondHierarchyList[' + secondHierarchyIndex + '].explanation" type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
+            '<input type="text" class="form-control col-9 row2-input" value=""　onblur="createInsistenceOption(this)">' + 
             '<button name="sh" onclick="changeHierarchy(this,\'delete\',\'' + name + '\')" type="button" class="btn btn-primary col-1">削除</button>' + 
             '</div>' + 
             '<div class="row">' + 

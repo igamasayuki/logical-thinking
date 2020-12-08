@@ -8,12 +8,11 @@ import java.util.List;
  * ロジックツリーの第二階層を表すクラス.
  */
 public class SecondHierarchy {
-	
 	private int id;
 	private String explanation;
 	private Integer firstHierarchyId;
 	private Integer displayOrder;
-	private List<ThirdHierarchy> thirdHierarchyList = new ArrayList<>();
+	private List<ThirdHierarchy> thirdHierarchyList;
 	
 	/**
 	 * @return the id
@@ -76,6 +75,11 @@ public class SecondHierarchy {
 	 */
 	public void setDisplayOrder(Integer displayOrder) {
 		this.displayOrder = displayOrder;
+	}
+	@Override
+	public String toString() {
+		return "SecondHierarchy [id=" + id + ", explanation=" + explanation + ", firstHierarchyId=" + firstHierarchyId
+				+ ", displayOrder=" + displayOrder + ", thirdHierarchyList=" + thirdHierarchyList + "]";
 	}
 	
 }

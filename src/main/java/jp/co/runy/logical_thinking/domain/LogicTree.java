@@ -147,7 +147,12 @@ public class LogicTree {
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "LogicTree [id=" + id + ", partnerWants=" + partnerWants + ", currentState=" + currentState
+				+ ", descriptionType=" + descriptionType + ", frameworkId=" + frameworkId + ", insistence=" + insistence
+				+ ", firstHierarchyList=" + firstHierarchyList + ", sessionId=" + sessionId + "]";
+	}
 	
 }
