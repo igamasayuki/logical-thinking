@@ -3,34 +3,37 @@
 //const urlUtil = new UrlUtils.Url;
 //const pyramidUrlUtil = new UrlUtils.PyramidUrl;
 
-var url = location.href;
-var path = location.pathname;
-var uri = url.replace(path, "");
+let url = location.href;
+let path = location.pathname;
+let uri = url.replace(path, "");
 let frameworks;
 let frameworkElements;
+
 const URL = uri + '/logicalthinking/logictree/api';
 
 // 初期描画時の処理
 $(document).ready( function(){
 	$.ajax({
-		url: uri + "/api/framework/get",
+        url: uri + "/api/framework/get",
 //		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
 		type: 'get',
 	}).done(function(data){
         frameworks = data['Framework'];
 		frameworkElements = data['FrameworkElement'];
-    })
+		
+		$.ajax({
+			url: uri + "/logicalthinking/logictree/get",
+			type: 'get',
+		}).done(function(data){
+			// 成功時の処理
+			if(data != ''){
+				// 画面にhtml要素を追加する
+				addHTML(data)
+			}
+		});
+		
+    });
     
-    $.ajax({
-		url: uri + "/logicalthinking/logictree/get",
-		type: 'get',
-	}).done(function(data){
-		// 成功時の処理
-		if(data != ''){
-			// 画面にhtml要素を追加する
-			addHTML(data)
-		}
-    })
 });
 function addHTML(data){
     // ロジックツリーに関する記述を追加
