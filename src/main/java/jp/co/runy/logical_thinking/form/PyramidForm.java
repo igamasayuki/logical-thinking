@@ -23,6 +23,8 @@ public class PyramidForm extends Pyramid{
     @NotNull
     private Integer frameworkId;
 
+    private String task;
+
     /** 結論 */
     @NotEmpty(message="入力してください")
     private String conclusion;
@@ -84,5 +86,13 @@ public class PyramidForm extends Pyramid{
      */
     public void setRationaleFormList(List<ReasonForm> rationaleFormList) {
         this.rationaleFormList = rationaleFormList;
+    }
+
+    public String getTask() {
+        return task;
+    }
+
+    public void setTask(String task) {
+        this.task = task;
     }
 }
