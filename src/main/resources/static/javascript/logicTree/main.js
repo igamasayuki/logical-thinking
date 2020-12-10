@@ -452,7 +452,7 @@ function createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkE
     `に関する具体的な【<font class="clarify">${clarify}</font>】を挙げてください` + 
     `</label>` +
     `<input type="hidden" value="${copyAnotherWord}">` + 
-    `<button name="fh" type="button" onclick="changeHierarchy($(this), "delete", "")" class="btn btn-danger col-1">削除</button>` + 
+    `<button type="button" onclick="changeHierarchy($(this), "delete", "")" class="btn btn-danger col-1">削除</button>` + 
     `</div>` +
     // ボタンの追加
     `<div name="add-second-hierarchy" class="row">` + 
@@ -504,18 +504,18 @@ function createHierarchyHtml(hierarchyIndex, hierarchyName, hierarchyButtonName,
 		`<section class="row${hierarchyIndex}" name="${hierarchyName}">` + 
 		`<div class="row"><label for="" class="col-2">第${hierarchyIndex}階層：</label>` + 
 	    `<input type="text" class="form-control col-9 row${hierarchyIndex}-input" value="${inputValue}" onblur="createInsistenceOption(this)">` + 
-	    `<button name="${hierarchyButtonName}" onclick="changeHierarchy($(this),'delete', '${hierarchyName}')" type="button" class="btn btn-primary col-1">削除</button>` + 
+	    `<button onclick="changeHierarchy($(this),'delete', '${hierarchyName}')" type="button" class="btn btn-primary col-1">削除</button>` + 
 	    `</div>` + 
 	    `<div name="add-${hierarchyNextIndex}-hierarchy" class="row">` + 
-	    `<button name="${hierarchyNextIndex}-hierarchy" onclick="changeHierarchy(this, 'add-${hierarchyNextIndex}-hierarchy','${hierarchyName}')" type="button" class="btn btn-info col-3 mb-2">第${hierarchyNextIndex}階層を追加</button>` + 
+	    `<button onclick="changeHierarchy(this, 'add-${hierarchyNextIndex}-hierarchy','${hierarchyName}')" type="button" class="btn btn-info col-3 mb-2">第${hierarchyNextIndex}階層を追加</button>` + 
 	    `</div>` + 
 	    `</section>`;
 }
 
 // 追加ボタンを押した際の挙動
-function clickAddHierarchyButton(){
-	fourthName = name + '_th' + $('section[name=' + name + '] section').length;
-    addHtml =  createHierarchyHtml(4, fourthName, 'forth-hierarchy', 'fifth-hierarchy');
-    $(selectedId).parent().before(addHtml)
-}
+// function clickAddHierarchyButton(){
+// 	fourthName = name + '_th' + $('section[name=' + name + '] section').length;
+//     addHtml =  createHierarchyHtml(4, fourthName, 'forth-hierarchy', 'fifth-hierarchy');
+//     $(selectedId).parent().before(addHtml)
+// }
 
