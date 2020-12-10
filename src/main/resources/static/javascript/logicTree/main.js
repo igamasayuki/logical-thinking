@@ -442,24 +442,24 @@ function createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkE
 	anotherWordText = createAnotherWordHtml(frameWorkElement, index, copyAnotherWord);
 	
      addFirstHierarchyHtml = 
-    '<section class="fw" id="'+ fwId +'" name="fh' + index +'">' + 
+    `<section class="fw" id="${fwId}" name="1${index}">` + 
     considerArea + 
     anotherWordText + 
     `<div id="${fhId}" class="row">` + 
-    '<label for="" class="col-11">' +
+    `<label for="" class="col-11">` +
     `<font class="copyAnotherWord">` + 
     copyAnotherWord + 
    `</font>` + 
-    'に関する具体的な【<font class="clarify">' + clarify + '</font>】を挙げてください' + 
-    '</label>' +
-    '<input type="hidden" value="' + copyAnotherWord +  '">' + 
-    '<button name="fh" type="button" onclick="changeHierarchy($(this), \'delete\', \'\')" class="btn btn-danger col-1">削除</button>' + 
-    '</div>' +
+    `に関する具体的な【<font class="clarify">${clarify}</font>】を挙げてください` + 
+    `</label>` +
+    `<input type="hidden" value="${copyAnotherWord}">` + 
+    `<button name="fh" type="button" onclick="changeHierarchy($(this), "delete", "")" class="btn btn-danger col-1">削除</button>` + 
+    `</div>` +
     // ボタンの追加
-    '<div name="addSH" class="row">' + 
-    '<button onclick="changeHierarchy(this, \'addSh\', \'fh' + index + '\')" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>' + 
-    '</div>' + 
-    '</section>';
+    `<div name="add-second-hierarchy" class="row">` + 
+    `<button onclick="changeHierarchy(this, "add-second-hierarchy", "fh${index}")" class="btn btn-primary col-3 mb-2">第二階層を追加する</button>` + 
+    `</div>` + 
+    `</section>`;
      return addFirstHierarchyHtml;
 }
 
