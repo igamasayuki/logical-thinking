@@ -71,23 +71,15 @@ function addHTML(data){
 
         // 第二階層を追加
          //TODO 今, idが入っているため, このif文は意味がない
-//         if(firstHierarchy.secondHierarchyList.length != null){ 
-             for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
-               secondHierarchy = firstHierarchy.secondHierarchyList[index2];
-               // 上記の様にhtmlの追加をしないためにexplanationがnullの場合はbreak
-               if(secondHierarchy.explanation == null) break;
-               shName = name + '_sh' + index2;
-               value = secondHierarchy.explanation !== null ? secondHierarchy.explanation : ``; 
-               addSHSection =  createHierarchyHtml(2, shName, 'secound-hierarchy', 'third-hierarchy', value);
-               $('section[name=' + name + ']').children('div[name=addSH]').before(addSHSection);
-               for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
-                    thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
-                    if(thirdHierarchy.explanation == null) break;
-                    thName = shName + '_th' + index3;
-                    value = thirdHierarchy.explanation !== null ? thirdHierarchy.explanation : ``; 
-                    addTHSection =  createHierarchyHtml(3, thName, 'third-hierarchy', 'forth-hierarchy', value);
-                    $('section[name=' + shName + ']').children('div[name=addTH]').before(addTHSection);
-//               }
+        for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
+            secondHierarchy = firstHierarchy.secondHierarchyList[index2];
+            shName = FHname + '_2-' + index2;
+            value = secondHierarchy.explanation !== null ? secondHierarchy.explanation : ``; 
+            addSHSection =  createHierarchyHtml(2, shName, 'secound-hierarchy', 'third-hierarchy', value);
+            $('section[name=' + FHname + ']').children('div[name=add-second-hierarchy]').before(addSHSection);
+            for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
+                thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
+                createInitailHierarchy(index3, 3, thirdHierarchy, shName);
              }
          }
       }
@@ -95,6 +87,13 @@ function addHTML(data){
       $('#hierarchy').append(addFH)
       createInsistenceOption();
       $('#insistence').val(data.insistence);
+}
+
+function createInitailHierarchy(index,currentHierarchyIndex,currentHierarchy, preHierarchyName){
+    currentHierarchyName = preHierarchyName + '_3-' + index;
+    value = currentHierarchy.explanation !== null ? currentHierarchy.explanation : ``; 
+    hierarchyHTML = createHierarchyHtml(currentHierarchyIndex, currentHierarchyName, `${currentHierarchyIndex}-hierarchy`, `${currentHierarchyIndex + 1}-hierarchy`, value);
+    $(`section[name=${preHierarchyName}]`).children(`div[name=add-${currentHierarchyIndex}-hierarchy]`).before(hierarchyHTML);
 }
 
 $(function(){
