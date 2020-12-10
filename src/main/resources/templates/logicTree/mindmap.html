@@ -23,15 +23,13 @@
 			/**
 			 * ロジカルツリー図の作成を行う.
 			 * 
-			 * @author nonaka
-			 * 
 			 * @param logicTree ロジックツリー情報
 			 */
 			const loadJsmind = (logicTree) => {
 				/** 課題部分の作成を行う */
 				const task = createTask(logicTree)
 				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
-				const children = createFirstHierarchy(logicTree.firstHierarchyListForDisplay);
+				const children = createFirstHierarchy(logicTree.firstHierarchyList);
 				/** マインドマップの作成 */
 			    const mind = {
 			        "meta":{
@@ -39,34 +37,8 @@
 			        },
 			        "format":"node_tree",
 			        "data":{"id":"root","topic":`課題<br>${task}`, children
-			        //ロジックマップ作成後消去予定
-			//        	[
-			//            {"id":"easy","topic":"ヒト<br>Javaエンジニア","direction":"right","children":[
-			//                {"id":"test1","topic":"30万円のエンジニア<br>を提案する", "direction": "right", "children": [
-			//                	{"id": "test11", "topic":"コミュニケーションは取れないが、<br>安いエンジニアを提供する"},
-			//                	{"id": "test12", "topic":"コミュニケーションは取れるが、<br>Java経験の浅いエンジニアを提供する"}
-			//                ]},
-			//                {"id":"test2","topic":"相場通りのエンジニア<br>をご検討いただく", "direction": "right", "children": [
-			//                	{"id": "test21", "topic": "値段は高いがコミュニケーションが<br>取れるJavaのエンジニアを<br>ご検討いただく"}
-			//                ]},
-			//            ]},
-			//            {"id":"open","topic":"モノ<br>設備","direction":"bottom","children":[
-			//                {"id":"open1","topic":"リモートワークにする"},
-			//                {"id":"open2","topic":"ハイスペックPCを支給する"},
-			//                {"id":"open3","topic":"たつや学長の誰でも完璧<br>メールを使う"}
-			//            ]},
-			//            {"id":"powerful","topic":"カネ<br>エンジニア単価","direction":"bottom","children":[
-			//                {"id":"powerful1","topic":"3ヵ月分一括払い<br>にしてもらえれば<br>20%ディスカウントにする"},
-			//                {"id":"powerful2","topic":"成果が出せていなければ<br>値引きする"}
-			//            ]},
-			//            {"id":"other","topic":"情報<br>エンジニア派遣の市況","direction":"bottom","children":[
-			//                {"id":"other1","topic":"派遣したエンジニアから<br>取れないような情報の差分<br>を自社から提供する"},
-			//                {"id":"other2","topic":"毎月お得な技術方法をお客様に配信する"}
-			//            ]}
-			//        ]
 			        }
 			    };
-				
 			    const options = {
 			        container:'jsmind_container',
 			        editable:true,
@@ -80,8 +52,6 @@
 			
 			/**
 			 * 文章の改行を行う.
-			 * 
-			 * @author nonaka
 			 * 
 			 * @param sentense 文章
 			 * @return 14字で改行された文章
@@ -99,42 +69,64 @@
 			}
 			
 			/**
+			 * 第三階層リストの作成を行う.
+			 * 
+			 * @param thirdHierarchyList 第三階層リスト
+			 * @return 第三階層リスト
+			 */
+			const createThirdHierarchy = (thirdHierarchyList) => {
+				thirdHierarchyList = thirdHierarchyList.filter((thirdHierarchy) => {
+					return !!thirdHierarchy.explanation
+				})
+				const thirdHierarchyListForDisplay = thirdHierarchyList.map((thirdHierarchy) => {
+					return {"id": `${thirdHierarchy.explanation}`,
+							  "topic":`${handleSentense(thirdHierarchy.explanation)}`, 
+							  "direction": "right"
+					}
+				})
+				return thirdHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第二階層リストの作成を行う.
+			 * 
+			 * @param secondHierarchyList 第二階層リスト
+			 * @return 第二階層リスト
+			 */
+			const createSecondHierarchy = (secondHierarchyList) => {
+				secondHierarchyList = secondHierarchyList.filter((secondHierarchy) => {
+					return !!secondHierarchy.explanation
+				})
+				const secondHierarchyForDisplay = secondHierarchyList.map((secondHierarchy) => {
+						return {"id": `${secondHierarchy.explanation}`,
+								  "topic":`${handleSentense(secondHierarchy.explanation)}`, 
+								  "direction": "right",
+								  "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
+						}						
+				})
+				return secondHierarchyForDisplay
+			}
+			
+			/**
 			 * ロジックツリーの子要素を追加する.
-			 * 
-			 * @author nonaka
-			 * 
+			 *  * 
 			 * @param firstHierarchyList 第一階層情報リスト
 			 * @return 第一階層情報
 			 */
-			const createFirstHierarchy = (firstHierarchyListForDisplay) => {
+			const createFirstHierarchy = (firstHierarchyList) => {
 				/** 第一階層のマインドマップを作成する */
-				const firstHierarchy = firstHierarchyListForDisplay.map((firstHierarchy) => {
-					console.log(firstHierarchy)
-					return {'id': `${firstHierarchy.element}`, 
-							  'topic': `${firstHierarchy.element}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
-							  'direction': "right",
-							  //'children': createSecondHierarchy(`${firstHierarchy.secondHierarchyList}`)
+				const firstHierarchyListForDisplay = firstHierarchyList.map((firstHierarchy) => {
+					return {"id": `${firstHierarchy.word}`, 
+							  "topic": `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
+							  "direction": "right",
+							  "children": createSecondHierarchy(firstHierarchy.secondHierarchyList)
 					}
 				});
-				return firstHierarchy
+				return firstHierarchyListForDisplay
 			}
-			/*
-			const createSecondHierarchy = (secondHierarchyList) => {
-				console.log(secondHierarchyList)
-				const secondHierarchy = secondHierarchyList.map((secondHierarchy) => {
-					return {'id': `${secondHierarchy.explanation}`,
-							  'topic':`${secondHierarchy.explanation}`, 
-							  'direction': "right"
-					}
-				})
-				return secondHierarchy
-			}
-			*/
 			
 			/**
 			 * ロジックツリー課題部分の作成を行う.
-			 * 
-			 * @author nonaka
 			 * 
 			 * @param partnerWants 求めるもの
 			 * @param currentState 現状
@@ -148,43 +140,21 @@
 				return taskSentense
 			}
 			
-			/** 要素リストの取得 */
-			const elementList = /*[[ ${ logicTree.elementList } ]]*/
 			/** 入力した第一階層リストの取得 */
 			let firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+			
+			/** 言い換えがnull以外でない項目のみ表示を行う */
 		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
 				return firstHierarchy.anotherWord !== null
 			})
-			/** 表示用第一階層リストの作成 */
-			const firstHierarchyListForDisplay = []
-			/*
-			const secondHierarchyListForDisplay = []
-			console.log(firstHierarchyList)
-			const test = firstHierarchyList.map((firstHierarchy) => {
-				return firstHierarchy.secondHierarchyList
-			})
-			console.log(test)
-			*/
-
-			for(let i = 0; i < elementList.length; i++) {
-				if(!!firstHierarchyList[i]){
-					const firstHierarchy = {
-						element: elementList[i],
-						anotherWord: firstHierarchyList[i].anotherWord ? firstHierarchyList[i].anotherWord : '',
-					}
-					firstHierarchyListForDisplay.push(firstHierarchy)
-				}
-			}
-			console.log(firstHierarchyListForDisplay)
-			
+		
 			/** ロジカルツリーの中身作成 */
 			const logicTree = {
 				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
 				currentState : /*[[ 「 + ${logicTree.currentState} + 」 ]]*/,
 				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
-				firstHierarchyListForDisplay
+				firstHierarchyList
 			}	
-			console.log(logicTree.partnerWants)
 			loadJsmind(logicTree)	
 		/*]]>*/
 	</script>

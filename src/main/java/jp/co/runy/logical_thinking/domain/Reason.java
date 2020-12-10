@@ -19,7 +19,6 @@ public class Reason {
 	private Integer pyramidId;
 	private String sessionId;
 	private Integer displayOrder;
-	/**	根拠を言い換えたもの */
 	private List<Example> evidenceList = new ArrayList<>();
 	
 	/**
@@ -118,7 +117,4 @@ public class Reason {
 	public void setEvidenceList(List<Example> evidenceList) {
 		this.evidenceList = evidenceList;
 	}
-	
-	
-
 }

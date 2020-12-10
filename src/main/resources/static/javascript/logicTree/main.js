@@ -67,6 +67,7 @@ function addHTML(data){
         frameWorkElement = firstHierarchy.word;
        
         new_list = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkElement, "");
+
         $('#hierarchy').append(new_list);
 
         // 第二階層を追加
@@ -201,6 +202,20 @@ function register(){
     	});
     	$(`#submit-value-error`).text('エラー入力項目があります。入力欄上のエラーメッセージをご確認ください');
     });
+}
+
+/**
+ * マインドマップページに遷移する.
+ */
+const createLogicTreeMap = () => {    
+    //ロジックツリー(第一階層から第三階層までの作成)の作成を行う.
+    const logicTree = createLogicTreeData();
+    // json化
+    const param = JSON.stringify(logicTree);
+    //エンコード
+    const encoded = encodeURIComponent(param)
+    //エンコードしたJSONをparamとして遷移させる
+    location.href= uri + `/logicalthinking/mindmap?json=${encoded}`;
 }
 
 //登録するロジックツリーの情報を取得します.
@@ -379,7 +394,6 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
             break;
         // 第一階層を追加
         case 'add-1-hierarchy':
-            
         	targetFrameworkElementId = $(`#fwradio option:selected`).val();
         	
         	fwId = 'fw' + targetFrameworkElementId;
@@ -389,6 +403,7 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
             name = '1-' + $('.fw').length;
             considerArea = '<br><div><input onkeyup="keyup(this)" type="text" name="' + name + '">' + 
             'について検討します</div>';
+
             
             //第一階層を設定
             addHtml = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, "", considerArea);
@@ -399,7 +414,6 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
      	   	shName = name + '_2-' + $('.fw[name=' + name + '] section').length
      	   	addHtml =  createHierarchyHtml(2, shName, '');
      	   	$('#' + fhId).after(addHtml);
-            
             
             break;
         case 'add':

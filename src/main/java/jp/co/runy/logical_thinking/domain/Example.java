@@ -73,7 +73,4 @@ public class Example {
 	public void setRationaleId(Integer rationaleId) {
 		this.rationaleId = rationaleId;
 	}
-	
-	
-
 }

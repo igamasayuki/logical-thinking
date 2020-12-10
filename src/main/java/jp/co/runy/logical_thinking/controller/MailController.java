@@ -1,8 +1,6 @@
 package jp.co.runy.logical_thinking.controller;
 
-import static jp.co.runy.logical_thinking.util.SessionKeyUtil.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,12 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.runy.logical_thinking.domain.Example;
-import jp.co.runy.logical_thinking.domain.FirstHierarchy;
 import jp.co.runy.logical_thinking.domain.LogicTree;
 import jp.co.runy.logical_thinking.domain.Pyramid;
 import jp.co.runy.logical_thinking.domain.Reason;
-import jp.co.runy.logical_thinking.domain.SecondHierarchy;
-import jp.co.runy.logical_thinking.domain.ThirdHierarchy;
 import jp.co.runy.logical_thinking.exception.SessionTypeConversionExeption;
 import jp.co.runy.logical_thinking.service.MailService;
 import jp.co.runy.logical_thinking.util.SessionTypeConversion;

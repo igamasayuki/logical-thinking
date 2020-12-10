@@ -3,6 +3,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="jp.co.runy.logical_thinking.mapper.PyramidMapper">
+    <resultMap type="jp.co.runy.logical_thinking.domain.Pyramid" id="Pyramid">
+      <id column="pyramid_id" property="id"/>
+      <result column="framework_kind_id" property="frameworkKindId"/>
+      <result column="framework_id" property="frameworkId"/>
+      <result column="conclusion" property="conclusion"/>
+      <collection property="rationaleList" ofType="jp.co.runy.logical_thinking.domain.Reason">
+        <id column="reason_id" property="id"/>
+        <result column="word" property="word"/>
+        <result column="reason_explanation" property="explanation"/>
+        <result column="another_explanation" property="anotherExplanation"/>
+        <result column="pyramid_id" property="pyramidId"/>
+        <result column="reason_display_order" property="displayOrder"/>
+        <collection property="evidenceList" ofType="jp.co.runy.logical_thinking.domain.Example">
+          <id column="example_id" property="id"/>
+          <result column="example_explanation" property="explanation"/>
+          <result column="reason_id" property="rationaleId"/>
+          <result column="example_display_order" property="displayOrder"/>
+        </collection>
+      </collection>
+    </resultMap>
     <select id="selectPyramid" resultType="jp.co.runy.logical_thinking.domain.Pyramid">
 		select 
 			id,
@@ -13,6 +33,37 @@
 			pyramids
 		where
 			session_id = #{sessionId};
+    </select>
+    <select id="findPyramid" resultMap="Pyramid" resultType="jp.co.runy.logical_thinking.domain.Pyramid">
+    select
+      p.id pyramid_id,
+      p.framework_kind_id framework_kind_id,
+      p.framework_id framework_id,
+      p.conclusion conclusion,
+      r.id reason_id,
+      r.word word,
+      r.another_explanation another_explanation,
+      r.explanation reason_explanation,
+      r.display_order reason_display_order,
+      e.id example_id,
+      e.explanation example_explanation,
+      e.display_order example_display_order
+    from
+      pyramids p
+    inner join
+      reasons r
+    on
+      p.id = r.pyramid_id
+    and
+      p.id = ${pyramidId}
+    and
+      p.session_id = #{sessionId}
+    inner join
+      examples e
+    on
+      r.id = e.reason_id
+    order by
+      reason_display_order, example_display_order;
     </select>
     <select id="insert"  resultType="int" parameterType="jp.co.runy.logical_thinking.domain.LogicTree">
       with insert_pyramid AS (

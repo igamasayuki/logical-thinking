@@ -14,7 +14,7 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item">Step1 全体像を把握する</li>
           <li class="breadcrumb-item" style="color: #6c757d;">Step2 ピラミッド構造=PREPを作成する</li>
-          <li class="breadcrumb-item" style="color: #6c757d;" aria-current="page">生成されたメール文章</li>
+          <li class="breadcrumb-item" style="color: #6c757d;" aria-current="page">Step3 生成されたメール文章</li>
         </ol>
 	</nav>
 
@@ -90,32 +90,26 @@
             MECEとは？
         </button>
         </div>
-        
-		<form target="_blank" th:action="@{/logical-thinking/mindmap}" method="post">
-			<div class="row mb-3">
-				<select name="fw" class="form-control" id="fwradio">
-					<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
-					<option th:each="framework : ${frameworkList}" th:value="${framework.id}" th:text="${framework.content}"></option>
-	            </select>
-	        </div>
-	        <section id="hierarchy">
-	        </section>
-	        <div class="row mb-5">
-	            <button class="btn btn-primary mr-3">
-	              <p>ここまでのロジックツリーを確認する</p>
-	              So What?/Why So?の関係になっているか確認してください
-	            </button>
-	            <!-- <a href="#" target="_blank" class="btn btn-warning">
-	              ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
-	            </a> -->
-	            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
-	                So What?/Why So?とは
-	            </button>
-	          </div>
-	          <input id="partnerWantsForLogicTree" type="hidden" name="partnerWants">
-	          <input id="currentStateForLogicTree" type="hidden" name="currentState">
-	          <input id="descriptionTypeForLogicTree" type="hidden" name="descriptionType" value="1">
-          </form>
+		<div class="row mb-3">
+			<select name="fw" class="form-control" id="fwradio">
+				<option value="0">-- 使えそうなフレームワークを１つ選択してください --</option>
+				<option th:each="framework : ${frameworkList}" th:value="${framework.id}" th:text="${framework.content}"></option>
+            </select>
+        </div>
+        <section id="hierarchy">
+        </section>
+        <div class="row mb-5">
+            <button onclick="createLogicTreeMap()" class="btn btn-primary mr-3">
+              <p>ここまでのロジックツリーを確認する</p>
+              So What?/Why So?の関係になっているか確認してください
+            </button>
+            <!-- <a href="#" target="_blank" class="btn btn-warning">
+              ここで確認して欲しいこと (So What?/Why So?の関係になっているか？の資料に飛ぶ！)
+            </a> -->
+            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#soWhatModal">
+                So What?/Why So?とは
+            </button>
+          </div>
     </section>
     <section class="col-12">
         <div class="alert alert-danger" role="alert">
