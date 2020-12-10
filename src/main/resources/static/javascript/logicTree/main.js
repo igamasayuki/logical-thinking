@@ -407,19 +407,19 @@ function changeHierarchy(selectedId, option, name){
             // 「第二階層を追加」ボタンを追加
             break;
         // 第二階層を追加
-        case 'add-second-hierarchy':
+        case 'add-2-hierarchy':
             shName = name + '_sh' + $('.fw[name=' + name + '] section.row2').length
             addHtml =  createHierarchyHtml(2, shName, 'second-hierarchy', 'third-hierarchy', '');
             $(selectedId).parent().before(addHtml);
             break;
             // 第三階層を追加
-        case 'add-third-hierarchy':
+        case 'add-3-hierarchy':
             thName = name + '_th' + $('section[name=' + name + '] section').length;
             addHtml =  createHierarchyHtml(3, thName, 'third-hierarchy', 'fourth-hierarchy', '');
             $(selectedId).parent().before(addHtml)
             break;
             // 第四階層を追加
-        case 'add-fourth-hierarchy':
+        case 'add-4-hierarchy':
             fourthName = name + '_fh' + $('section[name=' + name + '] section').length;
             addHtml =  createHierarchyHtml(4, fourthName, 'forth-hierarchy', 'fifth-hierarchy','');
             $(selectedId).parent().before(addHtml)
@@ -500,14 +500,15 @@ function createAddFHButton(){
 function createHierarchyHtml(hierarchyIndex, hierarchyName, hierarchyButtonName, hierarchyNextButtonName, inputValue){
 	let hierarchyNextIndex = hierarchyIndex + 1;
 	
+	
 	return addHierarchyHtml = 
 		`<section class="row${hierarchyIndex}" name="${hierarchyName}">` + 
 		`<div class="row"><label for="" class="col-2">第${hierarchyIndex}階層：</label>` + 
-	    `<input type="text" class="form-control col-9 row${hierarchyIndex}-input" value="${inputValue}"　onblur="createInsistenceOption(this)">` + 
+	    `<input type="text" class="form-control col-9 row${hierarchyIndex}-input" value="${inputValue}" onblur="createInsistenceOption(this)">` + 
 	    `<button name="${hierarchyButtonName}" onclick="changeHierarchy($(this),'delete', '${hierarchyName}')" type="button" class="btn btn-primary col-1">削除</button>` + 
 	    `</div>` + 
-	    `<div class="row">` + 
-	    `<button name="${hierarchyNextButtonName}" onclick="changeHierarchy(this, 'add-${hierarchyNextButtonName}','${hierarchyName}')" type="button" class="btn btn-info col-3 mb-2">第${hierarchyNextIndex}階層を追加</button>` + 
+	    `<div name="add-${hierarchyNextIndex}-hierarchy" class="row">` + 
+	    `<button name="${hierarchyNextIndex}-hierarchy" onclick="changeHierarchy(this, 'add-${hierarchyNextIndex}-hierarchy','${hierarchyName}')" type="button" class="btn btn-info col-3 mb-2">第${hierarchyNextIndex}階層を追加</button>` + 
 	    `</div>` + 
 	    `</section>`;
 }
