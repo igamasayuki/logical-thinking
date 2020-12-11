@@ -234,7 +234,7 @@ function createLogicTreeData(){
     
 	// 第一階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
-        // ex. fh0, fh1 ...
+        // ex. 1-0, 1-1 ...
         fHName = '1-' + index;
         // 第一階層の値を取得
         firstHierarchy = {
@@ -418,8 +418,8 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
             break;
         case 'add':
             // 各階層を追加します。
-            shName = name + `_${hierarchyIndex}-` + $('.fw[name=' + name + '] section').length;
-            addHtml =  createHierarchyHtml(hierarchyIndex, shName, '');
+            hierarchyName = name + `_${hierarchyIndex}-` + $('.fw[name=' + name + '] section').length;
+            addHtml =  createHierarchyHtml(hierarchyIndex, hierarchyName, '');
             $(selectedId).parent().before(addHtml);
             break;
         default:
