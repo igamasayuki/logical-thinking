@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Organization Chart Plugin</title>
+  <script th:src="@{http://code.jquery.com/jquery-3.5.1.min.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/jquery.orgchart.css}" href="../../static/css/jquery.orgchart.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" href="../../static/css/style.css">
+
+</head>
+
+<body>
+  <label><input id="togglePan" type="checkbox" checked>Enable Pan</label>
+  <label><input id="toggleZoom" type="checkbox" checked>Enable Zoom</label>
+  <div id="chart-container"></div>
+
+  <script type="text/javascript" th:src="@{/javascript/mindmap/jquery.orgchart.js}" src="../../static/javascript/mindmap/jquery.orgchart.js"></script>
+  <script type="text/javascript" th:inline="javascript">
+    $(function () {
+      const datasources = /*[[${pyramid}]]*/ null;
+      const oc = $('#chart-container').orgchart({
+        'data': datasources,
+        'nodeContent': 'title',
+        'draggable': true,
+        'pan': true,
+        'zoom': true,
+        'dropCriteria': function ($draggedNode, $dragZone, $dropZone) {
+          if ($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
+            return false;
+          }
+          return true;
+        }
+      });
+
+      $('#togglePan').on('click', function () {
+        // of course, oc.setOptions({ 'pan': this.checked }); is also OK.
+        oc.setOptions('pan', this.checked);
+      });
+
+      $('#toggleZoom').on('click', function () {
+        // of course, oc.setOptions({ 'zoom': this.checked }); is also OK.
+        oc.setOptions('zoom', this.checked);
+      });
+
+
+    });
+  </script>
+</body>
+
+</html>

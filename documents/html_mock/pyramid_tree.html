@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Organization Chart Plugin</title>
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="../../src/main/resources/static/css/jquery.orgchart.css">
+    
+    <link rel="stylesheet" href="../../src/main/resources/static/css/style.css">
+
+</head>
+
+<body>
+    <label><input id="togglePan" type="checkbox" checked>Enable Pan</label>
+    <label><input id="toggleZoom" type="checkbox" checked>Enable Zoom</label>
+    <div id="chart-container"></div>
+
+    <script type="text/javascript" src="../../src/main/resources/static/javascript/mindmap/jquery.orgchart.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            var datascource = {
+                'name': '課題',
+                'title': '「コミュニケーションが普通にとれる人月30蔓延程度のjavaのWebエンジニアを派遣してほしい」に対して「コミュニケーションが取れるJavaのWebエンジニアは人月40万円が相場である」のギャップが課題です。</br>この課題に対してどの方法が最適と考えられるか？',
+                'children': [
+                    {
+                        'name': '結論',
+                        'title': '自社、競合、顧客、チャネルの観点から30万円のエンジニアを提案する',
+                        'children': [
+                            {
+                                'name': '自社',
+                                'title': '自社によるサポート体制の強化</br>サポート体制を強化することを検討します',
+                                'children': [
+                                    {
+                                        'name': '証拠1',
+                                        'title': '以前、他のお客様から同様のご依頼をいただいた際に、サポート体制強化をいたしましたら、非常にご満足いただけるサービスレベルとご回答いただいております',
+                                    }
+                                ]
+                            }, {
+                                'name': '競合',
+                                'title': '競合に対する優位性</br>他社のエンジニアと比較しても品質は高く、結果的に工数が少なく（TCO:トータルコストオブオーナーシップ）は廉価で済みます',
+                                'children': [
+                                    {
+                                        'name': '証拠1',
+                                        'title': '当社では、プロジェクト終了時にアンケートを実施しており、顧客満足度4.2となっております、</br>評価詳細を見ると、生産性の高さのご意見を多くいただいています',
+                                    }
+                                ]
+                            }, {
+                                'name': '顧客',
+                                'title': '顧客のメリット<br>(1) プロジェクト期間が短くできます</br>(2)お客様サイドにおける管理工数が低くなります',
+                                'children': [
+                                    {
+                                        'name': '証拠1',
+                                        'title': '(1)戦術の通り、当社のエンジニアは生産性が高いことから、結果プロジェクト期間を短くした事例が多数あります',
+                                    }, {
+                                        'name': '証拠2',
+                                        'title': '(2)当社比で、5年前に比べると、お客様の管理工数が約35%削減できているデータがあります',
+                                    }
+                                ]
+                            }, {
+                                'name': 'チャネル',
+                                'title': '当社のアライアンスパートナー</br>そこまでのクオリティが不要という場合は、当社パートナーにも優秀なエンジニアがおりますので、ご提案可能です',
+                                'children': [
+                                    {
+                                        'name': '証拠1',
+                                        'title': '昨年度実績で申し上げますと、当社が携わるプロジェクトの70%にアライアンスパートナーのエンジニアが参画しております。当社のアライアンスエンジニアになるためには当社独自のテストをクリアする必要があります。こういったプロセスを経て、エンジニアの質の担保を行っています。',
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            var oc = $('#chart-container').orgchart({
+                'data': datascource,
+                'nodeContent': 'title',
+                'draggable': true,
+                'pan': true,
+                'zoom': true,
+                'dropCriteria': function ($draggedNode, $dragZone, $dropZone) {
+                    if ($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
+                        return false;
+                    }
+                    return true;
+                }
+            });
+
+            oc.$chart.on('nodedrop.orgchart', function (event, extraParams) {
+                console.log('draggedNode:' + extraParams.draggedNode.children('.title').text()
+                    + ', dragZone:' + extraParams.dragZone.children('.title').text()
+                    + ', dropZone:' + extraParams.dropZone.children('.title').text()
+                );
+            });
+
+            $('#togglePan').on('click', function () {
+                // of course, oc.setOptions({ 'pan': this.checked }); is also OK.
+                oc.setOptions('pan', this.checked);
+            });
+
+            $('#toggleZoom').on('click', function () {
+                // of course, oc.setOptions({ 'zoom': this.checked }); is also OK.
+                oc.setOptions('zoom', this.checked);
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
