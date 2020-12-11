@@ -28,13 +28,13 @@ public class ShowMindMapController {
 	 * @throws JsonProcessingException 
 	 * @throws JsonMappingException 
 	 */
-	@GetMapping("/logicalthinking/mindmap")
+	@GetMapping("/logicalthinking/logictree-map")
 	public String showMindMap (String json, Model model) throws JsonMappingException, JsonProcessingException {
 		//JacksonのObjectMapperインスタンスを作成
 		ObjectMapper mapper = new ObjectMapper();
 		//JSON⇒Javaオブジェクトに変換
 		LogicTree logicTree = mapper.readValue(json, LogicTree.class);	
 		model.addAttribute("logicTree", logicTree);
-		return "logicTree/mindmap.html";
+		return "logicTree/logictree-map.html";
 	}
 }

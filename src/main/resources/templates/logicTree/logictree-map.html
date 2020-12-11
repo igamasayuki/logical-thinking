@@ -6,18 +6,18 @@
 	<script th:src="@{/jquery/jquery-3.5.1.min.js}"></script>
     <!-- Bootstrap CSS-->
 	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
-	<!-- JSMindMap CSS -->
-	<link rel="stylesheet" href="/jsmind/style/jsmind.css" th:href="@{/css/jsmind.css}" />
+	<!-- for org chart -->
+	<link rel="stylesheet" href="css/jquery.orgchart.css" th:href="@{/css/jquery.orgchart.css}">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="css/logictree.css" th:href="@{/css/logictree.css}">
 	<!-- <link rel="text/javascript" th:href="@{/bootstrap/js/bootstrap.min.js}"> -->
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<!-- <link rel="text/javascript" th:href="@{/jquery/jquery-3.5.1.min.js}"> -->
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
-	<div id="jsmind_container" style="width:100%;height:900px;"></div>
-	
-	<script th:src="@{/javascript/mindmap/jsmind.js}"></script>
+	<div id="chart-container"></div>
+    <script type="text/javascript" src="js/jquery.orgchart.js" th:src="@{/javascript/mindmap/jquery.orgchart.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
 			/**
@@ -29,25 +29,20 @@
 				/** 課題部分の作成を行う */
 				const task = createTask(logicTree)
 				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
-				const children = createFirstHierarchy(logicTree.firstHierarchyList);
+				const children = createFirstHierarchy(logicTree.firstHierarchyList)
 				/** マインドマップの作成 */
-			    const mind = {
-			        "meta":{
-			            "name":"jsMind remote"
-			        },
-			        "format":"node_tree",
-			        "data":{"id":"root","topic":`課題<br>${task}`, children
-			        }
-			    };
-			    const options = {
-			        container:'jsmind_container',
-			        editable:true,
-			        theme:'primary'
+			    const data = {
+			    	'name': '課題',
+			  	    'title': `${task}`,
+			  	    children
 			    }
-			    
-			    const jm = jsMind.show(options,mind);
-			    jm.add_node("sub2","sub23", "new node", {"background-color":"red"});
-			    jm.set_node_color('sub21', 'green', '#ccc');
+				
+			    const oc = $('#chart-container').orgchart({
+			        'data' : data,
+			        'nodeContent': 'title',
+			        'direction': 'l2r',
+			        'draggable': true
+			    })
 			}
 			
 			/**
@@ -56,6 +51,7 @@
 			 * @param sentense 文章
 			 * @return 14字で改行された文章
 			 */
+			 /*
 			const handleSentense = (sentense) => {
 				let sentenseList = [];
 				for(let i = 0; i <= sentense.length; i++){
@@ -67,6 +63,7 @@
 				}
 				return sentenseList.join('')
 			}
+			*/
 			
 			/**
 			 * 第三階層リストの作成を行う.
@@ -79,9 +76,9 @@
 					return !!thirdHierarchy.explanation
 				})
 				const thirdHierarchyListForDisplay = thirdHierarchyList.map((thirdHierarchy) => {
-					return {"id": `${thirdHierarchy.explanation}`,
-							  "topic":`${handleSentense(thirdHierarchy.explanation)}`, 
-							  "direction": "right"
+					return {
+						"name": "第3階層",
+						"title": `${thirdHierarchy.explanation}`
 					}
 				})
 				return thirdHierarchyListForDisplay
@@ -98,10 +95,10 @@
 					return !!secondHierarchy.explanation
 				})
 				const secondHierarchyForDisplay = secondHierarchyList.map((secondHierarchy) => {
-						return {"id": `${secondHierarchy.explanation}`,
-								  "topic":`${handleSentense(secondHierarchy.explanation)}`, 
-								  "direction": "right",
-								  "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
+						return {
+							"name": "第2階層",
+							"title": `${secondHierarchy.explanation}`,
+						    "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
 						}						
 				})
 				return secondHierarchyForDisplay
@@ -116,9 +113,8 @@
 			const createFirstHierarchy = (firstHierarchyList) => {
 				/** 第一階層のマインドマップを作成する */
 				const firstHierarchyListForDisplay = firstHierarchyList.map((firstHierarchy) => {
-					return {"id": `${firstHierarchy.word}`, 
-							  "topic": `${firstHierarchy.word}<br>${handleSentense(firstHierarchy.anotherWord)}`, 
-							  "direction": "right",
+					return {"name": `${firstHierarchy.word}`, 
+							  "title": `${firstHierarchy.anotherWord}`, 
 							  "children": createSecondHierarchy(firstHierarchy.secondHierarchyList)
 					}
 				});
@@ -135,8 +131,7 @@
 			 */
 			const createTask = ({ partnerWants, currentState, descriptionType }) => {
 				const type = descriptionType === '1' ? `この課題の原因にはどのようなものが考えられるか？` : `この課題を解決するにはどのような方法が考えられるか？` ;
-				const inputTaskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
-				const taskSentense = handleSentense(inputTaskSentense)
+				const taskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
 				return taskSentense
 			}
 			

@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#chart-container {
+    height: 98%;
+}
+
+.orgchart .node {
+    text-align: inherit;
+}
+
+.orgchart td {
+    text-align: -webkit-center;
+}
+
+.orgchart.l2r .node, .orgchart.r2l .node {
+  width: 75%;
+}
+
+.orgchart .node .content {
+    height: 60%;
+    text-align: left;
+    word-break: break-all;
+}
