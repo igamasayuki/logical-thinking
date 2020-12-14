@@ -14,6 +14,6 @@ public class FifthHierarchy {
 	private String explanation;
 	private Integer fourHierarchyId;
 	private Integer displayOrder;
-	private List<SixthHierarchy> sixthHierarchieList;
+	private List<SixthHierarchy> sixthHierarchyList;
 	
 }

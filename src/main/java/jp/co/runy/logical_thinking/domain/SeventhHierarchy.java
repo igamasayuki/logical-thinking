@@ -14,5 +14,5 @@ public class SeventhHierarchy {
 	private String explanation;
 	private Integer sixthHierarchyId;
 	private Integer displayOrder;
-	private List<EighthHierarchy> eighthHierarchList;
+	private List<EighthHierarchy> eighthHierarchyList;
 }
