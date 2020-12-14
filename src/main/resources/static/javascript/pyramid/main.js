@@ -33,6 +33,31 @@ $(document).ready(function () {
 
 });
 
+$(function () {
+	// const datasources = /*[[${pyramid}]]*/ null;
+	// const oc = $('#chart-container').orgchart({
+	// 	'data': datasources,
+	// 	'nodeContent': 'title',
+	// 	'draggable': true,
+	// 	'pan': true,
+	// 	'zoom': true,
+	// 	'dropCriteria': function ($draggedNode, $dragZone, $dropZone) {
+	// 	if ($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
+	// 		return false;
+	// 	}
+	// 	return true;
+	// 	}
+	// });
+
+	// $('#togglePan').on('click', function () {
+	// 	oc.setOptions('pan', this.checked);
+	// });
+
+	// $('#toggleZoom').on('click', function () {
+	// 	oc.setOptions('zoom', this.checked);
+	// });
+});
+
 function addRationale(rationale) {
 	$('.reason > section').remove();
 	for (let index = 0; index < rationale.length; index++) {
@@ -122,10 +147,6 @@ $(function(){
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		switch (targetId) {
-			case `check-pyramid` :
-				const data = encodeURIComponent(JSON.stringify(createPyramidData(true)));
-				window.open(`${urlUtil.uri}/logicalthinking/pyramidtree?data=${data}`, '_blank')
-				break;
 			case `addEvidence${evidenceParentId}`:
 				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
 				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
@@ -173,6 +194,8 @@ $(function(){
 					console.log(args);
 				});
 				break;
+			case 'check-pyramid': 
+				break;
 			default:
 		}
 	});
@@ -207,6 +230,47 @@ $(function(){
 		}
 	});
 });
+$(function () {
+	// 「.modal_open」をクリックしたらモーダルと黒い背景を表示する
+	$('#check-pyramid').click(function () {
+		// 黒い背景をbody内に追加
+		$('body').append('<div class="modal_bg"></div>');
+		$('.modal_bg').fadeIn();
+
+		// data-targetの内容をIDにしてmodalに代入
+		var modal = '#' + $(this).attr('data-target');
+
+		// モーダルをウィンドウの中央に配置する
+		function modalResize() {
+			var w = $(window).width();
+			var h = $(window).height();
+
+			var x = (w - $(modal).outerWidth(true)) / 2;
+			var y = (h - $(modal).outerHeight(true)) / 2;
+
+			$(modal).css({ 'left': x + 'px', 'top': y + 'px' });
+		}
+
+		// modalResizeを実行
+		modalResize();
+
+		// modalをフェードインで表示
+		$(modal).fadeIn();
+
+		// .modal_bgか.modal_closeをクリックしたらモーダルと背景をフェードアウトさせる
+		$('.modal_bg, .modal_close').off().click(function () {
+			$('.modal_box').fadeOut();
+			$('.modal_bg').fadeOut('slow', function () {
+				$('.modal_bg').remove();
+			});
+		});
+
+		// ウィンドウがリサイズされたらモーダルの位置を再計算する
+		$(window).on('resize', function () {
+			modalResize();
+		});
+	});
+});
 
 function validation () {
 	let validatedError = false;
@@ -236,7 +300,6 @@ function createPyramidData(isCreatePyramidTree) {
 		conclusion: $('#conclusion').val(),
 		rationaleFormList: []
 	}
-	console.log($("#task").text());
 	if(!isCreatePyramidTree){
 		errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
 		errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));

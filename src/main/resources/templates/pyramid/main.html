@@ -72,7 +72,7 @@
       
       <section>
       	<div class="row mb-5">
-          <div id="check-pyramid" class="btn btn-primary">
+          <div data-target="modal1" id="check-pyramid" class="btn btn-primary modal_open">
             ここまでのピラミッド構造を確認する
           </div>
         </div>
@@ -89,7 +89,15 @@
             <button type="button" id='submit' class="btn btn-primary">メール文章を作成する</button>
         </div>
       </section>
+    </div>  
+    <!-- モーダル -->
+    <div id="modal1" class="modal_box">
+      <h2>ウィンドウ1</h2>
+      <p>モーダルウィンドウが開きました。</p>
+      <p><a class="modal_close"><i class="zmdi zmdi-close">×</i></a></p>
     </div>
+  <p><a class=" modal_close"><i class="zmdi zmdi-close"></i></a></p>
+  </div>For elements with box-sizing: border-box, only absolute content area dimensions can be applied
     <script type="module" th:src="@{/javascript/pyramid/main.js}"></script>
 </body>
 </html>
