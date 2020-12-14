@@ -2,6 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="fragments/config :: configFragment">
 </head>
+<link rel="stylesheet" th:href="@{/css/jquery.orgchart.css}" href="../../static/css/jquery.orgchart.css">
 <body>
 	<div class="container">
 		<header th:replace="fragments/header :: headerFragment"></header>
@@ -92,12 +93,14 @@
     </div>  
     <!-- モーダル -->
     <div id="modal1" class="modal_box">
-      <h2>ウィンドウ1</h2>
-      <p>モーダルウィンドウが開きました。</p>
+      <label><input id="togglePan" type="checkbox">Enable Pan</label>
+      <label><input id="toggleZoom" type="checkbox">Enable Zoom</label>
+      <div id="chart-container"></div>
       <p><a class="modal_close"><i class="zmdi zmdi-close">×</i></a></p>
     </div>
   <p><a class=" modal_close"><i class="zmdi zmdi-close"></i></a></p>
-  </div>For elements with box-sizing: border-box, only absolute content area dimensions can be applied
-    <script type="module" th:src="@{/javascript/pyramid/main.js}"></script>
+  <script type="text/javascript" th:src="@{/javascript/mindmap/jquery.orgchart.js}"
+    src="../../static/javascript/mindmap/jquery.orgchart.js"></script>
+  <script type="module" th:src="@{/javascript/pyramid/main.js}"></script>
 </body>
 </html>

@@ -4,6 +4,19 @@ const urlUtil = new Utils.Url;
 const pyramidUrlUtil = new Utils.PyramidUrl;
 let frameworks;
 let frameworkElements;
+let oc = $('#chart-container').orgchart({
+	'data': "",
+	'nodeContent': 'title',
+	'draggable': true,
+	'pan': true,
+	'zoom': true,
+	'dropCriteria': function ($draggedNode, $dragZone, $dropZone) {
+		if ($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
+			return false;
+		}
+		return true;
+	}
+});
 
 let errors = {
 	selectedError: [],
@@ -33,30 +46,35 @@ $(document).ready(function () {
 
 });
 
-$(function () {
-	// const datasources = /*[[${pyramid}]]*/ null;
-	// const oc = $('#chart-container').orgchart({
-	// 	'data': datasources,
-	// 	'nodeContent': 'title',
-	// 	'draggable': true,
-	// 	'pan': true,
-	// 	'zoom': true,
-	// 	'dropCriteria': function ($draggedNode, $dragZone, $dropZone) {
-	// 	if ($draggedNode.find('.content').text().indexOf('manager') > -1 && $dropZone.find('.content').text().indexOf('engineer') > -1) {
-	// 		return false;
-	// 	}
-	// 	return true;
-	// 	}
-	// });
-
-	// $('#togglePan').on('click', function () {
-	// 	oc.setOptions('pan', this.checked);
-	// });
-
-	// $('#toggleZoom').on('click', function () {
-	// 	oc.setOptions('zoom', this.checked);
-	// });
-});
+function createPyramidFigure () {
+	const datasources = {
+		name : "課題",
+		title : $("#task").text(),
+		children : [{
+			name : "結論",
+			title : $("#conclesion").val(),
+			children : []
+		}]
+	};
+	for (let i = 0; i < $('.reason').children('section').length; i++) {
+		const reasonDataOb = {
+			name: $(`#word${i}`).val(),
+			title: $(`#explanation${i}`).val(),
+			children: []
+		};
+		// 証拠リストを取得
+		for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
+			const evidenceDataOb = {
+				name: "証拠",
+				title: $(`#evidence${i}_${j}`).val(),
+				children: []
+			}
+			reasonDataOb.children.push(evidenceDataOb);
+		}
+		datasources.children[0].children.push(reasonDataOb);
+	}
+	oc.init({'data': datasources});
+};
 
 function addRationale(rationale) {
 	$('.reason > section').remove();
@@ -142,6 +160,14 @@ function addHTML(data) {
 }
 
 $(function(){
+	$('#togglePan').on('click', function () {
+		oc.setOptions('pan', this.checked);
+	});
+
+	$('#toggleZoom').on('click', function () {
+		oc.setOptions('zoom', this.checked);
+	});
+
 	$(document).click(function(e){
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
@@ -194,8 +220,6 @@ $(function(){
 					console.log(args);
 				});
 				break;
-			case 'check-pyramid': 
-				break;
 			default:
 		}
 	});
@@ -232,8 +256,8 @@ $(function(){
 });
 $(function () {
 	// 「.modal_open」をクリックしたらモーダルと黒い背景を表示する
-	$('#check-pyramid').click(function () {
-		// 黒い背景をbody内に追加
+	// 黒い背景をbody内に追加
+	$("#check-pyramid").click(function () {
 		$('body').append('<div class="modal_bg"></div>');
 		$('.modal_bg').fadeIn();
 
@@ -256,10 +280,14 @@ $(function () {
 
 		// modalをフェードインで表示
 		$(modal).fadeIn();
-
+		$("#togglePan").prop('checked', true);
+		$("#toggleZoom").prop('checked', true);
+		createPyramidFigure();
 		// .modal_bgか.modal_closeをクリックしたらモーダルと背景をフェードアウトさせる
 		$('.modal_bg, .modal_close').off().click(function () {
 			$('.modal_box').fadeOut();
+			$("#togglePan").prop('checked', false);
+			$("#toggleZoom").prop('checked', false);
 			$('.modal_bg').fadeOut('slow', function () {
 				$('.modal_bg').remove();
 			});
@@ -269,7 +297,7 @@ $(function () {
 		$(window).on('resize', function () {
 			modalResize();
 		});
-	});
+	})
 });
 
 function validation () {
