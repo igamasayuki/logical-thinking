@@ -234,7 +234,7 @@ function register(){
  * マインドマップページに遷移する.
  */
 const createLogicTreeMap = () => {    
-    //ロジックツリー(第一階層から第三階層までの作成)の作成を行う.
+    //ロジックツリー(第1階層から第三階層までの作成)の作成を行う.
     const logicTree = createLogicTreeData();
     // json化
     const param = JSON.stringify(logicTree);
@@ -258,24 +258,24 @@ function createLogicTreeData(){
         firstHierarchyList : []
     }
     
-	// 第一階層の数を取得
+	// 第1階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
         // ex. 1-0, 1-1 ...
-        fHName = '1-' + index;
-        // 第一階層の値を取得
+        firstHName = '1-' + index;
+        // 第1階層の値を取得
         firstHierarchy = {
-            word : $('section[name=' + fHName + '] div input').val(),
+            word : $(`section[name=${firstHName}] font[name=word]`).text(),
             //name変更位置
-            anotherWord : $('section[name=' + fHName + '] input').val(),
+            anotherWord : $(`section[name=${firstHName}] input`).val(),
             logicTreeId : 0,
             displayOrder : index + 1,
             secondHierarchyList : []
         }
-        // 第二階層の数を取得 (第一階層で取得したnameの直接の子要素のsectionの数を取得)
+        // 第二階層の数を取得 (第1階層で取得したnameの直接の子要素のsectionの数を取得)
         // childrenの使用理由: 同列階層のsectionを除くため
-        for(let index2 = 0; index2 < $('section[name=' + fHName + ']').children('section').length; index2++){
+        for(let index2 = 0; index2 < $('section[name=' + firstHName + ']').children('section').length; index2++){
             // ex. fh0_sh0, fh0_sh1 ...
-            sHName = fHName + '_2-' + index2;
+            sHName = firstHName + '_2-' + index2;
             // 第二階層の値を取得
             secondHierarchy = {
                 explanation : $('section[name=' + sHName + '] input').val(),
