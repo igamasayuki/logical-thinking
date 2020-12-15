@@ -287,7 +287,52 @@ function createLogicTreeData(){
                 tHName = sHName + '_3-' + index3;
                 thirdHierarchy = {
 	                explanation : $('section[name=' + tHName + '] input').val(),
-	                displayOrder : index3 + 1
+                    displayOrder : index3 + 1,
+                    fourthHierarchyList:[]
+                }
+                for(let index4 = 0; index4 < $('section[name=' + tHName + '] section').length; index4++){
+                    fourthHName = tHName + '_4-' + index4;
+                    fourthHierarchy = {
+                        explanation : $('section[name=' + fourthHName + '] input').val(),
+                        displayOrder : index4 + 1,
+                        fifthHierarchyList:[]
+                    }
+                    for(let index5 = 0; index5 < $('section[name=' + fourthHName + '] section').length; index5++){
+                        fifthHName = fourthHName + '_5-' + index5;
+                        fifthHierarchy = {
+                            explanation : $('section[name=' + fifthHName + '] input').val(),
+                            displayOrder : index5 + 1,
+                            sixthHierarchyList:[]
+                        }
+                        for(let index6 = 0; index6 < $('section[name=' + fifthHName + '] section').length; index6++){
+                            sixthHName = fifthHName + '_6-' + index6;
+                            sixthHierarchy = {
+                                explanation : $('section[name=' + sixthHName + '] input').val(),
+                                displayOrder : index6 + 1,
+                                seventhHierarchyList:[]
+                            }
+                            for(let index7 = 0; index7 < $('section[name=' + sixthHName + '] section').length; index7++){
+                                sevenHName = sixthHName + '_7-' + index7;
+                                seventhHierarchy = {
+                                    explanation : $('section[name=' + sevenHName + '] input').val(),
+                                    displayOrder : index7 + 1,
+                                    eighthHierarchyList:[]
+                                }
+                                for(let index8 = 0; index8 < $('section[name=' + sevenHName + '] section').length; index8++){
+                                    eightHName = sevenHName + '_8-' + index8;
+                                    eighthHierarchy = {
+                                        explanation : $('section[name=' + eightHName + '] input').val(),
+                                        displayOrder : index8 + 1
+                                    }
+                                    seventhHierarchy.eighthHierarchyList.push(eighthHierarchy)
+                                }
+                                sixthHierarchy.seventhHierarchyList.push(seventhHierarchy)
+                            }
+                            fifthHierarchy.sixthHierarchyList.push(sixthHierarchy)
+                        }
+                        fourthHierarchy.fifthHierarchyList.push(fifthHierarchy)
+                    }
+                    thirdHierarchy.fourthHierarchyList.push(fourthHierarchy)
                 }
                 secondHierarchy.thirdHierarchyList.push(thirdHierarchy)
             }
