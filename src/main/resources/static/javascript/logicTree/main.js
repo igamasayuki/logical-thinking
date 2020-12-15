@@ -601,7 +601,7 @@ function createHierarchyHtml(hierarchyIndex, hierarchyName, inputValue){
     }
     
 	 addHierarchyHtml = 
-		`<section class="row${hierarchyIndex}" name="${hierarchyName}">` + 
+		`<section class="row${hierarchyIndex} row-margin-left" name="${hierarchyName}">` + 
 		`<div class="row"><label for="" class="col-2">第${hierarchyIndex}階層：</label>` + 
 	    `<input type="text" class="form-control col-9 row${hierarchyIndex}-input" value="${inputValue}" onblur="createInsistenceOption()">` + 
 	    `<button onclick="changeHierarchy($(this),'delete', '${hierarchyName}', '')" type="button" class="btn col-1 row${hierarchyIndex}-color text-white">削除</button>` + 
