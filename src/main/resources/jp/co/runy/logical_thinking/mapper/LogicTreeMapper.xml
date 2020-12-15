@@ -12,18 +12,43 @@
 		<result column="insistence" property="insistence"/>
 		<result column="session_id" property="sessionId"/>
 		<collection property="firstHierarchyList" ofType="jp.co.runy.logical_thinking.domain.FirstHierarchy">
-			<result column="fh_id" property="id"/>
-			<result column="fh_word" property="word"/>
-			<result column="fh_another_word" property="anotherWord"/>
+			<result column="first_id" property="id"/>
+			<result column="first_word" property="word"/>
+			<result column="first_another_word" property="anotherWord"/>
 			<result column="id" property="logicTreeId"/>
 			<collection property="secondHierarchyList" ofType="jp.co.runy.logical_thinking.domain.SecondHierarchy">
-				<result column="sh_id" property="id"/>
-				<result column="sh_explanation" property="explanation"/>
-				<result column="fh_id" property="firstHierarchyId"/>
+				<result column="second_id" property="id"/>
+				<result column="second_explanation" property="explanation"/>
+				<result column="first_id" property="firstHierarchyId"/>
 				<collection property="thirdHierarchyList" ofType="jp.co.runy.logical_thinking.domain.ThirdHierarchy">
-					<result column="th_id" property="id"/>
-					<result column="th_explanation" property="explanation"/>
-					<result column="sh_id" property="secondHierarchyId"/>
+					<result column="third_id" property="id"/>
+					<result column="third_explanation" property="explanation"/>
+					<result column="second_id" property="secondHierarchyId"/>
+					<collection property="fourthHierarchyList" ofType="jp.co.runy.logical_thinking.domain.FourthHierarchy">
+						<result column="fourth_id" property="id"/>
+						<result column="fourth_explanation" property="explanation"/>
+						<result column="third_id" property="thirdHierarchyId"/>
+						<collection property="fifthHierarchyList" ofType="jp.co.runy.logical_thinking.domain.FifthHierarchy">
+							<result column="fifth_id" property="id"/>
+							<result column="fifth_explanation" property="explanation"/>
+							<result column="fourth_id" property="fourthHierarchyId"/>
+							<collection property="sixthHierarchyList" ofType="jp.co.runy.logical_thinking.domain.SixthHierarchy">
+								<result column="sixth_id" property="id"/>
+								<result column="sixth_explanation" property="explanation"/>
+								<result column="fifth_id" property="fifthHierarchyId"/>
+								<collection property="seventhHierarchyList" ofType="jp.co.runy.logical_thinking.domain.SeventhHierarchy">
+									<result column="seventh_id" property="id"/>
+									<result column="seventh_explanation" property="explanation"/>
+									<result column="sixth_id" property="sixthHierarchyId"/>
+									<collection property="eighthHierarchyList" ofType="jp.co.runy.logical_thinking.domain.EighthHierarchy">
+										<result column="eighth_id" property="id"/>
+										<result column="eighth_explanation" property="explanation"/>
+										<result column="seventh_id" property="seventhHierarchyId"/>
+									</collection>
+								</collection>
+							</collection>
+						</collection>
+					</collection>
 				</collection>
 			</collection>
 		</collection>
@@ -37,25 +62,55 @@
 			lt.framework_id, 
 			lt.insistence, 
 			lt.session_id, 
-			fh.id as fh_id, 
-			fh.word as fh_word, 
-			fh.another_word as fh_another_word, 
-			sh.id as sh_id, 
-			sh.explanation as sh_explanation,
-			th.id as th_id, 
-			th.explanation as th_explanation 
+			first.id as first_id, 
+			first.word as first_word, 
+			first.another_word as first_another_word, 
+			second.id as second_id, 
+			second.explanation as second_explanation,
+			third.id as third_id, 
+			third.explanation as third_explanation,
+			fourth.id as fourth_id, 
+			fourth.explanation as fourth_explanation,
+			fifth.id as fifth_id, 
+			fifth.explanation as fifth_explanation,
+			sixth.id as sixth_id, 
+			sixth.explanation as sixth_explanation,
+			seventh.id as seventh_id, 
+			seventh.explanation as seventh_explanation,
+			eighth.id as eighth_id, 
+			eighth.explanation as eighth_explanation    
 		from 
 			logic_trees lt 
 		left join 
-			first_hierarchies fh on lt.id = fh.logic_tree_id 
+			first_hierarchies first on lt.id = first.logic_tree_id 
+		left join
+			second_hierarchies second on first.id = second.first_hierarchy_id
 		left join 
-			second_hierarchies sh on fh.id = sh.first_hierarchy_id
+			third_hierarchies third on second.id = third.second_hierarchy_id
 		left join 
-			third_hierarchies th on sh.id = th.second_hierarchy_id 
+			fourth_hierarchies fourth on third.id = fourth.third_hierarchy_id 
+		left join 
+			fifth_hierarchies fifth on fourth.id = fifth.fourth_hierarchy_id 
+		left join 
+			sixth_hierarchies sixth on fifth.id = sixth.fifth_hierarchy_id 
+		left join 
+			seventh_hierarchies seventh on sixth.id = seventh.sixth_hierarchy_id 
+		left join 
+			eighth_hierarchies eighth on seventh.id = eighth.seventh_hierarchy_id 	 
 		where
 			lt.session_id = #{sessionId}
 		and
-			lt.id = ${logicTreeId};
+			lt.id = ${logicTreeId}
+		order by
+			first.display_order 
+			,second.display_order 
+			,third.display_order 
+			,fourth.display_order 
+			,fifth.display_order 
+			,sixth.display_order 
+			,seventh.display_order 
+			,eighth.display_order 
+		;
 	</select>
 	
 	<select id="findBySessionId" resultType="jp.co.runy.logical_thinking.domain.LogicTree">
@@ -153,6 +208,106 @@
 							insert_second_hierarchies_${index1}_${index2}
 						returning id
 					)
+					<foreach collection="thirdHierarchy.fourthHierarchyList" item="fourthHierarchy" index="index4">
+						, insert_fourth_hierarchies_${index1}_${index2}_${index3}_${index4} AS (
+							insert into fourth_hierarchies (
+								<trim prefixOverrides=", ">
+									<if test="fourthHierarchy.explanation != null">, explanation</if>
+									, third_hierarchy_id
+									<if test="fourthHierarchy.displayOrder != null">, display_order</if>
+								</trim>
+							) 
+							select
+								<trim prefixOverrides=",">
+									<if test="fourthHierarchy.explanation != null">, #{fourthHierarchy.explanation}</if>
+									, id
+									<if test="fourthHierarchy.displayOrder != null">, #{fourthHierarchy.displayOrder}</if>
+								</trim>
+							from
+								insert_third_hierarchies_${index1}_${index2}_${index3}
+							returning id
+						)
+						<foreach collection="fourthHierarchy.fifthHierarchyList" item="fifthHierarchy" index="index5">
+							, insert_fifth_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5} AS (
+								insert into fifth_hierarchies (
+									<trim prefixOverrides=", ">
+										<if test="fifthHierarchy.explanation != null">, explanation</if>
+										, fourth_hierarchy_id
+										<if test="fifthHierarchy.displayOrder != null">, display_order</if>
+									</trim>
+								) 
+								select
+									<trim prefixOverrides=",">
+										<if test="fifthHierarchy.explanation != null">, #{fifthHierarchy.explanation}</if>
+										, id
+										<if test="fifthHierarchy.displayOrder != null">, #{fifthHierarchy.displayOrder}</if>
+									</trim>
+								from
+									insert_fourth_hierarchies_${index1}_${index2}_${index3}_${index4}
+								returning id
+							)
+							<foreach collection="fifthHierarchy.sixthHierarchyList" item="sixthHierarchy" index="index6">
+								, insert_sixth_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}_${index6} AS (
+									insert into sixth_hierarchies (
+										<trim prefixOverrides=", ">
+											<if test="sixthHierarchy.explanation != null">, explanation</if>
+											, fifth_hierarchy_id
+											<if test="sixthHierarchy.displayOrder != null">, display_order</if>
+										</trim>
+									) 
+									select
+										<trim prefixOverrides=",">
+											<if test="sixthHierarchy.explanation != null">, #{sixthHierarchy.explanation}</if>
+											, id
+											<if test="sixthHierarchy.displayOrder != null">, #{sixthHierarchy.displayOrder}</if>
+										</trim>
+									from
+										insert_fifth_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}
+									returning id
+								)
+								<foreach collection="sixthHierarchy.seventhHierarchyList" item="seventhHierarchy" index="index7">
+									, insert_seventh_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}_${index6}_${index7} AS (
+										insert into seventh_hierarchies (
+											<trim prefixOverrides=", ">
+												<if test="seventhHierarchy.explanation != null">, explanation</if>
+												, sixth_hierarchy_id
+												<if test="seventhHierarchy.displayOrder != null">, display_order</if>
+											</trim>
+										) 
+										select
+											<trim prefixOverrides=",">
+												<if test="seventhHierarchy.explanation != null">, #{seventhHierarchy.explanation}</if>
+												, id
+												<if test="seventhHierarchy.displayOrder != null">, #{seventhHierarchy.displayOrder}</if>
+											</trim>
+										from
+											insert_sixth_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}_${index6}
+										returning id
+									)
+									<foreach collection="seventhHierarchy.eighthHierarchyList" item="eighthHierarchy" index="index8">
+										, insert_eighth_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}_${index6}_${index7}_${index8} AS (
+											insert into eighth_hierarchies (
+												<trim prefixOverrides=", ">
+													<if test="eighthHierarchy.explanation != null">, explanation</if>
+													, seventh_hierarchy_id
+													<if test="eighthHierarchy.displayOrder != null">, display_order</if>
+												</trim>
+											) 
+											select
+												<trim prefixOverrides=",">
+													<if test="eighthHierarchy.explanation != null">, #{eighthHierarchy.explanation}</if>
+													, id
+													<if test="eighthHierarchy.displayOrder != null">, #{eighthHierarchy.displayOrder}</if>
+												</trim>
+											from
+												insert_seventh_hierarchies_${index1}_${index2}_${index3}_${index4}_${index5}_${index6}_${index7}
+											returning id
+										)
+									</foreach>
+								</foreach>
+							</foreach>
+						</foreach>
+					</foreach>
 				</foreach>
 			</foreach>
 		</foreach>

@@ -12,7 +12,7 @@ import lombok.Data;
 public class FifthHierarchy {
 	private int id;
 	private String explanation;
-	private Integer fourHierarchyId;
+	private Integer fourthHierarchyId;
 	private Integer displayOrder;
 	private List<SixthHierarchy> sixthHierarchyList;
 	
