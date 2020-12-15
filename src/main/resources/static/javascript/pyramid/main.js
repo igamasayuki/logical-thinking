@@ -117,14 +117,15 @@ function addHTML(data) {
 }
 
 $(function(){
-	$(document).on("click", "#check-pyramid", function(){
-		checkPyramid();
-	});
 	$(document).click(function(e){
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		switch (targetId) {
+			case `check-pyramid` :
+				const data = encodeURIComponent(JSON.stringify(createPyramidData(true)));
+				window.open(`${urlUtil.uri}/logicalthinking/pyramidtree?data=${data}`, '_blank')
+				break;
 			case `addEvidence${evidenceParentId}`:
 				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
 				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
@@ -153,37 +154,7 @@ $(function(){
 				}
 				break;
 			case 'submit' :
-				errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
-				errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));
-				const pyramidForm = {
-					frameworkKindId: $('#frameworkKind').val(),
-					frameworkId: $('#framework').val(),
-					conclusion: $('#conclusion').val(),
-					rationaleFormList: []
-				}
-				errors.pyramidError.push(new Utils.Error($('#conclusion').val(), 'conclusion', false, false));
-				// 根拠リストを取得
-				for (let i = 0; i < $('.reason').children('section').length; i++) {
-					const rationaleForm = {
-						word: $(`#word${i}`).val(),
-						explanation: $(`#explanation${i}`).val(),
-						anotherExplanation: $(`#anotherExplanation${i}`).val(),
-						evidenceFormList: [],
-						displayOrder: i + 1,
-					}
-					errors.rationalError.push(new Utils.Error(rationaleForm.explanation, `explanation${i}`, true, false));
-					errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false, false));
-					// 証拠リストを取得
-					for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
-						const evidenceForm = {
-							explanation: $(`#evidence${i}_${j}`).val(),
-							displayOrder: j + 1
-						}
-						errors.evidenceError.push(new Utils.Error(evidenceForm.explanation, `evidence${i}_${j}`, true, false));
-						rationaleForm.evidenceFormList.push(evidenceForm);
-					}
-					pyramidForm.rationaleFormList.push(rationaleForm);
-				}
+				const pyramidForm = createPyramidData(false);
 				if(validation()){
 					$(`#submit_error`).length == 0 ? $(`#submit`).parent().before($("<div id='submit_error' class='row text-danger'>エラー入力項目があります。入力欄上のエラーメッセージをご確認ください</div></br>")) : null;
 					return;
@@ -257,11 +228,45 @@ function validation () {
 	return validatedError;
 }
 
-function checkPyramid(){
-	$.ajax({
-		url: "http://localhost:8080/logical-thinking/mindmap",
-		type: 'get',
-	}).done(function(data){
-        console.log("成功")
-    })
+function createPyramidData(isCreatePyramidTree) {
+	const pyramidForm = {
+		frameworkKindId: $('#frameworkKind').val(),
+		frameworkId: $('#framework').val(),
+		task: $("#task").text(),
+		conclusion: $('#conclusion').val(),
+		rationaleFormList: []
+	}
+	console.log($("#task").text());
+	if(!isCreatePyramidTree){
+		errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
+		errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));
+		errors.pyramidError.push(new Utils.Error($('#conclusion').val(), 'conclusion', false, false));
+	}
+	// 根拠リストを取得
+	for (let i = 0; i < $('.reason').children('section').length; i++) {
+		const rationaleForm = {
+			word: $(`#word${i}`).val(),
+			explanation: $(`#explanation${i}`).val(),
+			anotherExplanation: $(`#anotherExplanation${i}`).val(),
+			evidenceFormList: [],
+			displayOrder: i + 1,
+		}
+		if (!isCreatePyramidTree) {
+			errors.rationalError.push(new Utils.Error(rationaleForm.explanation, `explanation${i}`, true, false));
+			errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false, false));
+		}
+		// 証拠リストを取得
+		for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
+			const evidenceForm = {
+				explanation: $(`#evidence${i}_${j}`).val(),
+				displayOrder: j + 1
+			}
+			if (!isCreatePyramidTree) {
+				errors.evidenceError.push(new Utils.Error(evidenceForm.explanation, `evidence${i}_${j}`, true, false));
+			}
+			rationaleForm.evidenceFormList.push(evidenceForm);
+		}
+		pyramidForm.rationaleFormList.push(rationaleForm);
+	}
+	return pyramidForm;
 }
