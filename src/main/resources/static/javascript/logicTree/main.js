@@ -343,7 +343,7 @@ function createLogicTreeData(){
     return logicTree;
 }
 
-//「第一階層を追加する」の後処理.
+//「第1階層を追加する」の後処理.
 function keyup(thisEle){
     // sectionのnameを取得
     name = $(thisEle).attr('name');
@@ -362,38 +362,62 @@ function createInsistenceOption(){
 		select.append(option);
 		
 		//　各理由の最下層の入力値を選択肢に設定
-		let target = $(`.row2`);
-		target.each(function(){
-			let row3Val = $(this).find(`.row3-input`);
-			if(0 !== row3Val.length){
-				// 最下層が第三階層の場合
-				let anyValueInput = false
-				row3Val.each(function(){
-					let val = $(this).val()
-					if(`` !== val){
-						option = $('<option>', { text: $(this).val(), value:$(this).val() });
-						select.append(option);
-						anyValueInput = true;
-					}
-				});
-				if(!anyValueInput){
-					// 第三階層の入力値が存在しない場合は第二階層の入力値を反映させる。
-					 val = $(this).find(`.row2-input`).val();
-					if(`` !== val){
-						option = $('<option>', { text:val, value:val });
-						select.append(option);
-					}
-				}
-			}else{
-				//　最下層が第二階層の場合
-				let val = $(this).find(`.row2-input`).val();
-				if(`` !== val){
-					option = $('<option>', { text:val, value:val });
-					select.append(option);
-				}
-			}
+		let row2 = $(`.row2`);
+		row2.each(function(){
+            let row3 = $(this).find(`.row3`);
+            let isContinue = createJudgeInsistence(row3, 3, this);
+            if (!isContinue) return true;
+            // 最下層が第三階層の場合
+            row3.each(function(){
+                let row4 = $(this).find(`.row4`);
+                let isContinue = createJudgeInsistence(row4, 4, this);
+                if (!isContinue) return true;
+                row4.each(function(){
+                    let row5 = $(this).find(`.row5`);
+                    let isContinue = createJudgeInsistence(row5, 5, this);
+                    if (!isContinue) return true;
+                    row5.each(function(){
+                        let row6 = $(this).find(`.row6`);
+                        let isContinue = createJudgeInsistence(row6, 6, this);
+                        if (!isContinue) return true;
+                        row6.each(function(){
+                            let row7 = $(this).find(`.row7`);
+                            let isContinue = createJudgeInsistence(row7, 7, this);
+                            if (!isContinue) return true;
+                            row7.each(function(){
+                                let row8 = $(this).find(`.row8`);
+                                let isContinue = createJudgeInsistence(row8, 8, this);
+                                input8Value = createInsistenceValue(this, 8);
+                            });
+                        });
+                    });
+                });
+            });
 		});
 }
+
+function createJudgeInsistence(row, index, target){
+    let isContinue = true;
+    let rowValue = row.find(`.row${index}-input`).val();
+    if(rowValue ==='' || rowValue === undefined){
+        createInsistenceValue (target, index-1);
+        isContinue = false;
+    }
+    return isContinue;
+}
+
+function createInsistenceValue (target, hierarchyIndex){
+    let insertValue = false;
+    let select = $('#insistence');
+    let val = $(target).find(`.row${hierarchyIndex}-input`).val();
+    if(`` !== val){
+        option = $('<option>', { text:val, value:val });
+        select.append(option);
+        insertValue = true;
+    }
+    return insertValue;
+}
+
 
 //原因(理由)/方法のラジオボタンを選択した時.
 function changeClarify(target){
