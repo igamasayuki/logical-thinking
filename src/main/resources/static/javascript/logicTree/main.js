@@ -113,10 +113,11 @@ function addHTML(data){
 }
 
 function createInitailHierarchy(index,currentHierarchyIndex,currentHierarchy, preHierarchyName){
-    currentHierarchyName = preHierarchyName + '_3-' + index;
+    currentHierarchyName = preHierarchyName + `_${currentHierarchyIndex}-` + index;
     value = currentHierarchy.explanation !== null ? currentHierarchy.explanation : ``; 
     hierarchyHTML = createHierarchyHtml(currentHierarchyIndex, currentHierarchyName, value);
     $(`section[name=${preHierarchyName}]`).children(`div[name=add-${currentHierarchyIndex}-hierarchy]`).before(hierarchyHTML);
+    return currentHierarchyName;
 }
 
 $(function(){
