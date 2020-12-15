@@ -16,6 +16,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 </head>
 <body>
+	 
+	<label>
+		<input id="togglePan" type="checkbox" checked>Enable Pan
+	</label>
+    <label>
+    	<input id="toggleZoom" type="checkbox" checked>Enable Zoom
+    </label>
+    
 	<div id="chart-container"></div>
     <script type="text/javascript" src="js/jquery.orgchart.js" th:src="@{/javascript/mindmap/jquery.orgchart.js}"></script>
 	<script type="text/javascript" th:inline="javascript">
@@ -28,7 +36,7 @@
 			const loadJsmind = (logicTree) => {
 				/** 課題部分の作成を行う */
 				const task = createTask(logicTree)
-				/** 子要素(第一,二,三階層)の作成を行う(現状第一のみ) */
+				/** 子要素(第一,二,三階層)の作成を行う */
 				const children = createFirstHierarchy(logicTree.firstHierarchyList)
 				/** マインドマップの作成 */
 			    const data = {
@@ -43,6 +51,14 @@
 			        'direction': 'l2r',
 			        'draggable': true
 			    })
+			    
+			    $('#togglePan').on('click', function() {
+			        oc.setOptions('pan', this.checked);
+			    });
+			      
+			    $('#toggleZoom').on('click', function() {
+			        oc.setOptions('zoom', this.checked);
+			    });
 			}
 		
 			/**
@@ -109,7 +125,7 @@
 			 * @param descriptionType 説明文の種類(1=原因,2=方法)
 			 * @return 課題情報
 			 */
-			const createTask = ({ partnerWants, currentState, descriptionType }) => {
+			const createTask = ({ partnerWants, currentState, descriptionType } = {}) => {
 				const type = descriptionType === '1' ? `この課題の原因にはどのようなものが考えられるか？` : `この課題を解決するにはどのような方法が考えられるか？` ;
 				const taskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
 				return taskSentense
