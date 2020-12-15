@@ -53,7 +53,7 @@ function addHTML(data){
     $('#logicTreeId').val(data.id)
     // 記述用の値(原因 or 方法)を取得
     clarify = $('input[name="clarify"]:checked').parent().text();
-    // 第一階層を追加 (取得した要素分を追加)
+    // 第１階層を追加 (取得した要素分を追加)
 	frameworkId = data.frameworkId;
 	targetFrameworkElements = frameworkElements[frameworkId];
     for (let index = 0; index < data.firstHierarchyList.length; index++) {
@@ -71,13 +71,38 @@ function addHTML(data){
         $('#hierarchy').append(new_list);
 
         // 第二階層を追加
-         //TODO 今, idが入っているため, このif文は意味がない
         for(let index2 = 0; index2 < firstHierarchy.secondHierarchyList.length; index2++){
             secondHierarchy = firstHierarchy.secondHierarchyList[index2];
-            createInitailHierarchy(index2, 2, secondHierarchy, FHname);
+            secondName = createInitailHierarchy(index2, 2, secondHierarchy, FHname);
+            // 第三階層を追加
             for(let index3 = 0; index3 < secondHierarchy.thirdHierarchyList.length; index3++){
-                thirdHierarchy = secondHierarchy.thirdHierarchyList[index3]
-                createInitailHierarchy(index3, 3, thirdHierarchy, shName);
+                thirdHierarchy = secondHierarchy.thirdHierarchyList[index3];
+                thirdName = createInitailHierarchy(index3, 3, thirdHierarchy, secondName);
+                // 第四階層を追加
+                for(let index4 = 0; index4 < thirdHierarchy.fourthHierarchyList.length; index4++){
+                    fourthHierarchy = thirdHierarchy.fourthHierarchyList[index4]
+                    fourthName = createInitailHierarchy(index4, 4, fourthHierarchy, thirdName);
+                    // 第5階層を追加
+                    for(let index5 = 0; index5 < fourthHierarchy.fifthHierarchyList.length; index5++){
+                        fifthHierarchy = fourthHierarchy.fifthHierarchyList[index5]
+                        fifthName = createInitailHierarchy(index5, 5, fifthHierarchy, fourthName);
+                        // 第6階層を追加
+                        for(let index6 = 0; index6 < fifthHierarchy.sixthHierarchyList.length; index6++){
+                            sixthHierarchy = fifthHierarchy.sixthHierarchyList[index6]
+                            sixthName = createInitailHierarchy(index6, 6, sixthHierarchy, fifthName);
+                            // 第7階層を追加
+                            for(let index7 = 0; index7 < sixthHierarchy.seventhHierarchyList.length; index7++){
+                                seventhHierarchy = sixthHierarchy.seventhHierarchyList[index7]
+                                seventhName = createInitailHierarchy(index7, 7, seventhHierarchy, sixthName);
+                                // 第8階層を追加
+                                for(let index8 = 0; index8 < seventhHierarchy.eighthHierarchyList.length; index8++){
+                                    eighthHierarchy = seventhHierarchy.eighthHierarchyList[index8]
+                                    eightName = createInitailHierarchy(index8, 8, eighthHierarchy, seventhName);
+                                }
+                            }
+                        }
+                    }
+                 }
              }
          }
       }
