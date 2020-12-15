@@ -493,14 +493,14 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
         	fwId = 'fw' + targetFrameworkElementId;
         	index = $('.fw').length
         	fhId = '1-' + targetFrameworkElementId;
-            copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word;
+            // copyAnotherWord = firstHierarchy.anotherWord !== `` ? firstHierarchy.anotherWord : firstHierarchy.word;
             name = '1-' + $('.fw').length;
             considerArea = '<br><div><input onkeyup="keyup(this)" type="text" name="' + name + '">' + 
             'について検討します</div>';
 
             
             //第1階層を設定
-            addHtml = createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, "", considerArea);
+            addHtml = createFirstHierarchyHtml(fwId, index, fhId, "", "", considerArea);
             $(selectedId).parent().before(addHtml);
             
             // 第二階層を設定
@@ -578,7 +578,7 @@ function createAnotherWordHtml(frameWorkElement, index, anotherWord){
 // 第1階層追加ボタンを作成
 function createAddFHButton(){
 	return addFH = '<div class="row">' + 
-	'<button onclick="changeHierarchy(this, `add-first-hierarchy`, ``)" type="button" class="btn btn-danger col-3 mb-5">第1階層を追加</button>' + 
+	'<button onclick="changeHierarchy(this, `add-1-hierarchy`, ``)" type="button" class="btn btn-danger col-3 mb-5">第1階層を追加</button>' + 
 	'</div>';
 }
 
