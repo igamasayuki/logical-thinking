@@ -261,67 +261,67 @@ function createLogicTreeData(){
 	// 第1階層の数を取得
     for(let index = 0; index < $('.fw').length; index++){
         // ex. 1-0, 1-1 ...
-        firstHName = '1-' + index;
+        firstHierarchyName = '1-' + index;
         // 第1階層の値を取得
         firstHierarchy = {
-            word : $(`section[name=${firstHName}] font[name=word]`).text(),
+            word : $(`section[name=${firstHierarchyName}] font[name=word]`).text(),
             //name変更位置
-            anotherWord : $(`section[name=${firstHName}] input`).val(),
+            anotherWord : $(`section[name=${firstHierarchyName}] input`).val(),
             logicTreeId : 0,
             displayOrder : index + 1,
             secondHierarchyList : []
         }
         // 第二階層の数を取得 (第1階層で取得したnameの直接の子要素のsectionの数を取得)
         // childrenの使用理由: 同列階層のsectionを除くため
-        for(let index2 = 0; index2 < $('section[name=' + firstHName + ']').children('section').length; index2++){
+        for(let index2 = 0; index2 < $('section[name=' + firstHierarchyName + ']').children('section').length; index2++){
             // ex. fh0_sh0, fh0_sh1 ...
-            sHName = firstHName + '_2-' + index2;
+            secondHirarchyName = firstHierarchyName + '_2-' + index2;
             // 第二階層の値を取得
             secondHierarchy = {
-                explanation : $('section[name=' + sHName + '] input').val(),
+                explanation : $('section[name=' + secondHirarchyName + '] input').val(),
                 displayOrder : index2 + 1,
                 thirdHierarchyList : []
             }
             // 第三階層の数を取得 (第二階層で取得したnameの子要素のsectionの数を取得)
-            for(let index3 = 0; index3 < $('section[name=' + sHName + '] section').length; index3++){
-                tHName = sHName + '_3-' + index3;
+            for(let index3 = 0; index3 < $('section[name=' + secondHirarchyName + ']').children('section').length; index3++){
+                thirdHierarchyName = secondHirarchyName + '_3-' + index3;
                 thirdHierarchy = {
-	                explanation : $('section[name=' + tHName + '] input').val(),
+	                explanation : $('section[name=' + thirdHierarchyName + '] input').val(),
                     displayOrder : index3 + 1,
                     fourthHierarchyList:[]
                 }
-                for(let index4 = 0; index4 < $('section[name=' + tHName + '] section').length; index4++){
-                    fourthHName = tHName + '_4-' + index4;
+                for(let index4 = 0; index4 < $('section[name=' + thirdHierarchyName + ']').children('section').length; index4++){
+                    fourthHierarchyName = thirdHierarchyName + '_4-' + index4;
                     fourthHierarchy = {
-                        explanation : $('section[name=' + fourthHName + '] input').val(),
+                        explanation : $('section[name=' + fourthHierarchyName + '] input').val(),
                         displayOrder : index4 + 1,
                         fifthHierarchyList:[]
                     }
-                    for(let index5 = 0; index5 < $('section[name=' + fourthHName + '] section').length; index5++){
-                        fifthHName = fourthHName + '_5-' + index5;
+                    for(let index5 = 0; index5 < $('section[name=' + fourthHierarchyName + ']').children('section').length; index5++){
+                        fifthHierarchyName = fourthHierarchyName + '_5-' + index5;
                         fifthHierarchy = {
-                            explanation : $('section[name=' + fifthHName + '] input').val(),
+                            explanation : $('section[name=' + fifthHierarchyName + '] input').val(),
                             displayOrder : index5 + 1,
                             sixthHierarchyList:[]
                         }
-                        for(let index6 = 0; index6 < $('section[name=' + fifthHName + '] section').length; index6++){
-                            sixthHName = fifthHName + '_6-' + index6;
+                        for(let index6 = 0; index6 < $('section[name=' + fifthHierarchyName + ']').children('section').length; index6++){
+                            sixthHierarchyName = fifthHierarchyName + '_6-' + index6;
                             sixthHierarchy = {
-                                explanation : $('section[name=' + sixthHName + '] input').val(),
+                                explanation : $('section[name=' + sixthHierarchyName + '] input').val(),
                                 displayOrder : index6 + 1,
                                 seventhHierarchyList:[]
                             }
-                            for(let index7 = 0; index7 < $('section[name=' + sixthHName + '] section').length; index7++){
-                                sevenHName = sixthHName + '_7-' + index7;
+                            for(let index7 = 0; index7 < $('section[name=' + sixthHierarchyName + ']').children('section').length; index7++){
+                                seventhHierarchyName = sixthHierarchyName + '_7-' + index7;
                                 seventhHierarchy = {
-                                    explanation : $('section[name=' + sevenHName + '] input').val(),
+                                    explanation : $('section[name=' + seventhHierarchyName + '] input').val(),
                                     displayOrder : index7 + 1,
                                     eighthHierarchyList:[]
                                 }
-                                for(let index8 = 0; index8 < $('section[name=' + sevenHName + '] section').length; index8++){
-                                    eightHName = sevenHName + '_8-' + index8;
+                                for(let index8 = 0; index8 < $('section[name=' + seventhHierarchyName + ']').children('section').length; index8++){
+                                    eightHierarchyName = seventhHierarchyName + '_8-' + index8;
                                     eighthHierarchy = {
-                                        explanation : $('section[name=' + eightHName + '] input').val(),
+                                        explanation : $('section[name=' + eightHierarchyName + '] input').val(),
                                         displayOrder : index8 + 1
                                     }
                                     seventhHierarchy.eighthHierarchyList.push(eighthHierarchy)
