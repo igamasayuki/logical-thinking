@@ -2,7 +2,6 @@ package jp.co.runy.logical_thinking.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import jp.co.runy.logical_thinking.form.ExampleForm;

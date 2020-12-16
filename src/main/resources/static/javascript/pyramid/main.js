@@ -5,7 +5,15 @@ const pyramidUrlUtil = new Utils.PyramidUrl;
 let frameworks;
 let frameworkElements;
 let oc = $('#chart-container').orgchart({
-	'data': "",
+	'data': {
+		name: "課題",
+		title: $("#task").text(),
+		children: [{
+			name: "結論",
+			title: $("#conclusion").val(),
+			children: []
+		}]
+	},
 	'nodeContent': 'title',
 	'draggable': true,
 	'pan': true,
@@ -52,7 +60,7 @@ function createPyramidFigure () {
 		title : $("#task").text(),
 		children : [{
 			name : "結論",
-			title : $("#conclesion").val(),
+			title : $("#conclusion").val(),
 			children : []
 		}]
 	};
@@ -266,13 +274,7 @@ $(function () {
 
 		// モーダルをウィンドウの中央に配置する
 		function modalResize() {
-			var w = $(window).width();
-			var h = $(window).height();
-
-			var x = (w - $(modal).outerWidth(true)) / 2;
-			var y = (h - $(modal).outerHeight(true)) / 2;
-
-			$(modal).css({ 'left': x + 'px', 'top': y + 'px' });
+			$(modal).css({ 'left': '10px', 'right': '10px', 'top': '10px', 'bottom': '10px' });
 		}
 
 		// modalResizeを実行

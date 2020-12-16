@@ -15,7 +15,7 @@ body {
   display: inline-block;
   top: 10px;
   left: 10px;
-  height: 95%;
+  height: 90%;
   width: calc(100% - 24px);
   border: 2px dashed #aaa;
   border-radius: 5px;
