@@ -395,13 +395,20 @@ function createInsistenceOption(){
 		});
 }
 
-function createJudgeInsistence(row, index, target){
+function createJudgeInsistence(rows, index, target){
     let isContinue = true;
-    let rowValue = row.find(`.row${index}-input`).val();
-    if(rowValue ==='' || rowValue === undefined){
+    if(0 === rows.length){
         createInsistenceValue (target, index-1);
-        isContinue = false;
+		isContinue = false;
     }
+    rows.each(function(){
+        let rowValue = $(this).find(`.row${index}-input`).val();
+        // 最n階層に入力値がなかったら、n-1階層の値で主張を作成します。
+		if(rowValue ==='' || rowValue === undefined){
+			createInsistenceValue (target, index-1);
+			isContinue = false;
+		}
+    })
     return isContinue;
 }
 
@@ -545,11 +552,11 @@ function createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkE
     `に関する具体的な【<font class="clarify">${clarify}</font>】を挙げてください` + 
     `</label>` +
     `<input type="hidden" value="${copyAnotherWord}">` + 
-    `<button type="button" onclick="changeHierarchy($(this), "delete", "","")" class="btn btn-danger col-1">削除</button>` + 
+    `<button type="button" onclick="changeHierarchy($(this),  'delete', '','')" class="btn btn-danger col-1">削除</button>` + 
     `</div>` +
     // ボタンの追加
     `<div name="add-2-hierarchy" class="row">` + 
-    `<button onclick="changeHierarchy(this, 'add', '1-${fhId}_2-${index}', 2)" class="btn col-3 mb-2 row2-color text-white">第2階層を追加</button>` + 
+    `<button onclick="changeHierarchy(this, 'add', '1-${index}', 2)" class="btn col-3 mb-2 row2-color text-white">第2階層を追加</button>` + 
     `</div>` + 
     `</section>`;
      return addFirstHierarchyHtml;
