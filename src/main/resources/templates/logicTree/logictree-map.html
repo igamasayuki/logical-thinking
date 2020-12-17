@@ -60,12 +60,111 @@
 			        oc.setOptions('zoom', this.checked);
 			    });
 			}
+			
+			/**
+			 * 第8階層リストの作成を行う.
+			 * 
+			 * @param eighthHierarchyList 第8階層リスト
+			 * @return 第8階層リスト
+			 */
+			const createEighthHierarchy = (eighthHierarchyList) => {
+				eighthHierarchyList = eighthHierarchyList.filter((eighthHierarchy) => {
+					return !!eighthHierarchy.explanation
+				})
+				const eighthHierarchyListForDisplay = eighthHierarchyList.map((eighthHierarchy) => {
+					return {
+						"name": "第8階層",
+						"title": `${eighthHierarchy.explanation}`
+					}
+				})
+				return eighthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第7階層リストの作成を行う.
+			 * 
+			 * @param seventhHierarchyList 第7階層リスト
+			 * @return 第7階層リスト
+			 */
+			const createSeventhHierarchy = (seventhHierarchyList) => {
+				seventhHierarchyList = seventhHierarchyList.filter((seventhHierarchy) => {
+					return !!seventhHierarchy.explanation
+				})
+				const seventhHierarchyListForDisplay = seventhHierarchyList.map((seventhHierarchy) => {
+					return {
+						"name": "第7階層",
+						"title": `${seventhHierarchy.explanation}`,
+						"children": createEighthHierarchy(seventhHierarchy.eighthHierarchyList)
+					}
+				})
+				return seventhHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第6階層リストの作成を行う.
+			 * 
+			 * @param sixthHierarchyList 第6階層リスト
+			 * @return 第6階層リスト
+			 */
+			const createSixthHierarchy = (sixthHierarchyList) => {
+				sixthHierarchyList = sixthHierarchyList.filter((sixthHierarchy) => {
+					return !!sixthHierarchy.explanation
+				})
+				const sixthHierarchyListForDisplay = sixthHierarchyList.map((sixthHierarchy) => {
+					return {
+						"name": "第6階層",
+						"title": `${sixthHierarchy.explanation}`,
+						"children": createSeventhHierarchy(sixHierarchy.seventhHierarchyList)
+					}
+				})
+				return sixthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第5階層リストの作成を行う.
+			 * 
+			 * @param fifthHierarchyList 第5階層リスト
+			 * @return 第5階層リスト
+			 */
+			const createFifthHierarchy = (fifthHierarchyList) => {
+				fifthHierarchyList = fifthHierarchyList.filter((fifthHierarchy) => {
+					return !!fifthHierarchy.explanation
+				})
+				const fifthHierarchyListForDisplay = fifthHierarchyList.map((fifthHierarchy) => {
+					return {
+						"name": "第5階層",
+						"title": `${fifthHierarchy.explanation}`,
+						"children": createSixthHierarchy(fifthHierarchy.sixthHierarchyList)
+					}
+				})
+				return fifthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第4階層リストの作成を行う.
+			 * 
+			 * @param fourthHierarchyList 第4階層リスト
+			 * @return 第4階層リスト
+			 */
+			const createFourthHierarchy = (fourthHierarchyList) => {
+				fourthHierarchyList = fourthHierarchyList.filter((fourthHierarchy) => {
+					return !!fourthHierarchy.explanation
+				})
+				const fourthHierarchyListForDisplay = fourthHierarchyList.map((fourthHierarchy) => {
+					return {
+						"name": "第4階層",
+						"title": `${fourthHierarchy.explanation}`,
+						"children": createFifthHierarchy(fourthHierarchy.fifthHierarchyList)
+					}
+				})
+				return fourthHierarchyListForDisplay
+			}
 		
 			/**
-			 * 第三階層リストの作成を行う.
+			 * 第3階層リストの作成を行う.
 			 * 
-			 * @param thirdHierarchyList 第三階層リスト
-			 * @return 第三階層リスト
+			 * @param thirdHierarchyList 第3階層リスト
+			 * @return 第3階層リスト
 			 */
 			const createThirdHierarchy = (thirdHierarchyList) => {
 				thirdHierarchyList = thirdHierarchyList.filter((thirdHierarchy) => {
@@ -74,17 +173,18 @@
 				const thirdHierarchyListForDisplay = thirdHierarchyList.map((thirdHierarchy) => {
 					return {
 						"name": "第3階層",
-						"title": `${thirdHierarchy.explanation}`
+						"title": `${thirdHierarchy.explanation}`,
+						"children": createFourthHierarchy(thirdHierarchy.fourthHierarchyList)
 					}
 				})
 				return thirdHierarchyListForDisplay
 			}
 			
 			/**
-			 * 第二階層リストの作成を行う.
+			 * 第2階層リストの作成を行う.
 			 * 
-			 * @param secondHierarchyList 第二階層リスト
-			 * @return 第二階層リスト
+			 * @param secondHierarchyList 第2階層リスト
+			 * @return 第2階層リスト
 			 */
 			const createSecondHierarchy = (secondHierarchyList) => {
 				secondHierarchyList = secondHierarchyList.filter((secondHierarchy) => {
@@ -101,13 +201,13 @@
 			}
 			
 			/**
-			 * ロジックツリーの子要素を追加する.
-			 *  * 
-			 * @param firstHierarchyList 第一階層情報リスト
-			 * @return 第一階層情報
+			 * 第1階層リストの作成を行う.
+			 *  
+			 * @param firstHierarchyList 第1階層情報リスト
+			 * @return 第1階層情報
 			 */
 			const createFirstHierarchy = (firstHierarchyList) => {
-				/** 第一階層のマインドマップを作成する */
+				/** 第1階層のマインドマップを作成する */
 				const firstHierarchyListForDisplay = firstHierarchyList.map((firstHierarchy) => {
 					return {"name": `${firstHierarchy.word}`, 
 							  "title": `${firstHierarchy.anotherWord}`, 
