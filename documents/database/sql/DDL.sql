@@ -69,6 +69,56 @@ create table if not exists third_hierarchies (
     on delete cascade
     on update cascade
 );
+-- 第四階層
+create table if not exists fourth_hierarchies (
+    id serial primary key,
+    explanation text,
+    third_hierarchy_id integer,
+    display_order integer,
+    foreign key (third_hierarchy_id) references third_hierarchies(id)
+    on delete cascade
+    on update cascade
+);
+-- 第五階層
+create table if not exists fifth_hierarchies (
+    id serial primary key,
+    explanation text,
+    fourth_hierarchy_id integer,
+    display_order integer,
+    foreign key (fourth_hierarchy_id) references fourth_hierarchies(id)
+    on delete cascade
+    on update cascade
+);
+-- 第六階層
+create table if not exists sixth_hierarchies (
+    id serial primary key,
+    explanation text,
+    fifth_hierarchy_id integer,
+    display_order integer,
+    foreign key (fifth_hierarchy_id) references fifth_hierarchies(id)
+    on delete cascade
+    on update cascade
+);
+-- 第七階層
+create table if not exists seventh_hierarchies (
+    id serial primary key,
+    explanation text,
+    sixth_hierarchy_id integer,
+    display_order integer,
+    foreign key (sixth_hierarchy_id) references sixth_hierarchies(id)
+    on delete cascade
+    on update cascade
+);
+-- 第八階層
+create table if not exists eighth_hierarchies (
+    id serial primary key,
+    explanation text,
+    seventh_hierarchy_id integer,
+    display_order integer,
+    foreign key (seventh_hierarchy_id) references seventh_hierarchies(id)
+    on delete cascade
+    on update cascade
+);
 -- 
 create table if not exists pyramids (
     id serial primary key,

@@ -4,6 +4,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/logical-thinking
     username: postgres
     password: postgres
+  jmx:
+    default-domain: lt
+
+#server:
+#  servlet:
+#    context-path: /lt
+    
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

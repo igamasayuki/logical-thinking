@@ -35,14 +35,13 @@
 
         <div class="alert alert-info" role="alert">
           <h4 class="alert-heading">今回の課題</h4>
-          「[[${logicTree.partnerWants}]]」に対して
-          「[[${logicTree.currentState}]]」のギャップが課題です
-          <div th:if="${logicTree.descriptionType==0}">【原因を選んだ場合→】この課題に対してどの原因が最も影響していると考えられるか？</div>  
-          <div th:if="${logicTree.descriptionType==1}">【方法を選んだ場合→】この課題に対してどの方法が最適と考えられるか？</div>
+          <div id="task">
+           「[[${logicTree.partnerWants}]]」に対して
+           「[[${logicTree.currentState}]]」のギャップが課題です
+           <div th:if="${logicTree.descriptionType==0}">この課題に対してどの原因が最も影響していると考えられるか？</div>  
+           <div th:if="${logicTree.descriptionType==1}">この課題に対してどの方法が最適と考えられるか？</div>
+          </div>
         </div>
-
-        
-
       </section>
 
       <section class="col-12">
