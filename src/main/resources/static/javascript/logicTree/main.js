@@ -206,7 +206,6 @@ function register(){
     
     // json化
     var param = JSON.stringify(logicTree);
-    console.log(param)
     $.ajax({
         url: URL + '/upsert',
         type: 'post',
@@ -512,7 +511,7 @@ function changeHierarchy(selectedId, option, name, hierarchyIndex){
             break;
         case 'add':
             // 各階層を追加します。
-            hierarchyName = name + `_${hierarchyIndex}-` + $('.fw[name=' + name + '] section').length;
+            hierarchyName = name + `_${hierarchyIndex}-` + $('section[name=' + name + ']').children('section').length;
             addHtml =  createHierarchyHtml(hierarchyIndex, hierarchyName, '');
             $(selectedId).parent().before(addHtml);
             break;
@@ -550,7 +549,7 @@ function createFirstHierarchyHtml(fwId, index, fhId, copyAnotherWord, frameWorkE
     `</div>` +
     // ボタンの追加
     `<div name="add-2-hierarchy" class="row">` + 
-    `<button onclick="changeHierarchy(this, 'add', 'fh${index}' '2')" class="btn col-3 mb-2 row2-color text-white">第2階層を追加</button>` + 
+    `<button onclick="changeHierarchy(this, 'add', '1-${fhId}_2-${index}', 2)" class="btn col-3 mb-2 row2-color text-white">第2階層を追加</button>` + 
     `</div>` + 
     `</section>`;
      return addFirstHierarchyHtml;
