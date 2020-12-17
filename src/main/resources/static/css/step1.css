@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.row-margin-left{
+	margin-left: 10px;
+}
+.row2-color{
+	background-color: blue;
+}
+.row3-color{
+	background-color: gray;
+}
+.row4-color{
+	background-color:green;
+}
+.row5-color{
+	background-color: orange;
+}
+.row6-color{
+	background-color: purple;
+}
+.row7-color{
+	background-color: skyblue;
+}
+.row8-color{
+	background-color: magenta;
+}
