@@ -230,7 +230,7 @@ function register(){
 }
 
 /**
- * マインドマップページに遷移する.
+ * ボタンクリック後にマインドマップページに遷移する.
  */
 const createLogicTreeMap = () => {    
     //ロジックツリー(第1階層から第三階層までの作成)の作成を行う.
@@ -240,7 +240,10 @@ const createLogicTreeMap = () => {
     //エンコード
     const encoded = encodeURIComponent(param)
     //エンコードしたJSONをparamとして遷移させる
-    location.href= uri + `/logicalthinking/mindmap?json=${encoded}`;
+    window.open(
+	  `${uri}/logicalthinking/logictree-map?json=${encoded}`,
+	  '_blank' //別タブ表示
+	)
 }
 
 //登録するロジックツリーの情報を取得します.

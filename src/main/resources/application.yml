@@ -23,4 +23,6 @@ logging:
           logical_thinking:
             mapper: DEBUG
 
+
+
 #  mapper-locations: classpath*:/jp/co/runy/logical_thinking/mapper/*.xml

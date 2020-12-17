@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<meta charset="UTF-8">
+	<title>たつや学長の誰でも完璧メール</title>
+	<script th:src="@{/jquery/jquery-3.5.1.min.js}"></script>
+    <!-- Bootstrap CSS-->
+	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+	<!-- for org chart -->
+	<link rel="stylesheet" href="css/jquery.orgchart.css" th:href="@{/css/jquery.orgchart.css}">
+    <link rel="stylesheet" href="css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="css/logictree.css" th:href="@{/css/logictree.css}">
+	<!-- <link rel="text/javascript" th:href="@{/bootstrap/js/bootstrap.min.js}"> -->
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- <link rel="text/javascript" th:href="@{/jquery/jquery-3.5.1.min.js}"> -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+</head>
+<body>
+	 
+	<label>
+		<input id="togglePan" type="checkbox" checked>Enable Pan
+	</label>
+    <label>
+    	<input id="toggleZoom" type="checkbox" checked>Enable Zoom
+    </label>
+    
+	<div id="chart-container"></div>
+    <script type="text/javascript" src="js/jquery.orgchart.js" th:src="@{/javascript/mindmap/jquery.orgchart.js}"></script>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+			/**
+			 * ロジカルツリー図の作成を行う.
+			 * 
+			 * @param logicTree ロジックツリー情報
+			 */
+			const loadJsmind = (logicTree) => {
+				/** 課題部分の作成を行う */
+				const task = createTask(logicTree)
+				/** 子要素(第一,二,三階層)の作成を行う */
+				const children = createFirstHierarchy(logicTree.firstHierarchyList)
+				/** マインドマップの作成 */
+			    const data = {
+			    	'name': '課題',
+			  	    'title': `${task}`,
+			  	    children
+			    }
+				
+			    const oc = $('#chart-container').orgchart({
+			        'data' : data,
+			        'nodeContent': 'title',
+			        'direction': 'l2r',
+			        'draggable': true
+			    })
+			    
+			    $('#togglePan').on('click', function() {
+			        oc.setOptions('pan', this.checked);
+			    });
+			      
+			    $('#toggleZoom').on('click', function() {
+			        oc.setOptions('zoom', this.checked);
+			    });
+			}
+			
+			/**
+			 * 第8階層リストの作成を行う.
+			 * 
+			 * @param eighthHierarchyList 第8階層リスト
+			 * @return 第8階層リスト
+			 */
+			const createEighthHierarchy = (eighthHierarchyList) => {
+				eighthHierarchyList = eighthHierarchyList.filter((eighthHierarchy) => {
+					return !!eighthHierarchy.explanation
+				})
+				const eighthHierarchyListForDisplay = eighthHierarchyList.map((eighthHierarchy) => {
+					return {
+						"name": "第8階層",
+						"title": `${eighthHierarchy.explanation}`
+					}
+				})
+				return eighthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第7階層リストの作成を行う.
+			 * 
+			 * @param seventhHierarchyList 第7階層リスト
+			 * @return 第7階層リスト
+			 */
+			const createSeventhHierarchy = (seventhHierarchyList) => {
+				seventhHierarchyList = seventhHierarchyList.filter((seventhHierarchy) => {
+					return !!seventhHierarchy.explanation
+				})
+				const seventhHierarchyListForDisplay = seventhHierarchyList.map((seventhHierarchy) => {
+					return {
+						"name": "第7階層",
+						"title": `${seventhHierarchy.explanation}`,
+						"children": createEighthHierarchy(seventhHierarchy.eighthHierarchyList)
+					}
+				})
+				return seventhHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第6階層リストの作成を行う.
+			 * 
+			 * @param sixthHierarchyList 第6階層リスト
+			 * @return 第6階層リスト
+			 */
+			const createSixthHierarchy = (sixthHierarchyList) => {
+				sixthHierarchyList = sixthHierarchyList.filter((sixthHierarchy) => {
+					return !!sixthHierarchy.explanation
+				})
+				const sixthHierarchyListForDisplay = sixthHierarchyList.map((sixthHierarchy) => {
+					return {
+						"name": "第6階層",
+						"title": `${sixthHierarchy.explanation}`,
+						"children": createSeventhHierarchy(sixthHierarchy.seventhHierarchyList)
+					}
+				})
+				return sixthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第5階層リストの作成を行う.
+			 * 
+			 * @param fifthHierarchyList 第5階層リスト
+			 * @return 第5階層リスト
+			 */
+			const createFifthHierarchy = (fifthHierarchyList) => {
+				fifthHierarchyList = fifthHierarchyList.filter((fifthHierarchy) => {
+					return !!fifthHierarchy.explanation
+				})
+				const fifthHierarchyListForDisplay = fifthHierarchyList.map((fifthHierarchy) => {
+					return {
+						"name": "第5階層",
+						"title": `${fifthHierarchy.explanation}`,
+						"children": createSixthHierarchy(fifthHierarchy.sixthHierarchyList)
+					}
+				})
+				return fifthHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第4階層リストの作成を行う.
+			 * 
+			 * @param fourthHierarchyList 第4階層リスト
+			 * @return 第4階層リスト
+			 */
+			const createFourthHierarchy = (fourthHierarchyList) => {
+				fourthHierarchyList = fourthHierarchyList.filter((fourthHierarchy) => {
+					return !!fourthHierarchy.explanation
+				})
+				const fourthHierarchyListForDisplay = fourthHierarchyList.map((fourthHierarchy) => {
+					return {
+						"name": "第4階層",
+						"title": `${fourthHierarchy.explanation}`,
+						"children": createFifthHierarchy(fourthHierarchy.fifthHierarchyList)
+					}
+				})
+				return fourthHierarchyListForDisplay
+			}
+		
+			/**
+			 * 第3階層リストの作成を行う.
+			 * 
+			 * @param thirdHierarchyList 第3階層リスト
+			 * @return 第3階層リスト
+			 */
+			const createThirdHierarchy = (thirdHierarchyList) => {
+				thirdHierarchyList = thirdHierarchyList.filter((thirdHierarchy) => {
+					return !!thirdHierarchy.explanation
+				})
+				const thirdHierarchyListForDisplay = thirdHierarchyList.map((thirdHierarchy) => {
+					return {
+						"name": "第3階層",
+						"title": `${thirdHierarchy.explanation}`,
+						"children": createFourthHierarchy(thirdHierarchy.fourthHierarchyList)
+					}
+				})
+				return thirdHierarchyListForDisplay
+			}
+			
+			/**
+			 * 第2階層リストの作成を行う.
+			 * 
+			 * @param secondHierarchyList 第2階層リスト
+			 * @return 第2階層リスト
+			 */
+			const createSecondHierarchy = (secondHierarchyList) => {
+				secondHierarchyList = secondHierarchyList.filter((secondHierarchy) => {
+					return !!secondHierarchy.explanation
+				})
+				const secondHierarchyForDisplay = secondHierarchyList.map((secondHierarchy) => {
+						return {
+							"name": "第2階層",
+							"title": `${secondHierarchy.explanation}`,
+						    "children": createThirdHierarchy(secondHierarchy.thirdHierarchyList)
+						}						
+				})
+				return secondHierarchyForDisplay
+			}
+			
+			/**
+			 * 第1階層リストの作成を行う.
+			 *  
+			 * @param firstHierarchyList 第1階層情報リスト
+			 * @return 第1階層情報
+			 */
+			const createFirstHierarchy = (firstHierarchyList) => {
+				/** 第1階層のマインドマップを作成する */
+				const firstHierarchyListForDisplay = firstHierarchyList.map((firstHierarchy) => {
+					return {"name": `${firstHierarchy.word}`, 
+							  "title": `${firstHierarchy.anotherWord}`, 
+							  "children": createSecondHierarchy(firstHierarchy.secondHierarchyList)
+					}
+				});
+				return firstHierarchyListForDisplay
+			}
+			
+			/**
+			 * ロジックツリー課題部分の作成を行う.
+			 * 
+			 * @param partnerWants 求めるもの
+			 * @param currentState 現状
+			 * @param descriptionType 説明文の種類(1=原因,2=方法)
+			 * @return 課題情報
+			 */
+			const createTask = ({ partnerWants, currentState, descriptionType } = {}) => {
+				const type = descriptionType === '1' ? `この課題の原因にはどのようなものが考えられるか？` : `この課題を解決するにはどのような方法が考えられるか？` ;
+				const taskSentense = `${partnerWants}に対して${currentState}のギャップが課題です。${type}`;
+				return taskSentense
+			}
+			
+			/** 入力した第一階層リストの取得 */
+			let firstHierarchyList = /*[[ ${logicTree.firstHierarchyList} ]]*/
+			
+			/** 言い換えがnull以外でない項目のみ表示を行う */
+		    firstHierarchyList = firstHierarchyList.filter((firstHierarchy) => {
+				return firstHierarchy.anotherWord !== null
+			})
+		
+			/** ロジカルツリーの中身作成 */
+			const logicTree = {
+				partnerWants : /*[[ 「 + ${logicTree.partnerWants} + 」 ]]*/,
+				currentState : /*[[ 「 + ${logicTree.currentState} + 」 ]]*/,
+				descriptionType : /*[[ ${logicTree.descriptionType} ]]*/,
+				firstHierarchyList
+			}	
+			loadJsmind(logicTree)	
+		/*]]>*/
+	</script>
+</body>
+</html>
