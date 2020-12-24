@@ -1228,7 +1228,8 @@
         $nodeDiv.append(opts.nodeTemplate(data));
       } else {
         $nodeDiv.append('<div class="title">' + data[opts.nodeTitle] + '</div>')
-          .append(typeof opts.nodeContent !== 'undefined' ? '<div class="content">' + (data[opts.nodeContent] || '') + '</div>' : '');
+        //tooltip追加部分
+          .append(typeof opts.nodeContent !== 'undefined' ? '<div class="content" data-toggle="tooltip" data-placement="right" title=' + (data[opts.nodeContent] || '') + '>' + (data[opts.nodeContent] || '') + '</div>' : '');
       }
       //
       var nodeData = $.extend({}, data);
