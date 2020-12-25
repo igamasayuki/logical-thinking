@@ -120,7 +120,7 @@ function createInitailHierarchy(index,currentHierarchyIndex,currentHierarchy, pr
     return currentHierarchyName;
 }
 
-$(function(){
+$(function(){	
 	// 主張の選択肢を追加
 	$(document).on("blur", ".row2", function(){
 		createInsistenceOption();
@@ -157,6 +157,13 @@ $(function(){
     // class="clarify"に対して対象の文言をhtmlで追加
     $('input[name="clarify"]').change(function () {
     	changeClarify(this);
+    	if ($(this).val() === '1') {
+    		$('#howtree').css('display', 'none');
+    		$('#whytree').css('display', '');
+    	} else {
+    		$('#howtree').css('display', '');
+    		$('#whytree').css('display', 'none');
+    	}
     });
       // name="fw"の値が変更されたらイベント発生
       // ドロップダウンの値が変更されたら, 変更後の値に対応したframeworkElementを取得
