@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.sample_image {
+	text-align: center;
+}
+
+#sample_image {
+	width: 78%;
+}
