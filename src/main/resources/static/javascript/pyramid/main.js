@@ -50,8 +50,6 @@ function addRationale(rationale) {
 			anotherExplanation: "",
 			evidenceList: [{explanation: ""}]
 		}]
-		manualInput = `<label>根拠を挙げる要素を入力してください</label>` +
-					`<input id='manualInput' class='form-control' type='text'/>`
 	}
 	for (let index = 0; index < rationale.length; index++) {
 		const rationaleObject = {
@@ -115,6 +113,8 @@ function addRationale(rationale) {
 			'</section>'
 		$('.reason').append($(new_section));
 	}
+	const addButton = '<button id="add_reason" type="button">追加</button>'
+	$('.reason').append($(addButton));
 }
 
 function addHTML(data) {
