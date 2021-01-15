@@ -12,6 +12,10 @@ let errors = {
 	evidenceError: [],
 }
 
+function test() {
+	console.log('test');
+}
+
 $(document).ready(function () {
 	$.ajax({
 		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
@@ -35,12 +39,30 @@ $(document).ready(function () {
 
 function addRationale(rationale) {
 	$('.reason > section').remove();
+	let manualInput = ''
+	if ($('#framework option:selected').text() === 'その他(手動入力)') {
+		rationale = [{
+			element: "",
+			frameworkId: null , 
+			id: null,
+			word: "",
+			explanation: "",
+			anotherExplanation: "",
+			evidenceList: [{explanation: ""}]
+		}]
+		manualInput = `<label>根拠を挙げる要素を入力してください</label>` +
+					`<input id='manualInput' class='form-control' type='text'/>`
+	}
 	for (let index = 0; index < rationale.length; index++) {
 		const rationaleObject = {
 			word: rationale[index].word == undefined ? rationale[index].element : rationale[index].word,
 			explanation: rationale[index].explanation == undefined ? "" : rationale[index].explanation,
 			anotherExplanation: rationale[index].anotherExplanation == undefined ? "" : rationale[index].anotherExplanation,
 			evidenceList: rationale[index].evidenceList == undefined ? [{explanation: ""}] : rationale[index].evidenceList,
+		}
+		if ($('#framework option:selected').text() === 'その他(手動入力)') {
+			manualInput = `<label>根拠を挙げる要素を入力してください</label>` +
+				`<input id='manualInput${index}' data-manualinputid=${index} class='form-control' type='text'/>`
 		}
 		const fwId = `fw${index}`;
 		const evidenceId = `evidence${index}`;
@@ -49,7 +71,8 @@ function addRationale(rationale) {
 		const anotherExplanationId = `anotherExplanation${index}`;
 		let new_section = '<section class="mb-5" id="' + fwId + '">' +
 			'<div class="row">' +
-			'<label for="clientSecret">' +
+			manualInput +
+			`<label id="clientSecret${index}" for="clientSecret">` +
 			rationaleObject.word + 'に関する根拠を挙げてください' +
 			'</label>' +
 			'<input type="hidden" id="' + wordId + '" value="' + rationaleObject.word + '"/>' +
@@ -204,6 +227,16 @@ $(function(){
 				});
 				break;
 			default:
+		}
+	});
+
+	$(document).keyup(function(e) {
+		const targetId = e.target.id;
+		switch (targetId) {
+			case `manualInput${$(`#${targetId}`).data("manualinputid")}` :
+				$(`#clientSecret${$(`#${targetId}`).data("manualinputid")}`).text(`${e.target.value}に関する根拠を挙げてください`);
+				$(`#word${$(`#${targetId}`).data("manualinputid")}`).val(e.target.value);
+			break;
 		}
 	});
 });
