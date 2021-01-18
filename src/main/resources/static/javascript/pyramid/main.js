@@ -105,13 +105,11 @@ function addRationale(rationale) {
 		new_section += '</section >' +
 			'<div class="row">' +
 			'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
-			'</div>' +
-			'</section>';
-		if(index != 0) {
-			new_section += '<div class="row">' +
-				`<button id="delete_reason" type="button" class="btn btn-danger">根拠の削除</button>` +
-				'</div>';
-		};
+			'</div>' + 
+			'<div class="row">' +
+			`<button id="delete_reason${index}" data-evidenceparentid="${index}" type="button" class="btn btn-danger">根拠の削除</button>` +
+			'</div>';
+		new_section += '</section>';
 		$('.reason').append($(new_section));
 	}
 	const addButton = '<div class="row mb-3"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
@@ -141,7 +139,7 @@ function addHTML(data) {
 }
 
 $(function(){
-	$(document).click(function(e){
+	$(document).click((e) => {
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
@@ -232,17 +230,40 @@ $(function(){
 					`<textarea id="${evidenceId}_0" class="form-control" rows="3" cols="70">` +
 					'</textarea>' +
 					'</div>' +
-					'</section >';
-				if ($("#reasons > section").length >= 1) {
-					new_section += '<div class="row">' +
-						`<button type="button" class="btn btn-danger">根拠の削除</button>` +
-						'</div>';
-				}
-				new_section += '<div class="row">' +
+					'<div class="row">' +
 					`<button id="addEvidence${$("#reasons > section").length}" type="button" class="btn btn-primary" data-evidenceparentid="${$("#reasons > section").length}">証拠を追加する</button>` +
-					'</div>' +
-					'</section>'
+					'</div>' + 
+					'<div class="row">' +
+					`<button type="button" id="delete_reason${$("#reasons > section").length}" data-evidenceparentid="${$("#reasons > section").length}" class="btn btn-danger">根拠の削除</button>` +
+					'</div>' + 
+					'</section>';
 				$("#add_reason").parent().before(new_section);
+				break;
+			case `delete_reason${e.target.dataset.evidenceparentid}`:
+				const dataEvidenceParentId = Number(e.target.dataset.evidenceparentid);
+				$(`#fw${dataEvidenceParentId}`).remove();
+				console.log(dataEvidenceParentId + 1);
+				for (var i = dataEvidenceParentId + 1; i <= $("#reasons > section").length; i++) {
+					console.log("test");
+					console.log(i);
+					$(`#fw${i}`).attr("id", `fw${i-1}`);
+					$(`#manualInput${i}`).attr("data-manualinputid", i - 1);
+					$(`#manualInput${i}`).attr("id", `manualInput${i - 1}`);
+					$(`#clientSecret${i}`).attr("id", `clientSecret${i - 1}`);
+					$(`#word${i}`).attr("id", `word${i - 1}`);
+					$(`#explanation${i}`).attr("id", `explanation${i - 1}`);
+					$(`#anotherExplanation${i}`).attr("id", `anotherExplanation${i - 1}`);
+					if ($(`evidence${i} > textarea`).length != 0) {
+						for (var j = 0; j <= $(`evidence${i} > textarea`).length; j++) {
+							$(`evidence${i}_${j}`).attr("id", `evidence${i - 1}_${j}`)
+						}
+					}
+					$(`#evidence${i}`).attr("id", `evidence${i - 1}`);
+					$(`#addEvidence${i}`).attr("data-evidenceparentid", i - 1);
+					$(`#addEvidence${i}`).attr("id", `addEvidence${i - 1}`)
+					$(`#delete_reason${i}`).attr("data-evidenceparentid", i - 1);
+					$(`#delete_reason${i}`).attr("id", `addEvidence${i - 1}`)
+				}
 				break;
 			default:
 		}
