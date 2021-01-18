@@ -113,7 +113,7 @@ function addRationale(rationale) {
 			'</section>'
 		$('.reason').append($(new_section));
 	}
-	const addButton = '<button id="add_reason" type="button">追加</button>'
+	const addButton = '<div class="row"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
 	$('.reason').append($(addButton));
 }
 
@@ -144,6 +144,7 @@ $(function(){
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
+		let evidenceId;
 		switch (targetId) {
 			case `check-pyramid` :
 				const data = encodeURIComponent(JSON.stringify(createPyramidData(true)));
@@ -151,7 +152,7 @@ $(function(){
 				break;
 			case `addEvidence${evidenceParentId}`:
 				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
-				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
+				evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
 				const new_evidence =
 					'<div class="row">' +
 					'<textarea id=evidence' + evidenceParentId + '_' + evidenceId + ' class="form-control" rows="3" cols="70">' +
@@ -196,6 +197,47 @@ $(function(){
 					console.log(args);
 				});
 				break;
+			case "add_reason":
+				const fwId = `fw${$("#reasons > section").length}`;
+				evidenceId = `evidence${$("#reasons > section").length}`;
+				const wordId = `word${$("#reasons > section").length}`;
+				const explanationId = `explanation${$("#reasons > section").length}`;
+				const anotherExplanationId = `anotherExplanation${$("#reasons > section").length}`;
+				let new_section = '<section class="mb-5" id="' + fwId + '">' +
+					'<div class="row">' +
+					`<label>根拠を挙げる要素を入力してください</label>` +
+					`<input id='manualInput${$("#reasons > section").length}' data-manualinputid=${$("#reasons > section").length} class='form-control' type='text'/>` +
+					`<label id="clientSecret${$("#reasons > section").length}" for="clientSecret">` +
+					'に関する根拠を挙げてください' +
+					'</label>' +
+					`<input type="hidden" id="${wordId}"/>` +
+					'</div>' +
+					'<div class="row">' +
+					`<textarea id="${explanationId}" class="form-control" rows="3" cols="70">` +
+					'</textarea>' +
+					'</div>' +
+					'<div class="row">' +
+					'上記の根拠を一言で言い換えると何ですか？' +
+					'</div>' +
+					'<div class="row">' +
+					`<input type="text" id="${anotherExplanationId}" class="form-control"/>` +
+					'</div>' +
+					'<div class="row">' +
+					'上記の根拠に対する証拠<span style="color:red">' +
+					'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+					'</div>' +
+					`<section id="${evidenceId}">` + 
+					'<div class="row">' +
+					`<textarea id="${evidenceId}_0" class="form-control" rows="3" cols="70">` +
+					'</textarea>' +
+					'</div>' +
+					'</section >' +
+					'<div class="row">' +
+					`<button id="addEvidence${$("#reasons > section").length}" type="button" class="btn btn-primary" data-evidenceparentid="${$("#reasons > section").length}">証拠を追加する</button>` +
+					'</div>' +
+					'</section>'
+				$("#add_reason").parent().before(new_section);
+				break;
 			default:
 		}
 	});
@@ -207,11 +249,13 @@ $(function(){
 				// 既存のフレームワークの要素を削除
 				const frameworkElement = frameworkElements[$(`#${targetId}`).val()];
 				$('.reason > section').remove();
+				$('#add_button').remove();
 				addRationale(frameworkElement);
 			break;
 			case 'frameworkKind':
 				const framework = frameworks[$(`#${targetId}`).val()];
 				$('.reason > section').remove();
+				$('#add_button').remove();
 				const select = document.getElementById("framework");
 				$('#framework > option').remove();
 				const defaultOpt = document.createElement('option');
