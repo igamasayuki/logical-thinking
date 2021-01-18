@@ -67,7 +67,7 @@ function addRationale(rationale) {
 		const wordId = `word${index}`;
 		const explanationId = `explanation${index}`;
 		const anotherExplanationId = `anotherExplanation${index}`;
-		let new_section = '<section class="mb-5" id="' + fwId + '">' +
+		let new_section = '<section class="mb-4" id="' + fwId + '">' +
 			'<div class="row">' +
 			manualInput +
 			`<label id="clientSecret${index}" for="clientSecret">` +
@@ -113,7 +113,7 @@ function addRationale(rationale) {
 			'</section>'
 		$('.reason').append($(new_section));
 	}
-	const addButton = '<div class="row"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
+	const addButton = '<div class="row mb-3"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
 	$('.reason').append($(addButton));
 }
 
@@ -203,7 +203,7 @@ $(function(){
 				const wordId = `word${$("#reasons > section").length}`;
 				const explanationId = `explanation${$("#reasons > section").length}`;
 				const anotherExplanationId = `anotherExplanation${$("#reasons > section").length}`;
-				let new_section = '<section class="mb-5" id="' + fwId + '">' +
+				let new_section = '<section class="mb-4" id="' + fwId + '">' +
 					'<div class="row">' +
 					`<label>根拠を挙げる要素を入力してください</label>` +
 					`<input id='manualInput${$("#reasons > section").length}' data-manualinputid=${$("#reasons > section").length} class='form-control' type='text'/>` +
@@ -313,7 +313,6 @@ function createPyramidData(isCreatePyramidTree) {
 		conclusion: $('#conclusion').val(),
 		rationaleFormList: []
 	}
-	console.log($("#task").text());
 	if(!isCreatePyramidTree){
 		errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
 		errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));
