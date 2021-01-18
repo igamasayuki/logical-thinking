@@ -12,10 +12,6 @@ let errors = {
 	evidenceError: [],
 }
 
-function test() {
-	console.log('test');
-}
-
 $(document).ready(function () {
 	$.ajax({
 		url: urlUtil.uri + pyramidUrlUtil.apiFrameworkUrl,
@@ -110,7 +106,12 @@ function addRationale(rationale) {
 			'<div class="row">' +
 			'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
 			'</div>' +
-			'</section>'
+			'</section>';
+		if(index != 0) {
+			new_section += '<div class="row">' +
+				`<button id="delete_reason" type="button" class="btn btn-danger">根拠の削除</button>` +
+				'</div>';
+		};
 		$('.reason').append($(new_section));
 	}
 	const addButton = '<div class="row mb-3"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
@@ -231,8 +232,13 @@ $(function(){
 					`<textarea id="${evidenceId}_0" class="form-control" rows="3" cols="70">` +
 					'</textarea>' +
 					'</div>' +
-					'</section >' +
-					'<div class="row">' +
+					'</section >';
+				if ($("#reasons > section").length >= 1) {
+					new_section += '<div class="row">' +
+						`<button type="button" class="btn btn-danger">根拠の削除</button>` +
+						'</div>';
+				}
+				new_section += '<div class="row">' +
 					`<button id="addEvidence${$("#reasons > section").length}" type="button" class="btn btn-primary" data-evidenceparentid="${$("#reasons > section").length}">証拠を追加する</button>` +
 					'</div>' +
 					'</section>'
@@ -248,13 +254,13 @@ $(function(){
 			case 'framework':
 				// 既存のフレームワークの要素を削除
 				const frameworkElement = frameworkElements[$(`#${targetId}`).val()];
-				$('.reason > section').remove();
 				$('#add_button').remove();
+				$('.reason').children().remove();
 				addRationale(frameworkElement);
 			break;
 			case 'frameworkKind':
 				const framework = frameworks[$(`#${targetId}`).val()];
-				$('.reason > section').remove();
+				$('.reason').children().remove();
 				$('#add_button').remove();
 				const select = document.getElementById("framework");
 				$('#framework > option').remove();
