@@ -163,7 +163,6 @@ $(function(){
 			case `evidenceDelete${evidenceParentId}_${evidenceChildId}` :
 				const evidence = $(`#evidence${evidenceParentId}_${evidenceChildId}`);
 				evidence.parent().remove();
-
 				const textareaList = $(`textarea[id*=evidence${evidenceParentId}_]`);
 				const deleteButtonList = $(`button[id*=evidenceDelete${evidenceParentId}_]`);
 
@@ -242,10 +241,7 @@ $(function(){
 			case `delete_reason${e.target.dataset.evidenceparentid}`:
 				const dataEvidenceParentId = Number(e.target.dataset.evidenceparentid);
 				$(`#fw${dataEvidenceParentId}`).remove();
-				console.log(dataEvidenceParentId + 1);
 				for (var i = dataEvidenceParentId + 1; i <= $("#reasons > section").length; i++) {
-					console.log("test");
-					console.log(i);
 					$(`#fw${i}`).attr("id", `fw${i-1}`);
 					$(`#manualInput${i}`).attr("data-manualinputid", i - 1);
 					$(`#manualInput${i}`).attr("id", `manualInput${i - 1}`);
