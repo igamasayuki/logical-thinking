@@ -17,21 +17,21 @@ import jp.co.runy.logical_thinking.service.FrameworkKindService;
 import jp.co.runy.logical_thinking.service.FrameworkService;
 
 /**
- * @author takahashikouhei
- * ajaxでフレームワークの情報を取得するためのコントローラ
+ * @author takahashikouhei ajaxでフレームワークの情報を取得するためのコントローラ
  */
 @RestController
 @RequestMapping("/api/framework")
 public class FrameworkController {
-	
+
 	@Autowired
 	private FrameworkService frameworkService;
 
 	@Autowired
 	private FrameworkKindService frameworkKindService;
 
-	
-	/** 
+	// pull request test
+
+	/**
 	 * フレームワークを取得するメソッド.
 	 * 
 	 * @return Map<String, Map<Integer, List<?>>> フレームワークとフレームワークカインド（要件等）のマップオブジェクト
@@ -48,8 +48,8 @@ public class FrameworkController {
 			private static final long serialVersionUID = 1L;
 
 			{
-				put("Framework",frameworkMap);
-				put("FrameworkElement",frameworkElementMap);
+				put("Framework", frameworkMap);
+				put("FrameworkElement", frameworkElementMap);
 			}
 		};
 		return map;
