@@ -35,6 +35,18 @@ $(document).ready(function () {
 
 function addRationale(rationale) {
 	$('.reason > section').remove();
+	let manualInput = ''
+	if ($('#framework option:selected').text() === 'その他(手動入力)') {
+		rationale = [{
+			element: "",
+			frameworkId: null , 
+			id: null,
+			word: "",
+			explanation: "",
+			anotherExplanation: "",
+			evidenceList: [{explanation: ""}]
+		}]
+	}
 	for (let index = 0; index < rationale.length; index++) {
 		const rationaleObject = {
 			word: rationale[index].word == undefined ? rationale[index].element : rationale[index].word,
@@ -42,14 +54,19 @@ function addRationale(rationale) {
 			anotherExplanation: rationale[index].anotherExplanation == undefined ? "" : rationale[index].anotherExplanation,
 			evidenceList: rationale[index].evidenceList == undefined ? [{explanation: ""}] : rationale[index].evidenceList,
 		}
+		if ($('#framework option:selected').text() === 'その他(手動入力)') {
+			manualInput = `<label>根拠を挙げる要素を入力してください</label>` +
+				`<input id='manualInput${index}' data-manualinputid=${index} class='form-control' type='text'/>`
+		}
 		const fwId = `fw${index}`;
 		const evidenceId = `evidence${index}`;
 		const wordId = `word${index}`;
 		const explanationId = `explanation${index}`;
 		const anotherExplanationId = `anotherExplanation${index}`;
-		let new_section = '<section class="mb-5" id="' + fwId + '">' +
+		let new_section = '<section class="mb-4" id="' + fwId + '">' +
 			'<div class="row">' +
-			'<label for="clientSecret">' +
+			manualInput +
+			`<label id="clientSecret${index}" for="clientSecret">` +
 			rationaleObject.word + 'に関する根拠を挙げてください' +
 			'</label>' +
 			'<input type="hidden" id="' + wordId + '" value="' + rationaleObject.word + '"/>' +
@@ -88,10 +105,15 @@ function addRationale(rationale) {
 		new_section += '</section >' +
 			'<div class="row">' +
 			'<button id="addEvidence' + index + '" type="button" class="btn btn-primary" data-evidenceparentid="' + index + '">証拠を追加する</button>' +
-			'</div>' +
-			'</section>'
+			'</div>' + 
+			'<div class="row">' +
+			`<button id="delete_reason${index}" data-evidenceparentid="${index}" type="button" class="btn btn-danger">根拠の削除</button>` +
+			'</div>';
+		new_section += '</section>';
 		$('.reason').append($(new_section));
 	}
+	const addButton = '<div class="row mb-3"><button id="add_reason" class="btn btn-primary" type="button">根拠の追加</button></div>'
+	$('.reason').append($(addButton));
 }
 
 function addHTML(data) {
@@ -117,10 +139,11 @@ function addHTML(data) {
 }
 
 $(function(){
-	$(document).click(function(e){
+	$(document).click((e) => {
 		const targetId = e.target.id == '' ? 'noId' : e.target.id;
 		const evidenceParentId = $(`#${targetId}`).data('evidenceparentid');
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
+		let evidenceId;
 		switch (targetId) {
 			case `check-pyramid` :
 				const data = encodeURIComponent(JSON.stringify(createPyramidData(true)));
@@ -128,7 +151,7 @@ $(function(){
 				break;
 			case `addEvidence${evidenceParentId}`:
 				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
-				const evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
+				evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
 				const new_evidence =
 					'<div class="row">' +
 					'<textarea id=evidence' + evidenceParentId + '_' + evidenceId + ' class="form-control" rows="3" cols="70">' +
@@ -140,7 +163,6 @@ $(function(){
 			case `evidenceDelete${evidenceParentId}_${evidenceChildId}` :
 				const evidence = $(`#evidence${evidenceParentId}_${evidenceChildId}`);
 				evidence.parent().remove();
-
 				const textareaList = $(`textarea[id*=evidence${evidenceParentId}_]`);
 				const deleteButtonList = $(`button[id*=evidenceDelete${evidenceParentId}_]`);
 
@@ -173,6 +195,72 @@ $(function(){
 					console.log(args);
 				});
 				break;
+			case "add_reason":
+				const fwId = `fw${$("#reasons > section").length}`;
+				evidenceId = `evidence${$("#reasons > section").length}`;
+				const wordId = `word${$("#reasons > section").length}`;
+				const explanationId = `explanation${$("#reasons > section").length}`;
+				const anotherExplanationId = `anotherExplanation${$("#reasons > section").length}`;
+				let new_section = '<section class="mb-4" id="' + fwId + '">' +
+					'<div class="row">' +
+					`<label>根拠を挙げる要素を入力してください</label>` +
+					`<input id='manualInput${$("#reasons > section").length}' data-manualinputid=${$("#reasons > section").length} class='form-control' type='text'/>` +
+					`<label id="clientSecret${$("#reasons > section").length}" for="clientSecret">` +
+					'に関する根拠を挙げてください' +
+					'</label>' +
+					`<input type="hidden" id="${wordId}"/>` +
+					'</div>' +
+					'<div class="row">' +
+					`<textarea id="${explanationId}" class="form-control" rows="3" cols="70">` +
+					'</textarea>' +
+					'</div>' +
+					'<div class="row">' +
+					'上記の根拠を一言で言い換えると何ですか？' +
+					'</div>' +
+					'<div class="row">' +
+					`<input type="text" id="${anotherExplanationId}" class="form-control"/>` +
+					'</div>' +
+					'<div class="row">' +
+					'上記の根拠に対する証拠<span style="color:red">' +
+					'(事実、事例、統計、「データ、官公庁発表データ、専門家や権威者のコメントなど)</span>を書いてください' +
+					'</div>' +
+					`<section id="${evidenceId}">` + 
+					'<div class="row">' +
+					`<textarea id="${evidenceId}_0" class="form-control" rows="3" cols="70">` +
+					'</textarea>' +
+					'</div>' +
+					'<div class="row">' +
+					`<button id="addEvidence${$("#reasons > section").length}" type="button" class="btn btn-primary" data-evidenceparentid="${$("#reasons > section").length}">証拠を追加する</button>` +
+					'</div>' + 
+					'<div class="row">' +
+					`<button type="button" id="delete_reason${$("#reasons > section").length}" data-evidenceparentid="${$("#reasons > section").length}" class="btn btn-danger">根拠の削除</button>` +
+					'</div>' + 
+					'</section>';
+				$("#add_reason").parent().before(new_section);
+				break;
+			case `delete_reason${e.target.dataset.evidenceparentid}`:
+				const dataEvidenceParentId = Number(e.target.dataset.evidenceparentid);
+				$(`#fw${dataEvidenceParentId}`).remove();
+				for (var i = dataEvidenceParentId + 1; i <= $("#reasons > section").length; i++) {
+					$(`#fw${i}`).attr("id", `fw${i-1}`);
+					$(`#manualInput${i}`).attr("data-manualinputid", i - 1);
+					$(`#manualInput${i}`).attr("id", `manualInput${i - 1}`);
+					$(`#clientSecret${i}`).attr("id", `clientSecret${i - 1}`);
+					$(`#word${i}`).attr("id", `word${i - 1}`);
+					$(`#explanation${i}`).attr("id", `explanation${i - 1}`);
+					$(`#anotherExplanation${i}`).attr("id", `anotherExplanation${i - 1}`);
+					if ($(`evidence${i} > textarea`).length != 0) {
+						for (var j = 0; j <= $(`evidence${i} > textarea`).length; j++) {
+							$(`evidence${i}_${j}`).attr("id", `evidence${i - 1}_${j}`)
+						}
+					}
+					$(`#evidence${i}`).attr("id", `evidence${i - 1}`);
+					$(`#addEvidence${i}`).attr("data-evidenceparentid", i - 1);
+					$(`#addEvidence${i}`).attr("id", `addEvidence${i - 1}`)
+					$(`#delete_reason${i}`).attr("data-evidenceparentid", i - 1);
+					$(`#delete_reason${i}`).attr("id", `addEvidence${i - 1}`)
+				}
+				break;
 			default:
 		}
 	});
@@ -183,12 +271,14 @@ $(function(){
 			case 'framework':
 				// 既存のフレームワークの要素を削除
 				const frameworkElement = frameworkElements[$(`#${targetId}`).val()];
-				$('.reason > section').remove();
+				$('#add_button').remove();
+				$('.reason').children().remove();
 				addRationale(frameworkElement);
 			break;
 			case 'frameworkKind':
 				const framework = frameworks[$(`#${targetId}`).val()];
-				$('.reason > section').remove();
+				$('.reason').children().remove();
+				$('#add_button').remove();
 				const select = document.getElementById("framework");
 				$('#framework > option').remove();
 				const defaultOpt = document.createElement('option');
@@ -204,6 +294,16 @@ $(function(){
 				});
 				break;
 			default:
+		}
+	});
+
+	$(document).keyup(function(e) {
+		const targetId = e.target.id;
+		switch (targetId) {
+			case `manualInput${$(`#${targetId}`).data("manualinputid")}` :
+				$(`#clientSecret${$(`#${targetId}`).data("manualinputid")}`).text(`${e.target.value}に関する根拠を挙げてください`);
+				$(`#word${$(`#${targetId}`).data("manualinputid")}`).val(e.target.value);
+			break;
 		}
 	});
 });
@@ -236,7 +336,6 @@ function createPyramidData(isCreatePyramidTree) {
 		conclusion: $('#conclusion').val(),
 		rationaleFormList: []
 	}
-	console.log($("#task").text());
 	if(!isCreatePyramidTree){
 		errors.selectedError.push(new Utils.Error($("#frameworkKind").val(), 'frameworkKind', false, true));
 		errors.selectedError.push(new Utils.Error($("#framework").val(), 'framework', false, true));
