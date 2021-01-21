@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/logical.css">
+    <title>たつや学長の誰でも完璧メール</title>
+
+  </head>
+  <body>
+    
+    <div class="container">
+      <h1 class="display-4 text-center"> たつや学長の誰でも完璧メール </h1>
+      <hr>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="step1.html">Step1 全体像を把握する</a></li>
+          <li class="breadcrumb-item"><a href="step2.html">Step2 ピラミッド構造=PREPを作成する</a></li>
+          <li class="breadcrumb-item"><a href="step3.html">Step3 生成されたメール文章</a></li>
+          <li class="breadcrumb-item active" aria-current="page">メール送信画面</li>
+        </ol>
+      </nav>
+      <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">メール送信</h4>
+        <p>
+          下記の内容でメールを送信します。<br>
+          問題が無ければ「メール送信」ボタンを押下してください。
+        </p>
+      </div>
+      <div class="alert alert-light" role="alert">
+      
+     送信元メールアドレス: <p th:text="${fromaddress}"/>
+     
+     宛先メールアドレス: <p th:text="${toaddress}"/>
+     
+     件名: <p th:text="${title}"/>
+
+	 <pre th:text="${mailText}"></pre>
+
+      </div>
+      <form method="post" th:action="@{sendStart}">
+      		<button type="submit" class="btn btn-primary">メール送信</button>
+      </form>
+    <br>
+        <form method="post" th:action="@{editMail}">
+      		<button type="submit" class="btn btn-primary">メール文章編集画面に戻る</button>
+      </form>
+      <br>
+      <form method="post" th:action="@{pyramid}">
+      		<button type="submit" class="btn btn-primary">step2に戻る</button>
+      </form>
+    </div>
+
+    <script src="js/logical.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
