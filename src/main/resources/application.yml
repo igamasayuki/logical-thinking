@@ -23,6 +23,7 @@ logging:
           logical_thinking:
             mapper: DEBUG
 
-
+server:
+  max-http-header-size: 64000
 
 #  mapper-locations: classpath*:/jp/co/runy/logical_thinking/mapper/*.xml

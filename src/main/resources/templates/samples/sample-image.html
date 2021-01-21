@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>たつや学長の誰でも完璧メール</title>
+
+<link th:href="@{/css/sample.css}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="sample_image">
+		<img th:src="@{'/img/' + ${treeName} + '.png'}" id="sample_image" />
+	</div>
+</body>
+</html>

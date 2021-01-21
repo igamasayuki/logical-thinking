@@ -247,10 +247,10 @@ const createLogicTreeMap = () => {
     //エンコード
     const encoded = encodeURIComponent(param)
     //エンコードしたJSONをparamとして遷移させる
-    window.open(
-	  `${uri}/logicalthinking/logictree-map?json=${encoded}`,
-	  '_blank' //別タブ表示
-	)
+     window.open(
+	   `${uri}/logicalthinking/logictree-map?json=${encoded}`,
+	   '_blank' //別タブ表示
+	 )
 }
 
 //登録するロジックツリーの情報を取得します.
