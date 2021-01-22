@@ -8,53 +8,28 @@
         <ol class="breadcrumb">
           <li class="breadcrumb-item active">Step1 全体像を把握する</li>
           <li class="breadcrumb-item">Step2 ピラミッド構造=PREPを作成する</li>
-          <li class="breadcrumb-item" aria-current="page">Step3 生成されたメール文章</li>
+          <li class="breadcrumb-item" aria-current="page">生成されたメール文章</li>
         </ol>
 	  </nav>
-	  
-<script type="text/javascript">
-$(function() {
-  $("#partnerWants").tooltip({
-    show:false,
-    hide:false
-  });
-  $("#currentState").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  $("#conclusion").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  $("#word").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  $("#anotherExplanation").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  $("#explanation").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  $("#example").tooltip({
-	    show:false,
-	    hide:false
-	  });
-  
-});
-</script>
 	  
 	        <div class="alert alert-warning" role="alert">
         <h4 class="alert-heading">出来上がったメールの文章</h4>
         <p>
           あなたの回答から以下のようにメール文章を作成しました。<br>
-          必要であれば手直しを行い空いてに送ってください。
+          必要であれば手直しを行い相手に送ってください。
         </p>
       </div>
       <div class="alert alert-light" role="alert">
-        <pre>
+  
+<form method="get" action="sendMail">
+  <p>送信元メールアドレス:<br>
+  <input type="text" name="fromaddress" size="30"></p>
+  <p>宛先メールアドレス:<br>
+  <input type="text" name="toaddress" size="30"></p>
+  <p>件名:<br>
+  <input type="text" name="title" size="30"></p>
+ 
+<textarea name="mailText" cols="80" rows="50">
 いつもお世話になっております。
 xxx株式会社の●○です。
           
@@ -62,47 +37,50 @@ xxx株式会社の●○です。
           
 先日のお話しでは、以下の課題が炙り出されました。
      
-「<mark><font th:text="${logicTree.partnerWants}" id="partnerWants"  title="相手が欲しいもの"></font></mark>」
+「[[${logicTree.partnerWants}]]」
 と言う貴社のご要望に対して、
-「<mark><font th:text="${logicTree.currentState}" id="currentState"  title="あなたの現状"></font></mark>」
+「[[${logicTree.currentState}]]」
 と回答いたしました。このギャップが課題として残りました。
 
 本日は、この課題についてご報告いたします。
           
-この点につきまして、
-          
-「<mark><font th:text="${pyramidList[0].conclusion}" id="conclusion"  title="結論"></font></mark>」
+この点につきまして、        
+「[[${pyramidList[0].conclusion}]]」
 
 とさせていただきたく思います。
         
-理由は「<mark><font th:text="${reasonList.size()}"></font></mark>」つあります。
+理由は「[[${reasonList.size()}]]」つあります。
 
-<li th:each="reason : ${reasonList}" th:text="${reason.word} + 'の視点'" id="word"  title="視点"></li>
-<mark th:each="reason, status : ${reasonList}">
-<font th:text="${status.count} + '点目は「' + ${reason.word} + '」による視点です。' "></font>
-<font th:text="${reason.anotherExplanation}" id="anotherExplanation"  title="根拠を一言で言い換えたもの"></font>
-<font th:text="${reason.explanation}" id="explanation"  title="根拠"></font>
+<li th:each="reason : ${reasonList}">
+ [[${reason.word}]] の視点</li>
+<p th:each="reason, status : ${reasonList}">
+[[${status.count}]]点目は「[[${reason.word}]]」による視点です。
+[[${reason.anotherExplanation}]]
+[[${reason.explanation}]]
 
-<font th:text="${exampleList[status.index].explanation}" id="example"  title="証拠"></font>
-</mark>
+[[${exampleList[status.index].explanation}]]
+</p>
 
 以上のことから、
           
 貴社と弊社のギャップを埋める対策として、
           
-「<mark><font th:text="${pyramidList[0].conclusion}"></font></mark>」
+「[[${pyramidList[0].conclusion}]]」
           
 をご提案します。
           
 以上、よろしくお願いします。
+</textarea>
+<button type="submit" class="btn btn-primary">メール文章を確認</button>
+</form>
+<!-- <input type="text" name="mailText" />
+<button type="submit" class="btn btn-primary">メール文章を確認</button>
+</form>
+<!--
+<!--<textarea name="editmail" cols="80" rows="50">-->
 
-          </pre>
+
       </div>
-      
-       <form method="post" th:action="@{editMail}">
-      		<button type="submit" class="btn btn-primary">メール文章を編集する</button>
-      </form>
-      
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
