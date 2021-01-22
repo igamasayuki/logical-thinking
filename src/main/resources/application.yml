@@ -23,6 +23,7 @@ logging:
           logical_thinking:
             mapper: DEBUG
 
+# ヘッダーの最大値をデフォルト8KB→64KB(400エラー回避のため)
 server:
   max-http-header-size: 64000
 
