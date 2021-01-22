@@ -145,10 +145,12 @@ $(function(){
 		const evidenceChildId = $(`#${targetId}`).data('evidencechildid');
 		let evidenceId;
 		switch (targetId) {
+			// ピラミッドツリー図表示時
 			case `check-pyramid` :
 				const data = encodeURIComponent(JSON.stringify(createPyramidData(true)));
 				window.open(`${urlUtil.uri}/logicalthinking/pyramidtree?data=${data}`, '_blank')
 				break;
+			// 証拠追加時
 			case `addEvidence${evidenceParentId}`:
 				const insertLine = $(`#evidence${evidenceParentId} textarea`).length - 1;
 				evidenceId = $(`#evidence${evidenceParentId} textarea`).length;
@@ -160,6 +162,7 @@ $(function(){
 					'</div>';
 				$(`#evidence${evidenceParentId}_${insertLine}`).parent().after(new_evidence);
 				break;
+			// 証拠削除時
 			case `evidenceDelete${evidenceParentId}_${evidenceChildId}` :
 				const evidence = $(`#evidence${evidenceParentId}_${evidenceChildId}`);
 				evidence.parent().remove();
@@ -175,6 +178,7 @@ $(function(){
 					deleteButtonList.eq(j).attr('data-evidencechildid', j+1);
 				}
 				break;
+			// Step2→step3遷移時
 			case 'submit' :
 				const pyramidForm = createPyramidData(false);
 				if(validation()){
@@ -195,6 +199,7 @@ $(function(){
 					console.log(args);
 				});
 				break;
+			// 証拠追加時（手動入力）,フレームワーク選択時も可
 			case "add_reason":
 				const fwId = `fw${$("#reasons > section").length}`;
 				evidenceId = `evidence${$("#reasons > section").length}`;
@@ -238,6 +243,7 @@ $(function(){
 					'</section>';
 				$("#add_reason").parent().before(new_section);
 				break;
+			// 根拠削除時
 			case `delete_reason${e.target.dataset.evidenceparentid}`:
 				const dataEvidenceParentId = Number(e.target.dataset.evidenceparentid);
 				$(`#fw${dataEvidenceParentId}`).remove();
@@ -298,6 +304,7 @@ $(function(){
 	});
 
 	$(document).keyup(function(e) {
+		// undefinedはエラー回避のため
 		const targetId = e.target.id == '' ? 'undefined' : e.target.id;
 		switch (targetId) {
 			case `manualInput${$(`#${targetId}`)?.data("manualinputid")}` :
@@ -308,6 +315,7 @@ $(function(){
 	});
 });
 
+// バリデーションチェック
 function validation () {
 	let validatedError = false;
 	if ($("#frameworkKind").value == 0 || $("#framework").value == 0){
@@ -325,9 +333,10 @@ function validation () {
 		})
 		errors[key] = [];
 	})
-	return validatedError;
+	return validatedError // true（エラーあり） or false;
 }
 
+// フォーム送信データ作成
 function createPyramidData(isCreatePyramidTree) {
 	const pyramidForm = {
 		frameworkKindId: $('#frameworkKind').val(),
