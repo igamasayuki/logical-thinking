@@ -298,9 +298,9 @@ $(function(){
 	});
 
 	$(document).keyup(function(e) {
-		const targetId = e.target.id;
+		const targetId = e.target.id == '' ? 'undefined' : e.target.id;
 		switch (targetId) {
-			case `manualInput${$(`#${targetId}`).data("manualinputid")}` :
+			case `manualInput${$(`#${targetId}`)?.data("manualinputid")}` :
 				$(`#clientSecret${$(`#${targetId}`).data("manualinputid")}`).text(`${e.target.value}に関する根拠を挙げてください`);
 				$(`#word${$(`#${targetId}`).data("manualinputid")}`).val(e.target.value);
 			break;
@@ -355,7 +355,7 @@ function createPyramidData(isCreatePyramidTree) {
 			errors.rationalError.push(new Utils.Error(rationaleForm.anotherExplanation, `anotherExplanation${i}`, false, false));
 		}
 		// 証拠リストを取得
-		for (let j = 0; j < $(`#evidence${i}`).children('div').length; j++) {
+		for (let j = 0; j < $(`#evidence${i}`).find('textarea').length; j++) {
 			const evidenceForm = {
 				explanation: $(`#evidence${i}_${j}`).val(),
 				displayOrder: j + 1

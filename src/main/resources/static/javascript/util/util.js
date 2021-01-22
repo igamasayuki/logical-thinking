@@ -28,6 +28,7 @@ export class Error {
     validation () {
         const regExpEmpty = "^[ ]*$";
         const value = this.errorElement.value;
+        console.log(this.errorElement);
         this.errorElement.validatedError = false;
         if ((value.match(regExpEmpty) || value.length > 100) && !this.errorElement.selected) {
             this.errorElement.validatedError = true;
