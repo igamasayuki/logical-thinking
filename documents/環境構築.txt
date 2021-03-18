@@ -1,0 +1,27 @@
+●VSCode
+以下を参照
+https://qiita.com/psychoroid/items/7d85ae6bade4a67aedb1
+
+拡張機能 Java Extension PackをVSCodeよりインストールします。
+
+
+
+●git
+Gitのインストールは研修で行っている為割愛
+1. [sshキーを登録](https://bitbucket.org/account/settings/ssh-keys/)
+　※すでにやっている場合は不要
+
+2. プロジェクトのdevelopブランチをクローン
+```
+ git clone -b develop https://github.com/igamasayuki/logical-thinking.git
+
+●実行まで
+//DB//
+..\logical-thinking\documents\database
+上記のsqlをpostgres内で実行
+
+//VSCode//
+Javaで実行
+http://localhost:8080ではなく
+http://localhost:8080/logicalthinking/logictreeで実行
+
