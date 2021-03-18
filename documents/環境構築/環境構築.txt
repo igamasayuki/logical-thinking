@@ -15,6 +15,9 @@ Gitのインストールは研修で行っている為割愛
 ```
  git clone -b develop https://github.com/igamasayuki/logical-thinking.git
 
+
+ 伊賀さんにコラボレーター承認を依頼する(push時に必要となる)
+
 ●実行まで
 //DB//
 ..\logical-thinking\documents\database
